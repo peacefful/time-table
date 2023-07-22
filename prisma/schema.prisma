@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Institution {
+	id Int @id @default(autoincrement())
+	appellation String
+	director Director?
+	@@map("institution")
+}
+
+model Director {
+	id Int @id @default(autoincrement())
+	name String
+	surname String
+	directorId Int @unique
+	groups Groups[]
+	director Institution @relation(fields: [directorId], references: [id], onDelete: Cascade)
+	@@map("directors")
+}
+
+model Groups {
+	id Int @id @default(autoincrement())
+	groupName String
+	course Int
+	groupId Int
+	students Students[]
+	group Director @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	@@map("groups")
+}
+
+model Students {
+	id Int @id @default(autoincrement())
+	name String
+	surname String
+	studentId Int
+	group Groups @relation(fields: [studentId], references: [id], onDelete: Cascade)
+	timeTable TimeTable?
+	@@map("students")
+}
+
+model TimeTable {
+	id Int @id @default(autoincrement())
+	timeTableId Int @unique
+	student Students @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	monday Monday[]
+	tuesday Tuesday[]
+	wednesday Wednesday[]
+	thursday Thursday[] 
+	friday Friday[] 
+	saturday Saturday[] 
+	@@map("timeTable")
+}
+
+model Monday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("monday")
+}
+
+model Tuesday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int 
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("tuesday")
+}
+
+model Wednesday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("wednesday")
+}
+
+model Thursday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int 
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("thursday")
+}
+
+model Friday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int 
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("friday")
+}
+
+model Saturday {
+	id Int @id @default(autoincrement())
+	subject String
+	office Int
+	teacher String
+	beginning String
+	end String
+	timeTableId Int 
+	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("saturday")
+}
