@@ -10,6 +10,8 @@ import studentsRouter from "./routers/students-router"
 import timeTableRouter from "./routers/timeTable-router"
 import weekdayRouter from "./routers/weekday-router"
 
+import { checkingSqlInjection } from "./middlewares/checkInput";
+
 declare const __dirname: string;
 
 const app = express()
@@ -21,6 +23,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended:false }))
 
 app.use(express.static("public"))
+
+app.use(checkingSqlInjection)
 
 app.use(institutionsRouter)
 app.use(directorsRouter)

@@ -18,6 +18,7 @@ model Director {
 	id Int @id @default(autoincrement())
 	name String
 	surname String
+	password Int
 	directorId Int @unique
 	groups Groups[]
 	director Institution @relation(fields: [directorId], references: [id], onDelete: Cascade)
@@ -38,6 +39,7 @@ model Students {
 	id Int @id @default(autoincrement())
 	name String
 	surname String
+	password Int
 	studentId Int
 	group Groups @relation(fields: [studentId], references: [id], onDelete: Cascade)
 	timeTable TimeTable?

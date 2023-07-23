@@ -19,11 +19,12 @@ export const getDirectors = async (req: Request, res: Response):Promise<void> =>
 
 export const addDirector = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const { name, surname, directorId }:IDirector = req.body
+		const { name, surname, password, directorId }:IDirector = req.body
 		const directors = await prisma.director.create({
 			data: {
 				name,
 				surname,
+				password,
 				directorId
 			}
 		})
@@ -50,7 +51,7 @@ export const deleteDirector = async (req: Request, res: Response):Promise<void> 
 export const changeDirector = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const id:number = parseInt(req.params.id)
-		const { name, surname, directorId }:IDirector = req.body
+		const { name, surname, password, directorId }:IDirector = req.body
 		const director = await prisma.director.update({
 			where: {
 				id
@@ -58,6 +59,7 @@ export const changeDirector = async (req: Request, res: Response):Promise<void> 
 			data: {
 				name,
 				surname,
+				password,
 				directorId,
 			}
 		})
