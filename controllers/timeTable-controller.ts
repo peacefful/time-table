@@ -8,6 +8,7 @@ export const getTimeTable = async (req: Request, res: Response):Promise<void> =>
 	try {
 		const timeTable = await prisma.timeTable.findMany({
 			include: {
+				student: true,
 				monday: true,
 				tuesday: true,
 				wednesday: true,
@@ -24,10 +25,10 @@ export const getTimeTable = async (req: Request, res: Response):Promise<void> =>
 
 export const createTimeTable = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const { timeTableId }:ITimeTable = req.body
+		const { groupId }:ITimeTable = req.body
 		const timeTable = await prisma.timeTable.create({
 			data: {
-				timeTableId
+				groupId
 			}
 		})
 		res.json(timeTable)
@@ -53,13 +54,13 @@ export const deleteTimeTable = async (req: Request, res: Response):Promise<void>
 export const changeTimeTable = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const id:number = parseInt(req.params.id)
-		const { timeTableId }:ITimeTable = req.body
+		const { groupId }:ITimeTable = req.body
 		const timeTable = await prisma.timeTable.update({
 			where: {
 				id
 			},
 			data: {
-				timeTableId
+				groupId
 			}
 		})
 		res.json(timeTable)

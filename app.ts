@@ -7,10 +7,11 @@ import institutionsRouter from "./routers/institutions-router"
 import directorsRouter from "./routers/directors-router"
 import groupsRouter from "./routers/groups-router"
 import studentsRouter from "./routers/students-router"
-import timeTableRouter from "./routers/timeTable-router"
-import weekdayRouter from "./routers/weekday-router"
+import timeTablesRouter from "./routers/timeTables-router"
+import tutorsRouter from "./routers/weekdays-router"
+import weekdaysRouter from "./routers/tutors-router"
 
-import { checkingSqlInjection } from "./middlewares/checkInput";
+// import { checkingSqlInjection } from "./middlewares/checkInput";
 
 declare const __dirname: string;
 
@@ -24,15 +25,16 @@ app.use(express.urlencoded({ extended:false }))
 
 app.use(express.static("public"))
 
-app.use(checkingSqlInjection)
+// app.use(checkingSqlInjection)
 
 app.use(institutionsRouter)
 app.use(directorsRouter)
 app.use(groupsRouter)
 app.use(studentsRouter)
-app.use(timeTableRouter)
+app.use(timeTablesRouter)
+app.use(tutorsRouter)
 
-app.use(weekdayRouter)
+app.use(weekdaysRouter)
 
 app.get("/", (req:Request, res:Response) => {
 	res.sendFile(path.resolve(__dirname, "public", "index.html"))

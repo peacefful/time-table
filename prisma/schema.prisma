@@ -7,56 +7,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Institution {
-	id Int @id @default(autoincrement())
-	appellation String
-	director Director?
-	@@map("institution")
-}
-
 model Director {
 	id Int @id @default(autoincrement())
 	name String
 	surname String
-	password Int
-	directorId Int @unique
-	groups Groups[]
-	director Institution @relation(fields: [directorId], references: [id], onDelete: Cascade)
+	password String
+	institution Institution?
 	@@map("directors")
+}
+
+model Institution {
+	id Int @id @default(autoincrement())
+	appellation String
+	directorId Int @unique
+	tutors Tutor[]
+	institution Director @relation(fields: [directorId], references: [id])
+	@@map("institutions")
+}
+
+model Tutor {
+	id Int @id @default(autoincrement())
+	name String
+	surname String
+	password String
+	institutionId Int
+	groups Groups[]
+	Tutor Institution @relation(fields: [institutionId], references: [id])
+	@@map("tutors")
 }
 
 model Groups {
 	id Int @id @default(autoincrement())
 	groupName String
 	course Int
-	groupId Int
-	students Students[]
-	group Director @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	tutorId Int
+	timeTable TimeTable[]
+	group Tutor @relation(fields: [tutorId], references: [id], onDelete: Cascade)
 	@@map("groups")
-}
-
-model Students {
-	id Int @id @default(autoincrement())
-	name String
-	surname String
-	password Int
-	studentId Int
-	group Groups @relation(fields: [studentId], references: [id], onDelete: Cascade)
-	timeTable TimeTable?
-	@@map("students")
 }
 
 model TimeTable {
 	id Int @id @default(autoincrement())
-	timeTableId Int @unique
-	student Students @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id])
+	student Students[]
 	monday Monday[]
 	tuesday Tuesday[]
 	wednesday Wednesday[]
 	thursday Thursday[] 
 	friday Friday[] 
 	saturday Saturday[] 
-	@@map("timeTable")
+	@@map("timeTables")
+}
+
+model Students {
+	id Int @id @default(autoincrement())
+	name String
+	surname String
+	password String
+	timeTableId Int
+	group TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	@@map("students")
 }
 
 model Monday {

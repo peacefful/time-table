@@ -8,7 +8,7 @@ export const getInstitutions = async (req: Request, res: Response):Promise<void>
 	try {
 		const institutions = await prisma.institution.findMany({
 			include: {
-				director: true,
+				tutors: true
 			}
 		})
 		res.json(institutions)
@@ -19,10 +19,11 @@ export const getInstitutions = async (req: Request, res: Response):Promise<void>
 
 export const addInstitutions = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const { appellation }:IInstitution = req.body
+		const { appellation, directorId }:IInstitution = req.body
 		const institutions = await prisma.institution.create({
 			data: {
-				appellation
+				appellation,
+				directorId
 			}
 		})
 		res.json(institutions)
@@ -48,13 +49,14 @@ export const deleteInstitution = async (req: Request, res: Response):Promise<voi
 export const changeInstitution = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const id:number = parseInt(req.params.id)
-		const { appellation }:IInstitution = req.body
+		const { appellation, directorId }:IInstitution = req.body
 		const institutions = await prisma.institution.update({
 			where: {
 				id
 			},
 			data: {
-				appellation
+				appellation,
+				directorId
 			}
 		})
 		res.json(institutions)

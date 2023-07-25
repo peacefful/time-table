@@ -1,6 +1,6 @@
-export interface IDirector {
-	id?: number
+export interface ITutor {
 	name: string
 	surname: string
 	password: string
+	institutionId: number
 }

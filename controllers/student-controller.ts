@@ -1,16 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express"
-import { IStudents } from "../interfaces/students"
+import { IStudent } from "../interfaces/student"
 
 const prisma = new PrismaClient()
 
 export const getStudents = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const students = await prisma.students.findMany({
-			include: {
-				timeTable: true
-			}
-		})
+		const students = await prisma.students.findMany()
 		res.send(students)
 	} catch (error) {
 		console.log(error);
@@ -19,13 +15,13 @@ export const getStudents = async (req: Request, res: Response):Promise<void> => 
 
 export const addStudent = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const { name, surname, password, studentId }:IStudents = req.body
+		const { name, surname, password, timeTableId }:IStudent = req.body
 		const students = await prisma.students.create({
 			data: {
 				name,
 				surname,
 				password,
-				studentId,
+				timeTableId,
 			}
 		})
 		res.send(students)
@@ -51,7 +47,7 @@ export const deleteStudent = async (req: Request, res: Response):Promise<void> =
 export const changeStudent = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const id:number = parseInt(req.params.id)
-		const { name, surname, password, studentId }:IStudents = req.body
+		const { name, surname, password, timeTableId }:IStudent = req.body
 		const students = await prisma.students.update({
 			where: {
 				id
@@ -60,7 +56,7 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 				name, 
 				surname,
 				password,
-				studentId
+				timeTableId
 			}
 		})
 		res.send(students)
