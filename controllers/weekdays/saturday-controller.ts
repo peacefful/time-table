@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
-import { IWeekday } from "../interfaces/weekday";
+import { IWeekday } from "../../interfaces/weekday";
 
 const prisma = new PrismaClient()
 
