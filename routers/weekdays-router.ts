@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getSubjectsOnMonday, addSubjectOnMonday, deleteSubjectOnMonday, changeSubjectOnMonday } from "../controllers/monday-controller"
 import { getSubjectsOnTuesday, addSubjectsOnTuesday, deleteSubjectsOnTuesday, changeSubjectsOnTuesday } from "../controllers/tuesday-controller"
-import { getSubjectsOnWednesday, addSubjectsOnWednesday, deleteSubjectsOnWednesday, changeSubjectsOnWednesday } from "../controllers/wednesday-controller"
+import { getSubjectsOnWednesday, addSubjectsOnWednesday, deleteSubjectsOnWednesday, changeSubjectsOnWednesday } from "../controllers/weekdays/wednesday-controller"
 import { getSubjectsOnThursday, addSubjectsOnThursday, deleteSubjectsOnThursday, changeSubjectsOnThursday } from "../controllers/thursday-controller"
 import { getSubjectsOnFriday, addSubjectsOnFriday, deleteSubjectsOnFriday, changeSubjectsOnFriday } from "../controllers/friday-controller"
 import { getSubjectsOnSaturday, addSubjectOnSaturday, deleteSubjectOnSaturday, changeSubjectOnSaturday } from "../controllers/saturday-controller"
