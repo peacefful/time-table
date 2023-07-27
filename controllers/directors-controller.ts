@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client"
 import { Request, Response } from "express"
 import { IDirector } from "../interfaces/director"
 
+import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator"
 
 const prisma = new PrismaClient()
@@ -26,11 +27,12 @@ export const addDirector = async (req: Request, res: Response):Promise<void> => 
 			res.status(400).json({ errors: errors.array() })
 		} else {
 			const { name, surname, password }:IDirector = req.body
+			const hashedPassword:string = await hashPassword(password);
 			const directors = await prisma.director.create({
 				data: {
 					name,
 					surname,
-					password
+					password: hashedPassword
 				}
 			})
 			res.send(directors)
@@ -62,17 +64,18 @@ export const changeDirector = async (req: Request, res: Response):Promise<void> 
 		} else {
 			const id:number = parseInt(req.params.id)
 			const { name, surname, password }:IDirector = req.body
-			const director = await prisma.director.update({
+			const hashedPassword:string = await hashPassword(password);
+			const directors = await prisma.director.update({
 				where: {
 					id
 				},
 				data: {
 					name,
 					surname,
-					password
+					password: hashedPassword
 				}
 			})
-			res.send(director)
+			res.send(directors)
 		}
 	} catch (error) {
 		console.log(error);

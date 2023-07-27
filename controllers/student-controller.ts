@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express"
 import { IStudent } from "../interfaces/student"
 
+import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator";
 
 const prisma = new PrismaClient()
@@ -22,11 +23,12 @@ export const addStudent = async (req: Request, res: Response):Promise<void> => {
 			res.status(400).json({ errors: errors.array() })
 		} else {
 			const { name, surname, password, timeTableId }:IStudent = req.body
+			const hashedPassword:string = await hashPassword(password);
 			const students = await prisma.students.create({
 				data: {
 					name,
 					surname,
-					password,
+					password: hashedPassword,
 					timeTableId,
 				}
 			})
@@ -59,6 +61,7 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 		} else {
 			const id:number = parseInt(req.params.id)
 			const { name, surname, password, timeTableId }:IStudent = req.body
+			const hashedPassword:string = await hashPassword(password);
 			const students = await prisma.students.update({
 				where: {
 					id
@@ -66,7 +69,7 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 				data: {
 					name, 
 					surname,
-					password,
+					password:hashedPassword,
 					timeTableId
 				}
 			})

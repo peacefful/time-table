@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getSubjectsOnMonday, addSubjectOnMonday, deleteSubjectOnMonday, changeSubjectOnMonday } from "../controllers/monday-controller"
-import { getSubjectsOnTuesday, addSubjectsOnTuesday, deleteSubjectsOnTuesday, changeSubjectsOnTuesday } from "../controllers/tuesday-controller"
+import { getSubjectsOnMonday, addSubjectOnMonday, deleteSubjectOnMonday, changeSubjectOnMonday } from "../controllers/weekdays/monday-controller"
+import { getSubjectsOnTuesday, addSubjectsOnTuesday, deleteSubjectsOnTuesday, changeSubjectsOnTuesday } from "../controllers/weekdays/tuesday-controller"
 import { getSubjectsOnWednesday, addSubjectsOnWednesday, deleteSubjectsOnWednesday, changeSubjectsOnWednesday } from "../controllers/weekdays/wednesday-controller"
-import { getSubjectsOnThursday, addSubjectsOnThursday, deleteSubjectsOnThursday, changeSubjectsOnThursday } from "../controllers/thursday-controller"
-import { getSubjectsOnFriday, addSubjectsOnFriday, deleteSubjectsOnFriday, changeSubjectsOnFriday } from "../controllers/friday-controller"
-import { getSubjectsOnSaturday, addSubjectOnSaturday, deleteSubjectOnSaturday, changeSubjectOnSaturday } from "../controllers/saturday-controller"
+import { getSubjectsOnThursday, addSubjectsOnThursday, deleteSubjectsOnThursday, changeSubjectsOnThursday } from "../controllers/weekdays/thursday-controller"
+import { getSubjectsOnFriday, addSubjectsOnFriday, deleteSubjectsOnFriday, changeSubjectsOnFriday } from "../controllers/weekdays/friday-controller"
+import { getSubjectsOnSaturday, addSubjectOnSaturday, deleteSubjectOnSaturday, changeSubjectOnSaturday } from "../controllers/weekdays/saturday-controller"
 
 const router = Router()
 
