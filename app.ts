@@ -11,7 +11,7 @@ import timeTablesRouter from "./routers/timeTables-router"
 import tutorsRouter from "./routers/weekdays-router"
 import weekdaysRouter from "./routers/tutors-router"
 
-// import { checkingSqlInjection } from "./middlewares/checkInput";
+import { checkingSqlInjection } from "./middlewares/validateDatas";
 
 declare const __dirname: string;
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended:false }))
 
 app.use(express.static("public"))
 
-// app.use(checkingSqlInjection)
+app.use(checkingSqlInjection)
 
 app.use(institutionsRouter)
 app.use(directorsRouter)
