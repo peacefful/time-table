@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import timeTable from './views/timeTable.vue';
+import TimeTable from './views/TimeTable.vue';
 </script>
 
 <template>
 	<main>
-		<timeTable/>
+		<TimeTable/>
 	</main>
 </template>
 

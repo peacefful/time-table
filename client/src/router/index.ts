@@ -6,7 +6,7 @@ const router = createRouter({
 	{
 	  path: '/',
 	  name: 'timeTable',
-	  component: () => import("../views/timeTable.vue")
+	  component: () => import("../views/TimeTable.vue")
 	},
 	{
 	  path: '/registration',
