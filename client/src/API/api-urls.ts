@@ -1,0 +1,1 @@
+export const directors:string = "http://localhost:3000/api/directors"
