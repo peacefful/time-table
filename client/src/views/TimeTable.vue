@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import timeTable from './views/timeTable.vue';
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-	<main>
-		<timeTable/>
-	</main>
+	<RouterView/>
 </template>
 
 <style scoped>

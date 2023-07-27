@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import timeTable from './views/timeTable.vue';
 </script>
 
 <template>
 	<main>
-		<timeTable/>
 	</main>
 </template>
 
