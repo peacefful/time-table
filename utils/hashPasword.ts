@@ -9,3 +9,12 @@ export async function hashPassword(password: string): Promise<string> {
 	  throw new Error('Ошибка при хешировании пароля');
 	}
 }
+
+// async function checkPassword(password:string, hashedPassword:string) {
+// 	try {
+// 		const match = await bcrypt.compare(password, hashedPassword);
+// 		return match;
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// }

@@ -12,6 +12,7 @@ import tutorsRouter from "./routers/weekdays-router"
 import weekdaysRouter from "./routers/tutors-router"
 
 import { checkingSqlInjection } from "./middlewares/validateDatas";
+import { limiter } from "./middlewares/requestLimit"
 
 declare const __dirname: string;
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended:false }))
 app.use(express.static("public"))
 
 app.use(checkingSqlInjection)
+app.use(limiter)
 
 app.use(institutionsRouter)
 app.use(directorsRouter)
