@@ -3,6 +3,7 @@ import axios from "axios"
 import { directors } from "../API/api-urls"
 import { ref } from "vue"
 import { move } from "../hooks/animation"
+import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 
 const { animationBoolean } = move(500)
 
@@ -28,18 +29,21 @@ const addDirector = async () => {
 		<main v-if="animationBoolean" class="registration">
 		<form @submit.prevent="addDirector()">
 			<h3>Регистрация</h3>
-			<div class="registration__flex">
-				<input placeholder="Ваше имя" type="text" v-model="name">
-				<input placeholder="Ваша фамилия" type="text" v-model="surname">
-				<input placeholder="Пароль" type="password" v-model="password">
-				<button type="submit">Зарегистрироваться</button>
+			<div class="registration-login__flex">
+				<RegistrationLoginUser 
+					v-model:name="name"
+					v-model:surname="surname"
+					v-model:password="password"
+				/>
 			</div>
+			<button type="submit">Зарегистрироваться</button>
+			<label><a href="">Войти</a></label>
 		</form>
 	</main>
 	</Transition>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
@@ -55,18 +59,12 @@ const addDirector = async () => {
   opacity: 0;
 }
 
-input {
-	padding: 2% 5%;
-	margin-top: 2%;
-	border-radius: 15px;
-}
-
 .registration {
 	margin-top: 10%;
 	display: flex;
 	text-align: center;
 	justify-content: center;
-	.registration__flex{
+	.registration-login__flex{
 		margin-top: 3%;
 		display: flex;
 		flex-direction: column;

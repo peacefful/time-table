@@ -37,3 +37,16 @@ button {
 		transition: all 0.5s;
 	}
 }
+
+label {
+	margin-top: 3%;
+	font-size: 25px;
+}
+
+a {
+	color: rgba(255, 255, 255, 0.475);
+	text-decoration: none;
+	&:hover {
+		color: white;
+	}
+}
