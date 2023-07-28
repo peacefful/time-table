@@ -3,6 +3,7 @@ import { ref } from "vue"
 import { move } from "../hooks/animation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/UI/ButtonLabel.vue"
+import router from '../router/index'
 
 import { addUser } from '../mixins/addDate'
 
@@ -26,7 +27,7 @@ const password = ref<string>("")
 					v-model:password="password"
 				/>
 			</div>
-			<ButtonLabel button="Зарегистрироваться" label="Войти"/>
+			<ButtonLabel @url="router.push('/')" button="Зарегистрироваться" label="Войти"/>
 		</form>
 	</main>
 	</Transition>

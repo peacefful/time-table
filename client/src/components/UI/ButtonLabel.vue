@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { computed } from "vue"
 
 defineProps<{
 	button: string
@@ -10,5 +8,5 @@ defineProps<{
 </script>
 <template>
 	<button type="submit">{{ button }}</button>
-	<label><a>{{ label }}</a></label>
+	<label><a @click="$emit('url')">{{ label }}</a></label>
 </template>
