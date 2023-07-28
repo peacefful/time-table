@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import axios from "axios"
-import { directors } from "../API/api-urls"
 import { ref } from "vue"
 import { move } from "../hooks/animation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/UI/ButtonLabel.vue"
+
+import { addUser } from '../mixins/addDate'
 
 const { animationBoolean } = move(500)
 
@@ -12,24 +12,12 @@ const name = ref<string>("")
 const surname = ref<string>("")
 const password = ref<string>("")
 
-const addUser = async () => {
-	await axios.post(directors, {
-		name: name.value,
-		surname: surname.value,
-		password: password.value,
-		
-	})
-	name.value = ""
-	surname.value = ""
-	password.value = ""
-}
-
 </script>
 
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="addUser()">
+		<form @submit.prevent="addUser(name, surname, password)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 
