@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import axios from "axios"
-import { directors } from "../API/api-urls"
-import { ref } from "vue"
 import { move } from "../hooks/animation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/UI/ButtonLabel.vue"
+import { ref } from "vue";
+import { directors } from "@/API/api-urls";
+import axios from "axios";
 
 const { animationBoolean } = move(500)
 
@@ -30,7 +30,7 @@ const addUser = async () => {
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
 		<form @submit.prevent="addUser()">
-			<h3>Регистрация</h3>
+			<h3>Вход</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 
 					v-model:name="name"
@@ -38,13 +38,13 @@ const addUser = async () => {
 					v-model:password="password"
 				/>
 			</div>
-			<ButtonLabel button="Зарегистрироваться" label="Войти"/>
+			<ButtonLabel button="Войти" label="Зарегистрироваться"/>
 		</form>
 	</main>
 	</Transition>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }

@@ -2,7 +2,12 @@
 import { ref } from "vue"
 import { computed } from 'vue'
 
-const props = defineProps(['name', 'surname', 'password'])
+const props = defineProps<{
+	name: string
+	surname: string
+	password: string
+}>()
+
 const emit = defineEmits(['update:name', 'update:surname', 'update:password'])
 
 const name = computed({
