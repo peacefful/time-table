@@ -5,7 +5,7 @@ import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/UI/ButtonLabel.vue"
 import router from '../router/index'
 
-import { addUser } from '../mixins/addDate'
+import { addUser } from '../mixins/addData'
 
 const { animationBoolean } = move(500)
 
@@ -47,4 +47,4 @@ const password = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>
+</style>../mixins/addData

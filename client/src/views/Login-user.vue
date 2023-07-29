@@ -5,7 +5,7 @@ import ButtonLabel from "../components/UI/ButtonLabel.vue"
 import { ref } from "vue";
 import router from '../router/index'
 
-import { addUser } from '../mixins/addDate'
+import { addUser } from '../mixins/addData'
 
 const { animationBoolean } = move(500)
 
@@ -18,18 +18,18 @@ const password = ref<string>("")
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="addUser(name, surname, password)">
-			<h3>Вход</h3>
-			<div class="registration-login__flex">
-				<RegistrationLoginUser 
-					v-model:name="name"
-					v-model:surname="surname"
-					v-model:password="password"
-				/>
-			</div>
-			<ButtonLabel @url="router.push('/registration')" button="Войти" label="Зарегистрироваться"/>
-		</form>
-	</main>
+			<form @submit.prevent="addUser(name, surname, password)">
+				<h3>Вход</h3>
+				<div class="registration-login__flex">
+					<RegistrationLoginUser 
+						v-model:name="name"
+						v-model:surname="surname"
+						v-model:password="password"
+					/>
+				</div>
+				<ButtonLabel @url="router.push('/registration')" button="Войти" label="Зарегистрироваться"/>
+			</form>
+		</main>
 	</Transition>
 </template>
 
@@ -47,4 +47,4 @@ const password = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>
+</style>../mixins/addData

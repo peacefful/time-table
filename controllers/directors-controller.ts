@@ -1,9 +1,11 @@
 import { PrismaClient } from "@prisma/client"
 import { Request, Response } from "express"
 import { IDirector } from "../interfaces/director"
+import bcrypt from "bcrypt"
 
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator"
+
 
 const prisma = new PrismaClient()
 
@@ -41,6 +43,35 @@ export const addDirector = async (req: Request, res: Response):Promise<void> => 
 		console.log(error);
 	}
 }
+
+export const checkDirector = async (req: Request, res: Response): Promise<void> => {
+	try {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+		} else {
+			const { surname, password }: IDirector = req.body;
+			const director = await prisma.director.findFirst({
+				where: {
+					surname
+				},
+			});
+
+			if (director) {
+				const passwordMatch = await bcrypt.compare(password, director.password);
+				if (passwordMatch) {
+					res.send(director);
+				} else {
+					res.status(401).json({ message: 'Invalid credentials' });
+				}
+			} else {
+				res.status(404).json({ message: 'User not found' });
+			}
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 export const deleteDirector = async (req: Request, res: Response):Promise<void> => {
 	try {

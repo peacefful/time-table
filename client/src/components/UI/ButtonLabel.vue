@@ -5,6 +5,8 @@ defineProps<{
 	label: string
 }>()
 
+defineEmits(['url'])
+
 </script>
 <template>
 	<button type="submit">{{ button }}</button>

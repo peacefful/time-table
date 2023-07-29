@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express"
 import { IStudent } from "../interfaces/student"
+import bcrypt from "bcrypt"
 
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator";
@@ -38,6 +39,35 @@ export const addStudent = async (req: Request, res: Response):Promise<void> => {
 		console.log(error);
 	}
 }
+
+export const checkStudent = async (req: Request, res: Response): Promise<void> => {
+	try {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() });
+		} else {
+			const { surname, password }: IStudent = req.body;
+			const student = await prisma.students.findFirst({
+				where: {
+					surname
+				},
+			});
+
+			if (student) {
+				const passwordMatch = await bcrypt.compare(password, student.password);
+				if (passwordMatch) {
+					res.send(student);
+				} else {
+					res.status(401).json({ message: 'Invalid credentials' });
+				}
+			} else {
+				res.status(404).json({ message: 'User not found' });
+			}
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 export const deleteStudent = async (req: Request, res: Response):Promise<void> => {
 	try {
