@@ -3,6 +3,8 @@ import { Request, Response } from "express"
 import * as path from 'path';
 import helmet from "helmet";
 import cors from "cors"
+import passport from "passport"
+import { getPassport } from "./middlewares/passport"
 
 import institutionsRouter from "./routers/institutions-router"
 import directorsRouter from "./routers/directors-router"
@@ -22,6 +24,9 @@ const PORT:number | string = process.env.PORT || 3000
 
 app.use(helmet())
 app.use(cors())
+app.use(passport.initialize())
+getPassport()
+// app.use(getPassport)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended:false }))

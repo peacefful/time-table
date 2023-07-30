@@ -2,8 +2,7 @@
 </script>
 
 <template>
-	<main>
-	</main>
+	<main></main>
 </template>
 
 <style></style>

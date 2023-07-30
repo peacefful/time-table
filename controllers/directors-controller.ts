@@ -2,7 +2,8 @@ import { PrismaClient } from "@prisma/client"
 import { Request, Response } from "express"
 import { IDirector } from "../interfaces/director"
 import bcrypt from "bcrypt"
-
+import jwt from "jsonwebtoken"
+import { keyJwt } from "../config/key"
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator"
 
@@ -60,7 +61,15 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 			if (director) {
 				const passwordMatch = await bcrypt.compare(password, director.password);
 				if (passwordMatch) {
-					res.send(director);
+					const token = jwt.sign({
+						name: director.name,
+						surname: director.surname,
+						password: director.password,
+						directorId: director.id
+					}, keyJwt, { expiresIn: 60 * 60 })
+					res.status(200).json({
+						token: `Bearer ${token}`
+					});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}
