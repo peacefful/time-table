@@ -2,9 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express"
 import { IStudent } from "../interfaces/student"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator";
+import { keyJwt } from "../config/key";
 
 const prisma = new PrismaClient()
 
@@ -56,7 +58,15 @@ export const checkStudent = async (req: Request, res: Response): Promise<void> =
 			if (student) {
 				const passwordMatch = await bcrypt.compare(password, student.password);
 				if (passwordMatch) {
-					res.send(student);
+					const token = jwt.sign({
+						name: student.name,
+						surname: student.surname,
+						password: student.password,
+						studentId: student.id
+					}, keyJwt, { expiresIn: 60 * 60 })
+					res.status(200).json({
+						token: `Bearer ${token}`
+					});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

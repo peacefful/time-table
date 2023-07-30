@@ -7,7 +7,7 @@ const router = Router()
 
 router.get("/api/tutors", getTutors)
 router.post("/api/tutors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),  addTutor)
-router.post("/api/checktutors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),  checkTutor)
+router.post("/api/logintutors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),  checkTutor)
 router.delete("/api/tutors/:id", deleteTutor)
 router.put("/api/tutors/:id", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20), changeTutor)
 

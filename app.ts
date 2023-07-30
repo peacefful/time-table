@@ -4,7 +4,6 @@ import * as path from 'path';
 import helmet from "helmet";
 import cors from "cors"
 import passport from "passport"
-import { getPassport } from "./middlewares/passport"
 
 import institutionsRouter from "./routers/institutions-router"
 import directorsRouter from "./routers/directors-router"
@@ -17,6 +16,10 @@ import weekdaysRouter from "./routers/tutors-router"
 import { checkingSqlInjection } from "./middlewares/validateDatas";
 import { limiter } from "./middlewares/requestLimit"
 
+import { directorPassport } from "./middlewares/passports/directors-passport"
+import { studentPassport } from "./middlewares/passports/students-passport"
+import { tutorPassport } from "./middlewares/passports/tutors-passport"
+
 declare const __dirname: string;
 
 const app = express()
@@ -25,8 +28,8 @@ const PORT:number | string = process.env.PORT || 3000
 app.use(helmet())
 app.use(cors())
 app.use(passport.initialize())
-getPassport()
-// app.use(getPassport)
+
+directorPassport()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended:false }))

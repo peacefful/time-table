@@ -1,7 +1,7 @@
 import passportJWT from "passport-jwt"
 import passport from "passport"
 
-import { keyJwt } from "../config/key"
+import { keyJwt } from "../../config/key"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient();
@@ -14,7 +14,7 @@ const JwtOptions = {
 	secretOrKey: keyJwt
 }
 
-export const getPassport = () => {
+export const directorPassport = () => {
 	passport.use(new JwtStrategy(JwtOptions, async (payload, done) => {
 		try {
 			const director = await prisma.director.findUnique({

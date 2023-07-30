@@ -6,9 +6,9 @@ import passport from "passport";
 
 const router = Router()
 
-router.get("/api/directors", passport.authenticate('jwt', { session: false }), getDirectors)
+router.get("/api/directors", getDirectors)
 router.post("/api/directors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),addDirector)
-router.post("/api/checkdirectors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),checkDirector)
+router.post("/api/logindirectors", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20),checkDirector)
 router.delete("/api/directors/:id", deleteDirector)
 router.put("/api/directors/:id", checkEmptyDatas("name", 2, 20), checkEmptyDatas("surname", 2, 20), checkEmptyDatas("password", 8, 20), changeDirector)
 
