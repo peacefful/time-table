@@ -52,10 +52,11 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 		if (!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() });
 		} else {
-			const { surname, password }: IDirector = req.body;
+			const { surname, password, role }: IDirector = req.body;
 			const director = await prisma.director.findFirst({
 				where: {
-					surname
+					surname,
+					role
 				},
 			});
 
@@ -68,10 +69,8 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 						password: director.password,
 						role: director.role,
 						directorId: director.id
-					}, keyJwt, { expiresIn: 60 * 60 })
-					res.status(200).json({
-						token: `Bearer ${token}`
-					});
+					}, keyJwt, { expiresIn: 2 * 60 })
+					res.status(200).json({ token: `Bearer ${token}` });
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

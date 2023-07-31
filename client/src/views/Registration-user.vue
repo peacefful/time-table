@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { move } from "../hooks/animation"
+import { move } from "../hooks/useAnimation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
-import ButtonLabel from "../components/UI/ButtonLabel.vue"
+import { directors } from "../API/api-enterprises-institutions"
+import ButtonLabel from "../components/ButtonLabel.vue"
 import router from '../router/index'
 
-import { addUser } from '../mixins/addData'
+import { registrationLoginUser } from '../mixins/addData'
 
 const { animationBoolean } = move(500)
 
@@ -19,7 +20,7 @@ const role = ref<string>("")
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="addUser(name, surname, password, role)">
+		<form @submit.prevent="registrationLoginUser(directors, name, surname, password, role)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 
@@ -49,4 +50,4 @@ const role = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>../mixins/addData
+</style>../mixins/addData../hooks/useAnimation

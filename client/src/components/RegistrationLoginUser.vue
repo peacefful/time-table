@@ -66,9 +66,9 @@ const showPassword = () => {
 	</label>
 	<select v-model="role">
 		<option disabled value="">Ваша должность</option>
-		<option>Директор</option>
-		<option>Куратор</option>
-		<option>Студент</option>
+		<option value="Директор">Директор</option>
+		<option value="Куратор">Куратор</option>
+		<option value="Студент">Студент</option>
 	</select>
 </template>
 

@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 
-export const checkEmptyDatas = (property:string, min:number, max:number) => body(property).trim().isLength({ min: min, max:max }).withMessage("Error, incorrect data")
+export const checkValidateDatas = (property:string, min:number, max:number) => body(property).trim().isLength({ min: min, max:max }).withMessage("Error, incorrect data")
+
+export const checkEmptyDatas = () => body("role").notEmpty().withMessage("Error, incorrect data")
 
 export function checkingSqlInjection(req:Request, res:Response, next:NextFunction):void {
 	try {
