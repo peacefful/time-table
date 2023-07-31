@@ -3,4 +3,5 @@ export interface IDirector {
 	name: string
 	surname: string
 	password: string
+	role: string
 }

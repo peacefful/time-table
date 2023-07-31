@@ -29,13 +29,14 @@ export const addDirector = async (req: Request, res: Response):Promise<void> => 
 		if (!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() })
 		} else {
-			const { name, surname, password }:IDirector = req.body
+			const { name, surname, password, role }:IDirector = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const directors = await prisma.director.create({
 				data: {
 					name,
 					surname,
-					password: hashedPassword
+					password: hashedPassword,
+					role
 				}
 			})
 			res.send(directors)
@@ -65,6 +66,7 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 						name: director.name,
 						surname: director.surname,
 						password: director.password,
+						role: director.role,
 						directorId: director.id
 					}, keyJwt, { expiresIn: 60 * 60 })
 					res.status(200).json({
@@ -103,7 +105,7 @@ export const changeDirector = async (req: Request, res: Response):Promise<void> 
 			res.status(400).json({ errors: errors.array() })
 		} else {
 			const id:number = parseInt(req.params.id)
-			const { name, surname, password }:IDirector = req.body
+			const { name, surname, password, role }:IDirector = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const directors = await prisma.director.update({
 				where: {
@@ -112,7 +114,8 @@ export const changeDirector = async (req: Request, res: Response):Promise<void> 
 				data: {
 					name,
 					surname,
-					password: hashedPassword
+					password: hashedPassword,
+					role
 				}
 			})
 			res.send(directors)

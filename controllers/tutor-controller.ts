@@ -29,14 +29,15 @@ export const addTutor = async (req: Request, res: Response):Promise<void> => {
 		if(!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() })
 		} else {
-			const { name, surname, password, institutionId }:ITutor = req.body
+			const { name, surname, password, institutionId, role }:ITutor = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const tutors = await prisma.tutor.create({
 				data: {
 					name,
 					surname,
 					password:hashedPassword,
-					institutionId
+					institutionId,
+					role
 				}
 			})
 			res.send(tutors)
@@ -66,7 +67,8 @@ export const checkTutor = async (req: Request, res: Response): Promise<void> => 
 						name: tutor.name,
 						surname: tutor.surname,
 						password: tutor.password,
-						tutorId: tutor.id
+						tutorId: tutor.id,
+						role: tutor.role
 					}, keyJwt, { expiresIn: 60 * 60 })
 					res.status(200).json({
 						token: `Bearer ${token}`
@@ -104,7 +106,7 @@ export const changeTutor = async (req: Request, res: Response):Promise<void> => 
 			res.status(400).json({ errors: errors.array() })
 		} else {
 			const id:number = parseInt(req.params.id)
-			const { name, surname, password, institutionId }:ITutor = req.body
+			const { name, surname, password, institutionId, role }:ITutor = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const tutors = await prisma.tutor.update({
 				where: {
@@ -114,7 +116,8 @@ export const changeTutor = async (req: Request, res: Response):Promise<void> => 
 					name,
 					surname,
 					password:hashedPassword,
-					institutionId
+					institutionId,
+					role
 				}
 			})
 			res.send(tutors)

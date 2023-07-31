@@ -16,9 +16,7 @@ import weekdaysRouter from "./routers/tutors-router"
 import { checkingSqlInjection } from "./middlewares/validateDatas";
 import { limiter } from "./middlewares/requestLimit"
 
-import { directorPassport } from "./middlewares/passports/directors-passport"
-import { studentPassport } from "./middlewares/passports/students-passport"
-import { tutorPassport } from "./middlewares/passports/tutors-passport"
+import { directorPassport } from "./middlewares/directors-passport"
 
 declare const __dirname: string;
 

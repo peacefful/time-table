@@ -4,6 +4,7 @@ CREATE TABLE "directors" (
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
 
     CONSTRAINT "directors_pkey" PRIMARY KEY ("id")
 );
@@ -24,6 +25,7 @@ CREATE TABLE "tutors" (
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "institutionId" INTEGER NOT NULL,
+    "role" TEXT NOT NULL,
 
     CONSTRAINT "tutors_pkey" PRIMARY KEY ("id")
 );
@@ -53,6 +55,7 @@ CREATE TABLE "students" (
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "timeTableId" INTEGER NOT NULL,
+    "role" TEXT NOT NULL,
 
     CONSTRAINT "students_pkey" PRIMARY KEY ("id")
 );

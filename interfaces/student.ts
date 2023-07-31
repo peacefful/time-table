@@ -4,4 +4,5 @@ export interface IStudent {
 	surname: string
 	password: string
 	timeTableId: number
+	role: string
 }

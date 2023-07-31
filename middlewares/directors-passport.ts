@@ -1,7 +1,7 @@
 import passportJWT from "passport-jwt"
 import passport from "passport"
 
-import { keyJwt } from "../../config/key"
+import { keyJwt } from "../config/key"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient();

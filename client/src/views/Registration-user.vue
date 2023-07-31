@@ -12,19 +12,21 @@ const { animationBoolean } = move(500)
 const name = ref<string>("")
 const surname = ref<string>("")
 const password = ref<string>("")
+const role = ref<string>("")
 
 </script>
 
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="addUser(name, surname, password)">
+		<form @submit.prevent="addUser(name, surname, password, role)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 
 					v-model:name="name"
 					v-model:surname="surname"
 					v-model:password="password"
+					v-model:role="role"
 				/>
 			</div>
 			<ButtonLabel @url="router.push('/')" button="Зарегистрироваться" label="Войти"/>

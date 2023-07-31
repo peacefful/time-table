@@ -6,9 +6,10 @@ const props = defineProps<{
 	name: string
 	surname: string
 	password: string
+	role: string
 }>()
 
-const emit = defineEmits(['update:name', 'update:surname', 'update:password'])
+const emit = defineEmits(['update:name', 'update:surname', 'update:password', 'update:role'])
 
 const name = computed({
 	get() {
@@ -37,6 +38,15 @@ const password = computed({
 	}
 })
 
+const role = computed({
+	get() {
+		return props.role
+	},
+	set(value) {
+		emit('update:role', value)
+	}
+})
+
 let boolean = ref<boolean>(false)
 let type = ref<string>("password")
 
@@ -54,6 +64,12 @@ const showPassword = () => {
 		<input type="checkbox" @click="showPassword()">
 		Показать пароль
 	</label>
+	<select v-model="role">
+		<option disabled value="">Ваша должность</option>
+		<option>Директор</option>
+		<option>Куратор</option>
+		<option>Студент</option>
+	</select>
 </template>
 
 <style scoped lang="scss">

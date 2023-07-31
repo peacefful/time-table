@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import "./variables.scss";
 
 * {
 	margin: 0;
@@ -14,12 +15,14 @@ body {
 }
 
 input {
-	color: white;
-	background-color: rgb(27, 27, 27);
-	outline: none;
-	font-size: 30px;
-	font-family: 'Montserrat', sans-serif;
-	border: 1px solid #000;
+	@extend %select-input;
+}
+
+select {
+	@extend %select-input;
+	border-radius: 15px;
+	padding: 2%;
+	margin-top: 2%;
 }
 
 button {
