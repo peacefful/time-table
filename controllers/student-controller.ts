@@ -49,10 +49,11 @@ export const checkStudent = async (req: Request, res: Response): Promise<void> =
 		if (!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() });
 		} else {
-			const { surname, password }: IStudent = req.body;
+			const { surname, password, role }: IStudent = req.body;
 			const student = await prisma.students.findFirst({
 				where: {
-					surname
+					surname,
+					role
 				},
 			});
 

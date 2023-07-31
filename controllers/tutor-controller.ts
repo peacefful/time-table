@@ -53,10 +53,11 @@ export const checkTutor = async (req: Request, res: Response): Promise<void> => 
 		if (!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() });
 		} else {
-			const { surname, password }: ITutor = req.body;
+			const { surname, password, role }: ITutor = req.body;
 			const tutor = await prisma.tutor.findFirst({
 				where: {
-					surname
+					surname,
+					role
 				},
 			});
 

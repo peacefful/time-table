@@ -69,7 +69,7 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 						password: director.password,
 						role: director.role,
 						directorId: director.id
-					}, keyJwt, { expiresIn: 2 * 60 })
+					}, keyJwt, { expiresIn: 10 * 60 })
 					res.status(200).json({ token: `Bearer ${token}` });
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
