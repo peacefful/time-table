@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { move } from "@/hooks/useAnimation";
-import { institutions } from "../API/api-enterprises-institutions"
-import { directors } from "../API/api-enterprises-institutions"
+import { institutions, directors } from "../API/api-enterprises-institutions"
 import axios from "axios";
 import { getData } from "../mixins/getData"
 
@@ -22,7 +21,7 @@ getInstitutions()
 </script>
 
 <template>
-	<header style="text-align: center;">
+	<header>
 	</header>
 	<transition>
 		<main v-if="animationBoolean" class="main">

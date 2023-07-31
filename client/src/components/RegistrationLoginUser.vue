@@ -71,25 +71,3 @@ const showPassword = () => {
 		<option value="Студент">Студент</option>
 	</select>
 </template>
-
-<style scoped lang="scss">
-input {
-	padding: 2% 5%;
-	margin-top: 2%;
-	border-radius: 15px;
-}
-
-.registration {
-	margin-top: 10%;
-	display: flex;
-	text-align: center;
-	justify-content: center;
-	.registration-login__flex{
-		margin-top: 3%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 400px;
-	}
-}
-</style>

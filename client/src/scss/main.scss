@@ -16,6 +16,9 @@ body {
 
 input {
 	@extend %select-input;
+	padding: 2% 5%;
+	margin-top: 2%;
+	border-radius: 15px;
 }
 
 select {
