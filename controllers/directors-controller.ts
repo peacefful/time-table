@@ -64,13 +64,13 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 				const passwordMatch = await bcrypt.compare(password, director.password);
 				if (passwordMatch) {
 					const token = jwt.sign({
+						directorId: director.id,
 						name: director.name,
 						surname: director.surname,
 						password: director.password,
-						role: director.role,
-						directorId: director.id
+						role: director.role
 					}, keyJwt, { expiresIn: 10 * 60 })
-					res.status(200).json({ token: `Bearer ${token}` });
+					res.status(200).json({ token: `Bearer ${token}`, id: director.id });
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

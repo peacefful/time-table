@@ -3,7 +3,7 @@ import router from "@/router"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
 
-export const registrationLoginUser = async (urlMethod:string, name:string, surname:string, password:string, role:string) => {
+export const registrationLoginUser = async (clientRouter:string, urlMethod:string, name:string, surname:string, password:string, role:string) => {
 	let _name:string = name
 	let _surname:string = surname
 	let _password:string = password
@@ -24,9 +24,13 @@ export const registrationLoginUser = async (urlMethod:string, name:string, surna
 				_surname = ""
 				_password = ""
 
-				const token = response.data.token
+				const token:string = response.data.token
 				localStorage.setItem('token', token);
-				router.push("/main")
+
+				const id:number = response.data.id
+				localStorage.setItem('id', id);
+
+				router.push(clientRouter)
 			} else {
 				throw new Error("Данные не корректные")
 			}

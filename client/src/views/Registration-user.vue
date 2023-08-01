@@ -20,7 +20,7 @@ const role = ref<string>("")
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="registrationLoginUser(directors, name, surname, password, role)">
+		<form @submit.prevent="registrationLoginUser('/', directors, name, surname, password, role)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 

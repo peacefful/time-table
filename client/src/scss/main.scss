@@ -54,11 +54,12 @@ label {
 	font-size: 25px;
 }
 
-a {
+a, p {
 	color: rgba(255, 255, 255, 0.475);
 	text-decoration: none;
 	&:hover {
 		color: white;
+		cursor: pointer;
 	}
 }
 

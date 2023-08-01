@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isToken } from "../handlers/checkToken"
+import { isAuth } from "../handlers/checkToken"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,18 +8,18 @@ const router = createRouter({
 	  path: '/',
 	  name: 'login',
 	  component: () => import("../views/Login-user.vue"),
-	  beforeEnter: isToken,
+	  beforeEnter: isAuth
 	},
 	{
 	  path: '/registration',
 	  name: 'registration',
 	  component: () => import("../views/Registration-user.vue"),
-	  beforeEnter: isToken,
+	  beforeEnter: isAuth
 	},
 	{
 	  path: '/main',
 	  name: 'main',
-	  component: () => import("../views/Main-page.vue"),
+	  component: () => import("../views/Main-page.vue")
 	},
   ]
 })

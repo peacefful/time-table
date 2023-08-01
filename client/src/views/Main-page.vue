@@ -2,29 +2,34 @@
 import { ref } from "vue"
 import { move } from "@/hooks/useAnimation";
 import { institutions, directors } from "../API/api-enterprises-institutions"
-import axios from "axios";
 import { getData } from "../mixins/getData"
+import router from "@/router"
 
 const { animationBoolean } = move(500)
 
 const institutionsDatas = ref<object[]>([])
 const directorsDatas = ref<object[]>([])
 
-const getInstitutions = async () => {
-	institutionsDatas.value = (await axios.get(institutions)).data
+getData(institutions, institutionsDatas)
+getData(directors, directorsDatas)
+
+const exit = () => {
+	localStorage.clear()
+	router.push("/")
 }
 
-getData(directors, directorsDatas)
-getInstitutions()
+console.log(localStorage.getItem("id"));
 
 </script>
 
 <template>
-	<header>
-	</header>
 	<transition>
-		<main v-if="animationBoolean">
-			Lorem ipsum dolor sit amet.
+		<main v-if="animationBoolean" class="main">
+			<b>Ваши учреждения / предприятия</b>
+			<div>
+				{{ directorsDatas }}
+			</div>
+			<button @click="exit">Выйти</button>
 		</main>
 	</transition>
 </template>
