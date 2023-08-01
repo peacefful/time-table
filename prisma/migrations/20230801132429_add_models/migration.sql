@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "directors" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -21,6 +22,7 @@ CREATE TABLE "institutions" (
 -- CreateTable
 CREATE TABLE "tutors" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -51,6 +53,7 @@ CREATE TABLE "timeTables" (
 -- CreateTable
 CREATE TABLE "students" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,

@@ -9,6 +9,7 @@ datasource db {
 
 model Director {
 	id Int @id @default(autoincrement())
+	uuid String
 	name String
 	surname String
 	password String
@@ -28,6 +29,7 @@ model Institution {
 
 model Tutor {
 	id Int @id @default(autoincrement())
+	uuid String
 	name String
 	surname String
 	password String
@@ -64,6 +66,7 @@ model TimeTable {
 
 model Students {
 	id Int @id @default(autoincrement())
+	uuid String
 	name String
 	surname String
 	password String

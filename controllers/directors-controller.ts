@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 import { keyJwt } from "../config/key"
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator"
-
+import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient()
 
@@ -36,7 +36,8 @@ export const addDirector = async (req: Request, res: Response):Promise<void> => 
 					name,
 					surname,
 					password: hashedPassword,
-					role
+					role,
+					uuid: uuidv4()
 				}
 			})
 			res.send(directors)
@@ -68,9 +69,10 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 						name: director.name,
 						surname: director.surname,
 						password: director.password,
-						role: director.role
+						role: director.role,
+						uuid: director.uuid
 					}, keyJwt, { expiresIn: 10 * 60 })
-					res.status(200).json({ token: `Bearer ${token}`, id: director.id });
+					res.status(200).json({ token: `Bearer ${token}`, uuid: director.uuid });
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}
