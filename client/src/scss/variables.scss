@@ -6,3 +6,23 @@
 	font-family: 'Montserrat', sans-serif;
 	border: 1px solid #000;
 }
+
+%button {
+	font-family: 'Montserrat', sans-serif;
+	margin-top: 5%;
+	font-size: 30px;
+	background-color: rgb(106, 0, 255);
+	color: white;
+	border-radius: 15px;
+	cursor: pointer;
+	&:hover{
+		color: rgb(106, 0, 255);
+		background-color: white;
+		transition: all 0.3s;
+	}
+	&:not(:hover) {
+		color: white;
+		background-color: rgb(106, 0, 255);
+		transition: all 0.3s;
+	}
+}

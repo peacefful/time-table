@@ -15,7 +15,6 @@ const surname = ref<string>("")
 const password = ref<string>("")
 const role = ref<string>("")
 
-
 </script>
 
 <template>

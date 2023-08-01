@@ -10,21 +10,18 @@ const { animationBoolean } = move(500)
 const institutionsDatas = ref<object[]>([])
 const directorsDatas = ref<object[]>([])
 
-getData(institutions, institutionsDatas)
 getData(directors, directorsDatas)
+getData(institutions, institutionsDatas)
 
 console.log(localStorage.getItem("id"));
-
 </script>
 
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
-			<b>Ваши учреждения / предприятия</b>
-			<div>
-				{{ directorsDatas }}
-			</div>
-			<button @click="outSystem()">Выйти</button>
+			<h3>Добро пожаловать {{ directorsDatas.name }}</h3>
+			<div>Ваши записи</div>
+			<p>{{ institutionsDatas.appellation }}</p>
 		</main>
 	</transition>
 </template>
@@ -43,8 +40,15 @@ console.log(localStorage.getItem("id"));
   transform: translateY(20px);
   opacity: 0;
 }
-
 .main {
 	text-align: center;
+	.main__schedules{
+		margin-top: 2%;
+	}
+}
+
+button {
+	@extend %button !optional;
+	padding: 1% 2%;
 }
 </style>@/hooks/useAnimation
