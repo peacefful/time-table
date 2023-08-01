@@ -3,7 +3,7 @@ import { ref } from "vue"
 import { move } from "@/hooks/useAnimation";
 import { institutions, directors } from "../API/api-enterprises-institutions"
 import { getData } from "../mixins/getData"
-import router from "@/router"
+import { outSystem } from "../mixins/outSystem"
 
 const { animationBoolean } = move(500)
 
@@ -12,11 +12,6 @@ const directorsDatas = ref<object[]>([])
 
 getData(institutions, institutionsDatas)
 getData(directors, directorsDatas)
-
-const exit = () => {
-	localStorage.clear()
-	router.push("/")
-}
 
 console.log(localStorage.getItem("id"));
 
@@ -29,7 +24,7 @@ console.log(localStorage.getItem("id"));
 			<div>
 				{{ directorsDatas }}
 			</div>
-			<button @click="exit">Выйти</button>
+			<button @click="outSystem()">Выйти</button>
 		</main>
 	</transition>
 </template>
