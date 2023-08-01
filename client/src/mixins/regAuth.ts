@@ -27,8 +27,8 @@ export const registrationLoginUser = async (clientRouter:string, urlMethod:strin
 				const token:string = response.data.token
 				localStorage.setItem('token', token);
 
-				const id:string = response.data.id
-				localStorage.setItem('id', id);
+				const uuid:string = response.data.uuid
+				localStorage.setItem('uuid', uuid);
 
 				router.push(clientRouter)
 			} else {

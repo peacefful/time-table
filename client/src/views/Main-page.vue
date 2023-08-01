@@ -13,15 +13,13 @@ const directorsDatas = ref<object[]>([])
 getData(directors, directorsDatas)
 getData(institutions, institutionsDatas)
 
-console.log(localStorage.getItem("id"));
+console.log( "uuid", localStorage.getItem("uuid"));
 </script>
 
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
-			<h3>Добро пожаловать {{ directorsDatas.name }}</h3>
 			<div>Ваши записи</div>
-			<p>{{ institutionsDatas.appellation }}</p>
 		</main>
 	</transition>
 </template>

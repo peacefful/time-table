@@ -2,7 +2,7 @@
 import { move } from "../hooks/useAnimation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/ButtonLabel.vue"
-import { loginDirectors } from "@/API/api-enterprises-institutions"
+import { authDirectors } from "@/API/api-enterprises-institutions"
 import { ref } from "vue";
 import router from '../router/index'
 
@@ -20,7 +20,7 @@ const role = ref<string>("")
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-			<form @submit.prevent="registrationLoginUser('/main', loginDirectors, name, surname, password, role)">
+			<form @submit.prevent="registrationLoginUser('/main', authDirectors, name, surname, password, role)">
 				<h3>Вход</h3>
 				<div class="registration-login__flex">
 					<RegistrationLoginUser 
