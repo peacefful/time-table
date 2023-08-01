@@ -13,7 +13,7 @@ export const registrationLoginUser = async (urlMethod:string, name:string, surna
 			throw new Error("Ошибка, не все поля были заполнены")
 		} else {
 			if (_name.length >= 2 || _surname.length >= 2 || _password.length >= 8 && symbols.includes(_password)){
-				await axios.post(urlMethod, {
+				const response = await axios.post(urlMethod, {
 					name: _name,
 					surname: _surname,
 					password: _password,
@@ -23,7 +23,9 @@ export const registrationLoginUser = async (urlMethod:string, name:string, surna
 				_name = ""
 				_surname = ""
 				_password = ""
-	
+
+				const token = response.data.token
+				localStorage.setItem('token', token);
 				router.push("/main")
 			} else {
 				throw new Error("Данные не корректные")

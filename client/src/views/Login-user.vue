@@ -6,7 +6,7 @@ import { loginDirectors } from "@/API/api-enterprises-institutions"
 import { ref } from "vue";
 import router from '../router/index'
 
-import { registrationLoginUser } from '../mixins/addData'
+import { registrationLoginUser } from '../mixins/regAuth'
 
 const { animationBoolean } = move(500)
 
@@ -51,4 +51,4 @@ const role = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>../mixins/addData../hooks/useAnimation
+</style>../mixins/reg.auth../mixins/regAuth

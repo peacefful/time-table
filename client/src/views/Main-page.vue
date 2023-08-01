@@ -15,7 +15,6 @@ const getInstitutions = async () => {
 }
 
 getData(directors, directorsDatas)
-
 getInstitutions()
 
 </script>
@@ -24,12 +23,8 @@ getInstitutions()
 	<header>
 	</header>
 	<transition>
-		<main v-if="animationBoolean" class="main">
-			<div v-if="institutionsDatas.length" class="main__institutions-list">
-			</div>
-			<div v-else>
-				Учреждений пока нет.
-			</div>
+		<main v-if="animationBoolean">
+			Lorem ipsum dolor sit amet.
 		</main>
 	</transition>
 </template>
