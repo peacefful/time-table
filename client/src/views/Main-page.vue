@@ -7,10 +7,8 @@ import { outSystem } from "../mixins/outSystem"
 
 const { animationBoolean } = move(500)
 
-const institutionsDatas = ref<object[]>([])
-const directorsDatas = ref<object[]>([])
+const institutionsDatas:object[] = []
 
-getData(directors, directorsDatas)
 getData(institutions, institutionsDatas)
 
 console.log( "uuid", localStorage.getItem("uuid"));
@@ -19,7 +17,14 @@ console.log( "uuid", localStorage.getItem("uuid"));
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
-			<div>Ваши записи</div>
+			<h3 style="padding-top: 1%;" >Выберите ваше учреждение</h3>
+			<div v-if="institutionsDatas.length">
+				{{ institutionsDatas }}
+			</div>
+			<div v-else>
+				<button>Добавить учреждение</button>
+			</div>
+			<button @click="outSystem()">Выйти</button>
 		</main>
 	</transition>
 </template>
@@ -38,15 +43,14 @@ console.log( "uuid", localStorage.getItem("uuid"));
   transform: translateY(20px);
   opacity: 0;
 }
-.main {
+
+.main{
 	text-align: center;
-	.main__schedules{
-		margin-top: 2%;
-	}
 }
 
 button {
 	@extend %button !optional;
-	padding: 1% 2%;
+	padding: 0.5% 3%;
+	margin-top: 2%;
 }
 </style>@/hooks/useAnimation

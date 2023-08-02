@@ -32,7 +32,7 @@ export const registrationLoginUser = async (clientRouter:string, urlMethod:strin
 
 				router.push(clientRouter)
 			} else {
-				throw new Error("Данные не корректные")
+				throw new Error("Не корректные данные")
 			}
 		}
 	} catch (error) {
