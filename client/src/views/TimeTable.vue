@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-	<video autoplay loop src="../assets/videos/lonely_tree.mp4"></video>
+	<video src="../assets/videos/lonely.mp4" autoplay muted loop></video>
 	<RouterView/>
 </template>
 

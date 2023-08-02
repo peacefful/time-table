@@ -6,23 +6,21 @@ import { getData } from "../mixins/getData"
 import { outSystem } from "../mixins/outSystem"
 
 const { animationBoolean } = move(500)
-
 const institutionsDatas:object[] = []
 
 getData(institutions, institutionsDatas)
-
 console.log( "uuid", localStorage.getItem("uuid"));
 </script>
 
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
-			<h3 style="padding-top: 1%;" >Выберите ваше учреждение</h3>
+			<h3 style="padding-top: 1%;">Выберите ваше учреждение</h3>
 			<div v-if="institutionsDatas.length">
 				{{ institutionsDatas }}
 			</div>
-			<div v-else>
-				<button>Добавить учреждение</button>
+			<div style="margin-top: 1%;" v-else>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eligendi odit reprehenderit sapiente, harum recusandae fuga id non assumenda perspiciatis? Praesentium officiis enim nesciunt reprehenderit fugit et perspiciatis. Hic, dignissimos.
 			</div>
 			<button @click="outSystem()">Выйти</button>
 		</main>

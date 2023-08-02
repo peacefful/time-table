@@ -6,5 +6,5 @@ interface IItem {
 
 export const getData = async (api:string, arrDatas:object[]) => {
 	const datas = (await axios.get(api)).data
-	arrDatas.value = datas.find(( item:IItem ) => item.uuid === localStorage.getItem("uuid"))
+	arrDatas = datas.find(( item:IItem ) => item.uuid === localStorage.getItem("uuid"))
 }
