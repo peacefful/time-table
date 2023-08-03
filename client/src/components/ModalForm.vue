@@ -8,8 +8,14 @@ defineEmits(['closeModal'])
 const appellation = ref<string>("")
 const showModal = ref<boolean>(false)
 
+const instance = axios.create({
+	baseURL: institutions,
+});
+
+instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
+
 const addInstitution = async () => {
-	await axios.post(institutions, {
+	await instance.post(institutions, {
 		appellation: appellation.value,
 		directorId: parseInt(localStorage.getItem("id"))
 	})

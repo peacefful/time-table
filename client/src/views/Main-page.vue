@@ -29,8 +29,9 @@ const getDatas = async () => {
 };
 
 getDatas()
-
 console.log("id", localStorage.getItem("id"));
+
+console.log(localStorage.getItem("token"));
 
 const { animationBoolean } = move(500)
 </script>
@@ -39,7 +40,7 @@ const { animationBoolean } = move(500)
 		<main v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 1%;">Выберите ваше учреждение / организацию</h3>
 			<div style="margin-top: 1%;" v-if="institutionsDatas">
-				{{ institutionsDatas.appellation }}
+				<p>{{ institutionsDatas.appellation }}</p>
 			</div>
 			<div style="margin-top: 1%;" v-else>
 				<button class="button" @click="openModal()">Добавить организацию</button>
