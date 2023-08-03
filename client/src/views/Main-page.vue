@@ -1,28 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { move } from "@/hooks/useAnimation";
-import { institutions, directors } from "../API/api-enterprises-institutions"
+import { institutions } from "../API/api-enterprises-institutions"
 import { getData } from "../mixins/getData"
 import { outSystem } from "../mixins/outSystem"
+import ModalForm from "../components/ModalForm.vue"
+import { ref } from "vue";
 
 const { animationBoolean } = move(500)
 const institutionsDatas:object[] = []
 
+const show = ref<boolean>(false)
+const closeModal = () => show.value = false
+const openModal = () => show.value = true
+
 getData(institutions, institutionsDatas)
 console.log( "uuid", localStorage.getItem("uuid"));
 </script>
-
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
-			<h3 style="padding-top: 1%;">Выберите ваше учреждение</h3>
+			<h3 style="padding-top: 1%;">Выберите ваше учреждение / организацию</h3>
 			<div v-if="institutionsDatas.length">
 				{{ institutionsDatas }}
 			</div>
 			<div style="margin-top: 1%;" v-else>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eligendi odit reprehenderit sapiente, harum recusandae fuga id non assumenda perspiciatis? Praesentium officiis enim nesciunt reprehenderit fugit et perspiciatis. Hic, dignissimos.
+				<button class="button" @click="openModal()">Добавить организацию</button>
+				<transition name="modal">
+					<ModalForm @close-modal="closeModal()" v-if="show" />
+				</transition>
 			</div>
-			<button @click="outSystem()">Выйти</button>
+			<button class="button" @click="outSystem()">Выйти</button>
 		</main>
 	</transition>
 </template>
@@ -30,10 +37,6 @@ console.log( "uuid", localStorage.getItem("uuid"));
 <style scoped lang="scss">
 .v-enter-active {
   transition: all 0.3s ease-out;
-}
-
-.v-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .v-enter-from,
@@ -51,4 +54,4 @@ button {
 	padding: 0.5% 3%;
 	margin-top: 2%;
 }
-</style>@/hooks/useAnimation
+</style>

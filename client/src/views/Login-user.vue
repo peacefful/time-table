@@ -50,4 +50,4 @@ const role = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>../mixins/reg.auth../mixins/regAuth
+</style>
