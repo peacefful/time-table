@@ -5,17 +5,16 @@ import { ref } from 'vue';
 
 defineEmits(['closeModal'])
 
-const institution = ref<string>("")
+const appellation = ref<string>("")
 const showModal = ref<boolean>(false)
 
 const addInstitution = async () => {
 	await axios.post(institutions, {
-		institution: institution.value,
-		directorId: localStorage.getItem("uuid")
+		appellation: appellation.value,
+		directorId: parseInt(localStorage.getItem("id"))
 	})
 
-	showModal.value = true
-	institution.value = ""
+	appellation.value = ""
 }
 
 </script>
@@ -28,7 +27,7 @@ const addInstitution = async () => {
 					<img  @click="$emit('closeModal')" src="../assets/icons/close-icon.svg">
 					<h3>Введите название организации</h3>
 						<div>
-							<input type="text">
+							<input type="text" v-model="appellation">
 						</div>
 					<button @click="addInstitution()">Добавить</button>
 				</div>
