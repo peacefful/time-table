@@ -6,43 +6,36 @@ import ModalForm from "../components/ModalForm.vue"
 import { ref } from "vue";
 import axios from "axios";
 
+const { animationBoolean } = move(500)
+
+const institutionsDatas = ref<object[]>([])
+
 interface IItem {
 	directorId: number
 }
-
-const institutionsDatas = ref<object[]>([]);
 
 const show = ref<boolean>(false)
 const closeModal = () => show.value = false
 const openModal = () => show.value = true
 
-const getDatas = async () => {
-	try {
-		let response = (await axios.get(institutions)).data
-		if (response) {
-			const item = response.find((item:IItem) => item.directorId === parseInt(localStorage.getItem("id")))
-			institutionsDatas.value = item
-		}
-	} catch (error) {
-		console.log(error);
+async function getInstitution() {
+	let response = (await axios.get(institutions)).data
+	if (response) {
+		institutionsDatas.value = response.filter(( item:IItem ) => item.directorId === Number(localStorage.getItem("id")))
 	}
-};
+}
 
-getDatas()
-console.log("id", localStorage.getItem("id"));
-console.log(localStorage.getItem("token"));
-
-const { animationBoolean } = move(500)
+getInstitution()
 
 </script>
 <template>
 	<transition>
 		<main v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 1%;">Выберите ваше учреждение / организацию</h3>
-			<div style="margin-top: 1%;" v-if="institutionsDatas">
-				<p>{{ institutionsDatas.appellation }}</p>
+			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
+				<p>{{ institution.appellation }}</p>
 			</div>
-			<div style="margin-top: 1%;" v-else>
+			<div style="margin-top: 1%;">
 				<button class="button" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm @close-modal="closeModal()" v-if="show" />

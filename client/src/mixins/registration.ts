@@ -1,6 +1,6 @@
 import router from "@/router"
 import { directors } from "@/API/api-enterprises-institutions"
-import { makeAuthRequest } from "../utils/postData"
+import { makeAuthRequest } from "../utils/auth/postData"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
 

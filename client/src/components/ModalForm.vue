@@ -3,13 +3,12 @@ import axios from 'axios';
 import { institutions } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
 
+const appellation = ref<string>()
+const showModal = ref<boolean>(true)
 defineEmits(['closeModal'])
 
-const appellation = ref<string>("")
-const showModal = ref<boolean>(false)
-
 const instance = axios.create({
-	baseURL: institutions,
+	baseURL: institutions
 });
 
 instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
@@ -17,25 +16,23 @@ instance.defaults.headers.common['Authorization'] = localStorage.getItem("token"
 const addInstitution = async () => {
 	await instance.post(institutions, {
 		appellation: appellation.value,
-		directorId: parseInt(localStorage.getItem("id"))
+		directorId: Number(localStorage.getItem("id"))
 	})
-
 	appellation.value = ""
 }
-
 </script>
 
 <template>
 	<transition name="model">
 		<main>
-			<form class="modal-form" @submit.prevent="addInstitution()">
+			<form v-if="showModal" class="modal-form" @submit=addInstitution()>
 				<div class="modal-form__box">
-					<img  @click="$emit('closeModal')" src="../assets/icons/close-icon.svg">
+					<img @click="$emit('closeModal')" src="../assets/icons/close-icon.svg">
 					<h3>Введите название организации</h3>
 						<div>
 							<input type="text" v-model="appellation">
 						</div>
-					<button @click="addInstitution()">Добавить</button>
+					<button>Добавить</button>
 				</div>
 			</form>
 		</main>

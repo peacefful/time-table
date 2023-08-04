@@ -9,34 +9,32 @@ datasource db {
 
 model Director {
 	id Int @id @default(autoincrement())
-	uuid String
 	name String
 	surname String
 	password String
 	role String
-	institution Institution?
+	institution Institution[]
 	@@map("directors")
 }
 
 model Institution {
 	id Int @id @default(autoincrement())
 	appellation String
-	directorId Int @unique
+	directorId Int
 	tutors Tutor[]
-	institution Director @relation(fields: [directorId], references: [id])
+	institution Director @relation(fields: [directorId], references: [id], onDelete: Cascade)
 	@@map("institutions")
 }
 
 model Tutor {
 	id Int @id @default(autoincrement())
-	uuid String
 	name String
 	surname String
 	password String
 	institutionId Int
 	role String
 	groups Groups[]
-	Tutor Institution @relation(fields: [institutionId], references: [id])
+	Tutor Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
 	@@map("tutors")
 }
 
@@ -53,7 +51,7 @@ model Groups {
 model TimeTable {
 	id Int @id @default(autoincrement())
 	groupId Int @unique
-	group Groups @relation(fields: [groupId], references: [id])
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	student Students[]
 	monday Monday[]
 	tuesday Tuesday[]
@@ -66,7 +64,6 @@ model TimeTable {
 
 model Students {
 	id Int @id @default(autoincrement())
-	uuid String
 	name String
 	surname String
 	password String

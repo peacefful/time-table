@@ -3,7 +3,6 @@ import { Request, Response } from "express"
 import { ITutor } from "../interfaces/tutor"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { v4 as uuidv4 } from 'uuid';
 
 import { hashPassword } from "../utils/hashPasword"
 import { validationResult } from "express-validator"
@@ -38,8 +37,7 @@ export const addTutor = async (req: Request, res: Response):Promise<void> => {
 					surname,
 					password:hashedPassword,
 					institutionId,
-					role,
-					uuid: uuidv4()
+					role
 				}
 			})
 			res.send(tutors)
@@ -71,10 +69,9 @@ export const checkTutor = async (req: Request, res: Response): Promise<void> => 
 						surname: tutor.surname,
 						password: tutor.password,
 						tutorId: tutor.id,
-						role: tutor.role,
-						uuid: tutor.uuid
+						role: tutor.role
 					}, keyJwt, { expiresIn: 60 * 60 })
-					res.status(200).json({token: `Bearer ${token}`, id: tutor.uuid});
+					res.status(200).json({token: `Bearer ${token}`, id: tutor.id});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}
