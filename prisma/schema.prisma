@@ -13,14 +13,14 @@ model Director {
 	surname String
 	password String
 	role String
-	institution Institution[]
+	institution Institution?
 	@@map("directors")
 }
 
 model Institution {
 	id Int @id @default(autoincrement())
 	appellation String
-	directorId Int
+	directorId Int @unique
 	tutors Tutor[]
 	institution Director @relation(fields: [directorId], references: [id], onDelete: Cascade)
 	@@map("institutions")
