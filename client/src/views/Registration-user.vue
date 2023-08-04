@@ -2,25 +2,23 @@
 import { ref } from "vue"
 import { move } from "../hooks/useAnimation"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
-import { directors } from "../API/api-enterprises-institutions"
 import ButtonLabel from "../components/ButtonLabel.vue"
 import router from '../router/index'
 
-import { registrationLoginUser } from '../mixins/regAuth'
-
-const { animationBoolean } = move(500)
+import { registrationUser } from '../mixins/registration'
 
 const name = ref<string>("")
 const surname = ref<string>("")
 const password = ref<string>("")
 const role = ref<string>("")
 
+const { animationBoolean } = move(500)
 </script>
 
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="registrationLoginUser('/', directors, name, surname, password, role)">
+		<form @submit.prevent="registrationUser(name, surname, password, role)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 
@@ -50,4 +48,4 @@ const role = ref<string>("")
   transform: translateY(20px);
   opacity: 0;
 }
-</style>
+</style>../mixins/auth../mixins/auth

@@ -1,9 +1,10 @@
-import axios from "axios"
 import router from "@/router"
+import axios from "axios"
+import { authDirectors } from "@/API/api-enterprises-institutions"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
 
-export const registrationLoginUser = async (clientRouter:string, urlMethod:string, name:string, surname:string, password:string, role:string) => {
+export const authUser = async (name:string, surname:string, password:string, role:string) => {
 	let _name:string = name
 	let _surname:string = surname
 	let _password:string = password
@@ -13,7 +14,7 @@ export const registrationLoginUser = async (clientRouter:string, urlMethod:strin
 			throw new Error("Ошибка, не все поля были заполнены")
 		} else {
 			if (_name.length >= 2 || _surname.length >= 2 || _password.length >= 8 && symbols.includes(_password)){
-				const response = await axios.post(urlMethod, {
+				const response = await axios.post(authDirectors, {
 					name: _name,
 					surname: _surname,
 					password: _password,
@@ -29,8 +30,8 @@ export const registrationLoginUser = async (clientRouter:string, urlMethod:strin
 
 				const id:string = response.data.id
 				localStorage.setItem('id', id);
-
-				router.push(clientRouter)
+			
+				router.push("/main")
 			} else {
 				throw new Error("Не корректные данные")
 			}
