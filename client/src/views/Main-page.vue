@@ -30,10 +30,10 @@ const getDatas = async () => {
 
 getDatas()
 console.log("id", localStorage.getItem("id"));
-
 console.log(localStorage.getItem("token"));
 
 const { animationBoolean } = move(500)
+
 </script>
 <template>
 	<transition>
