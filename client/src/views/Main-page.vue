@@ -2,18 +2,17 @@
 import { move } from "@/hooks/useAnimation";
 import { institutions } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
-import ModalForm from "../components/ModalForm.vue"
+import ModalForm from "../components/modal/ModalForm.vue"
 import { ref } from "vue";
 import router from "@/router";
-import { getInstitution } from "../mixins/getDatas"
+import { getDatasFromApi } from "../mixins/getDatas"
+import { closeOpenModal } from "../components/modal/open-close"
 
 const institutionsDatas = ref<object[]>([])
 
-const show = ref<boolean>(false)
-const closeModal = () => show.value = false
-const openModal = () => show.value = true
+const { show, closeModal, openModal } = closeOpenModal()
 
-getInstitution(institutions, institutionsDatas)
+getDatasFromApi(institutions, institutionsDatas)
 
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
@@ -28,7 +27,7 @@ const { animationBoolean } = move(500)
 				<p @click="router.push({ name: 'institution', params: { appellation: institution.appellation } })" >{{ institution.appellation }}</p>
 			</div>
 			<div style="margin-top: 1%;">
-				<button id="add" class="button" @click="openModal()">Добавить организацию</button>
+				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm @close-modal="closeModal()" v-if="show" />
 				</transition>

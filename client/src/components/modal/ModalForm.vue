@@ -27,7 +27,7 @@ const addInstitution = async () => {
 		<main>
 			<form v-if="showModal" class="modal-form" @submit=addInstitution()>
 				<div class="modal-form__box">
-					<img @click="$emit('closeModal')" src="../assets/icons/close-icon.svg">
+					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
 					<h3>Введите название организации</h3>
 						<div>
 							<input type="text" v-model="appellation">

@@ -1,6 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
+import { groups } from '@/API/api-enterprises-institutions';
+import { getDatasFromApi } from "../mixins/getDatas"
+import { ref } from 'vue';
+import { closeOpenModal } from "../components/modal/open-close"
+import ModalForm from "../components/modal/ModalForm.vue"
+
+const groupsDatas = ref<object[]>([])
+
+const { show, closeModal, openModal } = closeOpenModal()
+getDatasFromApi(groups, groupsDatas)
 
 const { animationBoolean } = move(500)
 </script>
@@ -9,7 +19,15 @@ const { animationBoolean } = move(500)
 	<transition>
 		<main style="text-align: center;" v-if="animationBoolean">
 			<h3>Выберите группу</h3>
-			<div v-if="condition"></div>
+			<div style="padding-top: 1%;" v-for="group in groupsDatas" :key="group.id">
+				<p>{{ group.groupName }}</p>
+			</div>
+			<div style="margin-top: 1%;">
+				<button id="add" @click="openModal()">Добавить организацию</button>
+				<transition name="modal">
+					<ModalForm @close-modal="closeModal()" v-if="show" />
+				</transition>
+			</div>
 		</main>
 	</transition>
 </template>
