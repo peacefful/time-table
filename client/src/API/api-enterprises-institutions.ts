@@ -1,9 +1,9 @@
 export const directors:string = "http://localhost:3000/api/directors"
-export const groups:string = "http://localhost:3000/api/groups"
 export const institutions:string = "http://localhost:3000/api/institutions"
-export const students:string = "http://localhost:3000/api/students"
-export const timtables:string = "http://localhost:3000/api/timetable"
 export const tutors:string = "http://localhost:3000/api/tutors"
+export const groups:string = "http://localhost:3000/api/groups"
+export const timetables:string = "http://localhost:3000/api/timetable"
+export const students:string = "http://localhost:3000/api/students"
 
 export const authDirectors:string = "http://localhost:3000/api/authdirectors"
 export const authTutors:string = "http://localhost:3000/api/authtutors"

@@ -7,8 +7,10 @@ const { animationBoolean } = move(500)
 
 <template>
 	<transition>
-		<main v-if="animationBoolean">
-	</main>
+		<main style="text-align: center;" v-if="animationBoolean">
+			<h3>Выберите группу</h3>
+			<div v-if="condition"></div>
+		</main>
 	</transition>
 </template>
 
