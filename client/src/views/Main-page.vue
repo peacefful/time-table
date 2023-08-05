@@ -3,16 +3,37 @@ import { move } from "@/hooks/useAnimation";
 import { institutions } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
 import ModalForm from "../components/modal/ModalForm.vue"
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import router from "@/router";
-import { getDatasFromApi } from "../mixins/getDatas"
+import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 
+const title:string = 'Введите название организации'
 const institutionsDatas = ref<object[]>([])
 
 const { show, closeModal, openModal } = closeOpenModal()
 
-getDatasFromApi(institutions, institutionsDatas)
+const crud = useCrud()
+crud.getDatasFromApi(institutions, institutionsDatas)
+
+// interface IData {
+// 	name: string
+// 	surname: string
+// 	age: number
+// }
+
+// const data:IData = reactive({
+// 	name: "Руслан",
+// 	surname: "Надыров",
+// 	age: 20,
+// })
+
+// function getLength(...restData:object[]) {
+// 	return [...restData].length
+// }
+
+// console.log(getLength(data.name, data.surname, data.age));
+
 
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
@@ -22,14 +43,14 @@ const { animationBoolean } = move(500)
 <template>
 	<transition>
 		<main style="text-align: center;" v-if="animationBoolean" class="main">
-			<h3 style="padding-top: 1%;">Выберите ваше учреждение / организацию</h3>
+			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
 			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<p @click="router.push({ name: 'institution', params: { appellation: institution.appellation } })" >{{ institution.appellation }}</p>
+				<p @click="router.push({ name: 'institution', params: { appellation: institution.appellation } })">{{ institution.appellation }}</p>
 			</div>
 			<div style="margin-top: 1%;">
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
-					<ModalForm @close-modal="closeModal()" v-if="show" />
+					<ModalForm :title="title" @close-modal="closeModal()" v-if="show" />
 				</transition>
 			</div>
 			<button class="button" @click="outSystem()">Выйти</button>

@@ -5,6 +5,11 @@ import { ref } from 'vue';
 
 const appellation = ref<string>()
 const showModal = ref<boolean>(true)
+
+defineProps<{
+	title: string
+}>()
+
 defineEmits(['closeModal'])
 
 const instance = axios.create({
@@ -28,7 +33,7 @@ const addInstitution = async () => {
 			<form v-if="showModal" class="modal-form" @submit=addInstitution()>
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
-					<h3>Введите название организации</h3>
+					<h3>{{ title }}</h3>
 						<div>
 							<input type="text" v-model="appellation">
 						</div>
