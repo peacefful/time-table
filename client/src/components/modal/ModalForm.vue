@@ -1,42 +1,45 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { institutions } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
 
-const appellation = ref<string>()
 const showModal = ref<boolean>(true)
 
-defineProps<{
-	placeholders: object
+const props = defineProps<{
+	page: string
+	appellation?: string
+	group?: string
+	course?: string
 }>()
 
-defineEmits(['closeModal'])
+const emit = defineEmits(['closeModal', 'postData', 'update:appellation', 'update:group', 'update:course'])
 
-const instance = axios.create({
-	baseURL: institutions
-});
-
-instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
-
-const addInstitution = async () => {
-	await instance.post(institutions, {
-		appellation: appellation.value,
-		directorId: Number(localStorage.getItem("id"))
-	})
-	appellation.value = ""
-}
 </script>
 
 <template>
 	<transition name="model">
 		<main>
-			<form v-if="showModal" class="modal-form" @submit=addInstitution()>
+			<form v-if="showModal" class="modal-form" @submit.prevent="$emit('postData')">
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
 					<h3>Заполните поля</h3>
-						<div v-for="placeholder in placeholders" :key="placeholder">
-							<input type="text" :placeholder="placeholder">
-						</div>
+					<div v-if="page === 'main'">
+						<input 
+							type="text" 
+							placeholder="Организация"
+							@input="$emit('update:appellation', $event.target.value)"
+						>
+					</div>
+					<div v-else-if="page === 'institution'">
+						<input 
+							type="text" 
+							placeholder="Группа"
+							@input="$emit('update:group', $event.target.value)"
+						>
+						<input 
+							type="text" 
+							placeholder="Курс"
+							@input="$emit('update:course', $event.target.value)"
+						>
+					</div>
 					<button>Добавить</button>
 				</div>
 			</form>

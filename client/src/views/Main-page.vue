@@ -3,24 +3,27 @@ import { move } from "@/hooks/useAnimation";
 import { institutions } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
 import ModalForm from "../components/modal/ModalForm.vue"
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import router from "@/router";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 
 const institutionsDatas = ref<object[]>([])
-
 const { show, closeModal, openModal } = closeOpenModal()
+
+const appellation = ref<string>("")
+const directorId = Number(localStorage.getItem("id"))
+
+const dataForPostMethod = ref<object>({
+	appellation,
+	directorId
+})
 
 const crud = useCrud()
 crud.getDatasFromApi(institutions, institutionsDatas)
 
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
-
-const datas = reactive({
-	appelation: "Организация",
-})
 
 const { animationBoolean } = move(500)
 </script>
@@ -35,7 +38,9 @@ const { animationBoolean } = move(500)
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm
-						:placeholders="datas"
+						@post-data="crud.postData(institutions, dataForPostMethod)"
+						v-model:appellation="appellation"
+						page="main"
 						@close-modal="closeModal()"
 						v-if="show"
 					/>

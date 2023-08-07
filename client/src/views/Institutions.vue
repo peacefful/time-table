@@ -3,26 +3,28 @@
 import { move } from '@/hooks/useAnimation';
 import { groups } from '@/API/api-enterprises-institutions';
 import { useCrud } from "../stores/crud"
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { closeOpenModal } from "../components/modal/open-close"
 import ModalForm from "../components/modal/ModalForm.vue"
 
+const { show, closeModal, openModal } = closeOpenModal()
+
 const groupsDatas = ref<object[]>([])
 
-const { show, closeModal, openModal } = closeOpenModal()
+const groupName = ref<string>("")
+const course = ref<string>("")
+const tutorId = 3
+
+const dataForPostMethod = ref<object>({
+	groupName,
+	course,
+	tutorId
+})
 
 const crud = useCrud()
 crud.getDatasFromApi(groups, groupsDatas)
 
-interface IData {
-	group: string
-	course: string
-}
-
-const datas:IData = reactive({
-	group: "Группа",
-	course: "Курс"
-})
+console.log(localStorage.getItem("id"));
 
 const { animationBoolean } = move(500)
 </script>
@@ -38,8 +40,11 @@ const { animationBoolean } = move(500)
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm
-						:placeholders="datas"
-						@close-modal="closeModal()" 
+						:props-data="crud.postData(groups, dataForPostMethod)"
+						v-model:group="groupName"
+						v-model:course="course"
+						@close-modal="closeModal()"
+						page="institution"
 						v-if="show"
 					/>
 				</transition>

@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from "axios"
 
@@ -18,16 +17,16 @@ export const useCrud = defineStore('crud', () => {
 		}
 	}
 
-	async function createDatas(apiUrl:string, ...data:object[]) {
+	const instance = axios.create({});
+	instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
+
+	const postData = async (apiUrl:string, dataFromPage:object) => {
 		try {
-			await axios.post(apiUrl, {
-				...data
-			})
+			await instance.post(apiUrl, dataFromPage)
 		} catch (error) {
 			console.log(error);
-			
 		}
 	}
-
-	return { getDatasFromApi, createDatas }
+	
+	return { getDatasFromApi, postData }
 })
