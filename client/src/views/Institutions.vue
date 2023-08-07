@@ -22,7 +22,7 @@ const dataForPostMethod = ref<object>({
 })
 
 const crud = useCrud()
-crud.getDatasFromApi(groups, groupsDatas)
+crud.getDatasFromApi(groups, groupsDatas, "tutorId")
 
 console.log(localStorage.getItem("id"));
 

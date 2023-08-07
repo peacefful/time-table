@@ -20,7 +20,7 @@ const dataForPostMethod = ref<object>({
 })
 
 const crud = useCrud()
-crud.getDatasFromApi(institutions, institutionsDatas)
+crud.getDatasFromApi(institutions, institutionsDatas, "directorId")
 
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
