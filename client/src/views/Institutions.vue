@@ -3,17 +3,26 @@
 import { move } from '@/hooks/useAnimation';
 import { groups } from '@/API/api-enterprises-institutions';
 import { useCrud } from "../stores/crud"
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { closeOpenModal } from "../components/modal/open-close"
 import ModalForm from "../components/modal/ModalForm.vue"
 
-const title:string = "Введите название группы"
 const groupsDatas = ref<object[]>([])
 
 const { show, closeModal, openModal } = closeOpenModal()
 
 const crud = useCrud()
 crud.getDatasFromApi(groups, groupsDatas)
+
+interface IData {
+	group: string
+	course: string
+}
+
+const datas:IData = reactive({
+	group: "Группа",
+	course: "Курс"
+})
 
 const { animationBoolean } = move(500)
 </script>
@@ -28,7 +37,11 @@ const { animationBoolean } = move(500)
 			<div style="margin-top: 1%;">
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
-					<ModalForm :title="title" @close-modal="closeModal()" v-if="show" />
+					<ModalForm
+						:placeholders="datas"
+						@close-modal="closeModal()" 
+						v-if="show"
+					/>
 				</transition>
 			</div>
 		</main>

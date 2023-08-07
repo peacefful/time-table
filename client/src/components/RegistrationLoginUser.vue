@@ -11,33 +11,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:name', 'update:surname', 'update:password', 'update:role'])
 
-const name = computed({
-	get() {
-		return props.name
-	},
-	set(value) {
-		emit('update:name', value)
-	}
-})
-
-const surname = computed({
-	get() {
-		return props.surname
-	},
-	set(value) {
-		emit('update:surname', value)
-	}
-})
-
-const password = computed({
-	get() {
-		return props.password
-	},
-	set(value) {
-		emit('update:password', value)
-	}
-})
-
 const role = computed({
 	get() {
 		return props.role
@@ -57,9 +30,21 @@ const showPassword = () => {
 </script>
 
 <template>
-	<input placeholder="Ваше имя" type="text" v-model="name">
-	<input placeholder="Ваша фамилия" type="text" v-model="surname">
-	<input placeholder="Пароль" :type="type" v-model="password">
+	<input 
+		placeholder="Ваше имя" 
+		type="text" 
+		@input="$emit('update:name', $event.target.value)"
+	>
+	<input 
+		placeholder="Ваша фамилия" 
+		type="text" 
+		@input="$emit('update:surname', $event.target.value)"
+	>
+	<input 
+		placeholder="Пароль" 
+		:type="type" 
+		@input="$emit('update:password', $event.target.value)"
+	>
 	<label>
 		<input type="checkbox" @click="showPassword()">
 		Показать пароль

@@ -8,7 +8,6 @@ import router from "@/router";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 
-const title:string = 'Введите название организации'
 const institutionsDatas = ref<object[]>([])
 
 const { show, closeModal, openModal } = closeOpenModal()
@@ -16,27 +15,12 @@ const { show, closeModal, openModal } = closeOpenModal()
 const crud = useCrud()
 crud.getDatasFromApi(institutions, institutionsDatas)
 
-// interface IData {
-// 	name: string
-// 	surname: string
-// 	age: number
-// }
-
-// const data:IData = reactive({
-// 	name: "Руслан",
-// 	surname: "Надыров",
-// 	age: 20,
-// })
-
-// function getLength(...restData:object[]) {
-// 	return [...restData].length
-// }
-
-// console.log(getLength(data.name, data.surname, data.age));
-
-
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
+
+const datas = reactive({
+	appelation: "Организация",
+})
 
 const { animationBoolean } = move(500)
 </script>
@@ -50,7 +34,11 @@ const { animationBoolean } = move(500)
 			<div style="margin-top: 1%;">
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
-					<ModalForm :title="title" @close-modal="closeModal()" v-if="show" />
+					<ModalForm
+						:placeholders="datas"
+						@close-modal="closeModal()"
+						v-if="show"
+					/>
 				</transition>
 			</div>
 			<button class="button" @click="outSystem()">Выйти</button>
@@ -61,6 +49,11 @@ const { animationBoolean } = move(500)
 <style scoped lang="scss">
 .v-enter-active {
   transition: all 0.3s ease-out;
+}
+
+h3 {
+	display: flex;
+	justify-content: center;
 }
 
 .v-enter-from,

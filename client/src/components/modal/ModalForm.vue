@@ -7,7 +7,7 @@ const appellation = ref<string>()
 const showModal = ref<boolean>(true)
 
 defineProps<{
-	title: string
+	placeholders: object
 }>()
 
 defineEmits(['closeModal'])
@@ -33,9 +33,9 @@ const addInstitution = async () => {
 			<form v-if="showModal" class="modal-form" @submit=addInstitution()>
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
-					<h3>{{ title }}</h3>
-						<div>
-							<input type="text" v-model="appellation">
+					<h3>Заполните поля</h3>
+						<div v-for="placeholder in placeholders" :key="placeholder">
+							<input type="text" :placeholder="placeholder">
 						</div>
 					<button>Добавить</button>
 				</div>
@@ -59,7 +59,7 @@ const addInstitution = async () => {
 }
 
 input {
-	margin-top: 13%;
+	margin-top: 4%;
 	background-color: rgb(18, 18, 18);
 }
 main {
