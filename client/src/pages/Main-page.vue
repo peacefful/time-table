@@ -25,6 +25,11 @@ crud.getDatasFromApi(institutions, institutionsDatas, "directorId")
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
 
+const selectIdAndPushRouter = (id:number, nameForUrl:string) => {
+	console.log(id);
+	return router.push({ name: 'institution', params: { appellation: nameForUrl }})
+}
+
 const { animationBoolean } = move(500)
 </script>
 <template>
@@ -32,7 +37,7 @@ const { animationBoolean } = move(500)
 		<main style="text-align: center;" v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
 			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<p @click="router.push({ name: 'institution', params: { appellation: institution.appellation } })">{{ institution.appellation }}</p>
+				<p @click="selectIdAndPushRouter(institution.id, institution.appellation)">{{ institution.appellation }}</p>
 			</div>
 			<div style="margin-top: 1%;">
 				<button id="add" @click="openModal()">Добавить организацию</button>
