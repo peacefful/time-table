@@ -2,8 +2,8 @@ import { ref } from "vue"
 
 export function closeOpenModal () {
 	const show = ref<boolean>(false)
-	const closeModal = () => show.value = false
-	const openModal = () => show.value = true
+	const closeModal = ():boolean => show.value = false
+	const openModal = ():boolean => show.value = true
 
 	return { show, closeModal, openModal }
 }

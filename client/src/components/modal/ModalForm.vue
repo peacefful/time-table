@@ -3,14 +3,14 @@ import { ref } from 'vue';
 
 const showModal = ref<boolean>(true)
 
-const props = defineProps<{
+defineProps<{
 	page: string
 	appellation?: string
 	group?: string
 	course?: string
 }>()
 
-const emit = defineEmits(['closeModal', 'postData', 'update:appellation', 'update:group', 'update:course'])
+defineEmits(['closeModal', 'postData', 'update:appellation', 'update:group', 'update:course'])
 
 </script>
 
@@ -34,13 +34,11 @@ const emit = defineEmits(['closeModal', 'postData', 'update:appellation', 'updat
 							placeholder="Группа"
 							@input="$emit('update:group', $event.target.value)"
 						>
-						{{ group }}
 						<input 
 							type="text" 
 							placeholder="Курс"
 							@input="$emit('update:course', $event.target.value)"
 						>
-						{{ course }}
 					</div>
 					<button type="submit">Добавить</button>
 				</div>

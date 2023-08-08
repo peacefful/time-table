@@ -12,7 +12,7 @@ const { show, closeModal, openModal } = closeOpenModal()
 
 const groupName = ref<string>("")
 const course = ref<string>("")
-const institutionId = Number(localStorage.getItem("institutionId"))
+const institutionId:number = Number(localStorage.getItem("institutionId"))
 
 const groupData = ref<object>({
 	groupName,

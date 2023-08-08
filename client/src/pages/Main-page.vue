@@ -6,14 +6,13 @@ import { ref } from "vue";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 import { selectIdAndPushRouter } from "../handlers/selectId"
-import router from "@/router";
 import ModalForm from "../components/modal/ModalForm.vue"
 
 const institutionsDatas = ref<object[]>([])
 const { show, closeModal, openModal } = closeOpenModal()
 
 const appellation = ref<string>("")
-const directorId = Number(localStorage.getItem("id"))
+const directorId:number = Number(localStorage.getItem("id"))
 
 const institutionData = ref<object>({
 	appellation,
