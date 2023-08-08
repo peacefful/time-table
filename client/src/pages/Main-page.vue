@@ -2,11 +2,12 @@
 import { move } from "@/hooks/useAnimation";
 import { institutions } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
-import ModalForm from "../components/modal/ModalForm.vue"
 import { ref } from "vue";
-import router from "@/router";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
+import { selectIdAndPushRouter } from "../handlers/selectId"
+import router from "@/router";
+import ModalForm from "../components/modal/ModalForm.vue"
 
 const institutionsDatas = ref<object[]>([])
 const { show, closeModal, openModal } = closeOpenModal()
@@ -25,11 +26,6 @@ crud.getDatasFromApi(institutions, institutionsDatas, directorId, "directorId")
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
 
-const selectIdAndPushRouter = (institutionId:number, nameForUrl:string) => {
-	router.push({ name: 'institution', params: { appellation: nameForUrl }})
-	localStorage.setItem('institutionId', institutionId.toString())
-}
-
 const { animationBoolean } = move(500)
 </script>
 <template>
@@ -37,7 +33,9 @@ const { animationBoolean } = move(500)
 		<main style="text-align: center;" v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
 			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<p @click="selectIdAndPushRouter(institution.id, institution.appellation)">{{ institution.appellation }}</p>
+				<p @click="selectIdAndPushRouter('institution', { appellation: institution.appellation }, institution.id)">
+					{{ institution.appellation }}
+				</p>
 			</div>
 			<div style="margin-top: 1%;">
 				<button id="add" @click="openModal()">Добавить организацию</button>
