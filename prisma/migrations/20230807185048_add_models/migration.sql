@@ -1,7 +1,6 @@
 -- CreateTable
 CREATE TABLE "directors" (
     "id" SERIAL NOT NULL,
-    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -22,7 +21,6 @@ CREATE TABLE "institutions" (
 -- CreateTable
 CREATE TABLE "tutors" (
     "id" SERIAL NOT NULL,
-    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -53,7 +51,6 @@ CREATE TABLE "timeTables" (
 -- CreateTable
 CREATE TABLE "students" (
     "id" SERIAL NOT NULL,
-    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -148,16 +145,16 @@ CREATE UNIQUE INDEX "institutions_directorId_key" ON "institutions"("directorId"
 CREATE UNIQUE INDEX "timeTables_groupId_key" ON "timeTables"("groupId");
 
 -- AddForeignKey
-ALTER TABLE "institutions" ADD CONSTRAINT "institutions_directorId_fkey" FOREIGN KEY ("directorId") REFERENCES "directors"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "institutions" ADD CONSTRAINT "institutions_directorId_fkey" FOREIGN KEY ("directorId") REFERENCES "directors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tutors" ADD CONSTRAINT "tutors_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "tutors" ADD CONSTRAINT "tutors_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "groups" ADD CONSTRAINT "groups_tutorId_fkey" FOREIGN KEY ("tutorId") REFERENCES "tutors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "timeTables" ADD CONSTRAINT "timeTables_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "timeTables" ADD CONSTRAINT "timeTables_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "students" ADD CONSTRAINT "students_timeTableId_fkey" FOREIGN KEY ("timeTableId") REFERENCES "timeTables"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -8,7 +8,9 @@ export const getGroups = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const groups = await prisma.groups.findMany({
 			include: {
-				timeTable: true
+				timeTable: true,
+				tutors: true,
+				students: true
 			}
 		})
 		res.send(groups)
@@ -19,12 +21,12 @@ export const getGroups = async (req: Request, res: Response):Promise<void> => {
 
 export const addGroup = async (req: Request, res: Response):Promise<void> => {
 	try {
-		const { groupName, course, tutorId }:IGroup = req.body
+		const { groupName, course, institutionId }:IGroup = req.body
 		const newGroup = await prisma.groups.create({
 			data: {
 				groupName,
 				course,
-				tutorId
+				institutionId
 			}
 		})
 		res.send(newGroup)
@@ -50,7 +52,7 @@ export const deleteGroup = async (req: Request, res: Response):Promise<void> => 
 export const changeGroup = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const id:number = parseInt(req.params.id)
-		const { groupName, course, tutorId }:IGroup = req.body
+		const { groupName, course, institutionId }:IGroup = req.body
 		const changedGroup = await prisma.groups.update({
 			where: {
 				id
@@ -58,7 +60,7 @@ export const changeGroup = async (req: Request, res: Response):Promise<void> => 
 			data: {
 				groupName,
 				course,
-				tutorId
+				institutionId
 			}
 		})
 		res.send(changedGroup)

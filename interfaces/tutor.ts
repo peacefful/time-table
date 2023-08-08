@@ -3,6 +3,6 @@ export interface ITutor {
 	name: string
 	surname: string
 	password: string
-	institutionId: number
+	groupId: number
 	role: string
 }

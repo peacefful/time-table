@@ -7,24 +7,21 @@ import { ref } from 'vue';
 import { closeOpenModal } from "../components/modal/open-close"
 import ModalForm from "../components/modal/ModalForm.vue"
 
-const { show, closeModal, openModal } = closeOpenModal()
-
 const groupsDatas = ref<object[]>([])
+const { show, closeModal, openModal } = closeOpenModal()
 
 const groupName = ref<string>("")
 const course = ref<string>("")
-const tutorId = 3
+const institutionId = 2
 
-const dataForPostMethod = ref<object>({
+const groupData = ref<object>({
 	groupName,
 	course,
-	tutorId
+	institutionId
 })
 
 const crud = useCrud()
-crud.getDatasFromApi(groups, groupsDatas, "tutorId")
-
-console.log(localStorage.getItem("id"));
+crud.getDatasFromApi(groups, groupsDatas, "institutionId")
 
 const { animationBoolean } = move(500)
 </script>
@@ -40,12 +37,12 @@ const { animationBoolean } = move(500)
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm
-						:props-data="crud.postData(groups, dataForPostMethod)"
+						@post-data="crud.postData(groups, groupData)"
+						@close-modal="closeModal()"
 						v-model:group="groupName"
 						v-model:course="course"
-						@close-modal="closeModal()"
-						page="institution"
 						v-if="show"
+						page="institution"
 					/>
 				</transition>
 			</div>

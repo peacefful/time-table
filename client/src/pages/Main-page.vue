@@ -14,7 +14,7 @@ const { show, closeModal, openModal } = closeOpenModal()
 const appellation = ref<string>("")
 const directorId = Number(localStorage.getItem("id"))
 
-const dataForPostMethod = ref<object>({
+const institutionData = ref<object>({
 	appellation,
 	directorId
 })
@@ -38,11 +38,11 @@ const { animationBoolean } = move(500)
 				<button id="add" @click="openModal()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm
-						@post-data="crud.postData(institutions, dataForPostMethod)"
-						v-model:appellation="appellation"
-						page="main"
+						@post-data="crud.postData(institutions, institutionData)"
 						@close-modal="closeModal()"
+						v-model:appellation="appellation"
 						v-if="show"
+						page="main"
 					/>
 				</transition>
 			</div>

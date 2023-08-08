@@ -3,6 +3,6 @@ export interface IStudent {
 	name: string
 	surname: string
 	password: string
-	timeTableId: number
+	groupId: number
 	role: string
 }

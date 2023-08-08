@@ -25,14 +25,14 @@ export const addStudent = async (req: Request, res: Response):Promise<void> => {
 		if (!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() })
 		} else {
-			const { name, surname, password, timeTableId, role }:IStudent = req.body
+			const { name, surname, password, groupId, role }:IStudent = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const students = await prisma.students.create({
 				data: {
 					name,
 					surname,
 					password: hashedPassword,
-					timeTableId,
+					groupId,
 					role
 				}
 			})
@@ -101,7 +101,7 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 			res.status(400).json({ errors: errors.array() })
 		} else {
 			const id:number = parseInt(req.params.id)
-			const { name, surname, password, timeTableId, role }:IStudent = req.body
+			const { name, surname, password, groupId, role }:IStudent = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const students = await prisma.students.update({
 				where: {
@@ -111,7 +111,7 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 					name, 
 					surname,
 					password:hashedPassword,
-					timeTableId,
+					groupId,
 					role
 				}
 			})

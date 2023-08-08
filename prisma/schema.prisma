@@ -21,9 +21,21 @@ model Institution {
 	id Int @id @default(autoincrement())
 	appellation String
 	directorId Int @unique
-	tutors Tutor[]
+	groups Groups[]
 	institution Director @relation(fields: [directorId], references: [id], onDelete: Cascade)
 	@@map("institutions")
+}
+
+model Groups {
+	id Int @id @default(autoincrement())
+	groupName String
+	course String
+	institutionId Int
+	timeTable TimeTable[]
+	tutors Tutor[]
+	students Students[]
+	group Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+	@@map("groups")
 }
 
 model Tutor {
@@ -31,28 +43,16 @@ model Tutor {
 	name String
 	surname String
 	password String
-	institutionId Int
+	groupId Int
 	role String
-	groups Groups[]
-	Tutor Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+	Tutor Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("tutors")
-}
-
-model Groups {
-	id Int @id @default(autoincrement())
-	groupName String
-	course Int
-	tutorId Int
-	timeTable TimeTable[]
-	group Tutor @relation(fields: [tutorId], references: [id], onDelete: Cascade)
-	@@map("groups")
 }
 
 model TimeTable {
 	id Int @id @default(autoincrement())
 	groupId Int @unique
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
-	student Students[]
 	monday Monday[]
 	tuesday Tuesday[]
 	wednesday Wednesday[]
@@ -67,16 +67,16 @@ model Students {
 	name String
 	surname String
 	password String
-	timeTableId Int
+	groupId Int
 	role String
-	group TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("students")
 }
 
 model Monday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String
@@ -88,7 +88,7 @@ model Monday {
 model Tuesday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String
@@ -100,7 +100,7 @@ model Tuesday {
 model Wednesday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String
@@ -112,7 +112,7 @@ model Wednesday {
 model Thursday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String
@@ -124,7 +124,7 @@ model Thursday {
 model Friday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String
@@ -136,7 +136,7 @@ model Friday {
 model Saturday {
 	id Int @id @default(autoincrement())
 	subject String
-	office Int
+	office String
 	teacher String
 	beginning String
 	end String

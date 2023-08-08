@@ -17,7 +17,7 @@ const emit = defineEmits(['closeModal', 'postData', 'update:appellation', 'updat
 <template>
 	<transition name="model">
 		<main>
-			<form v-if="showModal" class="modal-form" @submit.prevent="$emit('postData')">
+			<form v-if="showModal" class="modal-form" @submit="$emit('postData')">
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
 					<h3>Заполните поля</h3>
@@ -34,13 +34,15 @@ const emit = defineEmits(['closeModal', 'postData', 'update:appellation', 'updat
 							placeholder="Группа"
 							@input="$emit('update:group', $event.target.value)"
 						>
+						{{ group }}
 						<input 
 							type="text" 
 							placeholder="Курс"
 							@input="$emit('update:course', $event.target.value)"
 						>
+						{{ course }}
 					</div>
-					<button>Добавить</button>
+					<button type="submit">Добавить</button>
 				</div>
 			</form>
 		</main>

@@ -7,24 +7,24 @@ const router = createRouter({
 	{
 	  path: '/',
 	  name: 'login',
-	  component: () => import("../views/Login-user.vue"),
+	  component: () => import("../pages/Login-user.vue"),
 	  beforeEnter: isAuth
 	},
 	{
 	  path: '/registration',
 	  name: 'registration',
-	  component: () => import("../views/Registration-user.vue"),
+	  component: () => import("../pages/Registration-user.vue"),
 	  beforeEnter: isAuth
 	},
 	{
 	  path: '/main',
 	  name: 'main',
-	  component: () => import("../views/Main-page.vue")
+	  component: () => import("../pages/Main-page.vue")
 	},
 	{
 	  path: '/institution/:appellation',
 	  name: 'institution',
-	  component: () => import("../views/Institutions.vue")
+	  component: () => import("../pages/Institutions.vue")
 	},
   ]
 })

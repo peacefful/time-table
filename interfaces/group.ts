@@ -1,6 +1,6 @@
 export interface IGroup {
 	id?: number
 	groupName: string
-	course: number
-	tutorId: number
+	course: string
+	institutionId: number
 }

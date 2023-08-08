@@ -5,7 +5,7 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "dev": "npx nodemon"
+    "server": "npx nodemon"
   },
   "author": "",
   "license": "ISC",

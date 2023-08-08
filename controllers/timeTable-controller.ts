@@ -8,7 +8,6 @@ export const getTimeTable = async (req: Request, res: Response):Promise<void> =>
 	try {
 		const timeTable = await prisma.timeTable.findMany({
 			include: {
-				student: true,
 				monday: true,
 				tuesday: true,
 				wednesday: true,
