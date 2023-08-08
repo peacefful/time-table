@@ -12,7 +12,7 @@ const { show, closeModal, openModal } = closeOpenModal()
 
 const groupName = ref<string>("")
 const course = ref<string>("")
-const institutionId = 2
+const institutionId = Number(localStorage.getItem("institutionId"))
 
 const groupData = ref<object>({
 	groupName,
@@ -21,7 +21,7 @@ const groupData = ref<object>({
 })
 
 const crud = useCrud()
-crud.getDatasFromApi(groups, groupsDatas, "institutionId")
+crud.getDatasFromApi(groups, groupsDatas, institutionId, "institutionId")
 
 const { animationBoolean } = move(500)
 </script>

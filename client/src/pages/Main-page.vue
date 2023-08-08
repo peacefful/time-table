@@ -20,14 +20,14 @@ const institutionData = ref<object>({
 })
 
 const crud = useCrud()
-crud.getDatasFromApi(institutions, institutionsDatas, "directorId")
+crud.getDatasFromApi(institutions, institutionsDatas, directorId, "directorId")
 
 console.log(localStorage.getItem("token"));
 console.log(Number(localStorage.getItem("id")));
 
-const selectIdAndPushRouter = (id:number, nameForUrl:string) => {
-	console.log(id);
-	return router.push({ name: 'institution', params: { appellation: nameForUrl }})
+const selectIdAndPushRouter = (institutionId:number, nameForUrl:string) => {
+	router.push({ name: 'institution', params: { appellation: nameForUrl }})
+	localStorage.setItem('institutionId', institutionId.toString())
 }
 
 const { animationBoolean } = move(500)
