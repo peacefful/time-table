@@ -5,7 +5,6 @@ import { outSystem } from "../mixins/outSystem"
 import { ref } from "vue";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
-import { selectIdAndPushRouter } from "../handlers/selectId"
 import InputModal from "../components/modal/InputModal.vue"
 import DataModal from "../components/modal/DataModal.vue"
 
@@ -46,7 +45,7 @@ const { animationBoolean } = move(500)
 					/>
 				</transition>
 			</div>
-			<div style="margin-top: 1%;">
+			<div v-if="!institutionsDatas.length">
 				<button @click="openInputModal()">Добавить организацию</button>
 				<transition name="modal">
 					<InputModal
@@ -79,8 +78,7 @@ h3 {
 }
 
 button {
-	@extend %button !optional;
 	padding: 0.5% 3%;
 	margin-top: 1%;
 }
-</style>../components/modals/open-close../components/modals/InputModal.vue../components/modals/ShowDataModal.vue
+</style>

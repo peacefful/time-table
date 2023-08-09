@@ -13,8 +13,7 @@ crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getIte
 </script>
 
 <template>
-	<transition name="modal">
-		<main v-if="showModal">
+	<main v-if="showModal">
 			<div class="modal-form">
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
@@ -29,8 +28,16 @@ crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getIte
 							</p>
 						</div>
 					</div>
+					<button>Удалить учреждение</button>
 				</div>
 			</div>
 		</main>
-	</transition>
 </template>
+
+<style scoped lang="scss">
+@import '../../scss/variables.scss';
+
+button {
+	@include button(red, white);
+}
+</style>

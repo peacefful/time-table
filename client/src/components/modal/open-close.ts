@@ -1,5 +1,3 @@
-import { selectIdAndPushRouter } from "../../handlers/selectId"
-
 export function closeOpenModal (inputModal:boolean, dataModal:boolean) {
 	const closeInputModal = ():boolean => inputModal.value = false
 	const openInputModal = ():boolean => inputModal.value = true

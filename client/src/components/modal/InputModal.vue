@@ -15,8 +15,7 @@ defineEmits(['closeModal', 'postData', 'update:appellation', 'update:group', 'up
 </script>
 
 <template>
-	<transition name="modal">
-		<main v-if="showModal">
+	<main v-if="showModal">
 			<form class="modal-form" @submit="$emit('postData')">
 				<div class="modal-form__box">
 					<img @click="$emit('closeModal')" src="../../assets/icons/close-icon.svg">
@@ -44,11 +43,9 @@ defineEmits(['closeModal', 'postData', 'update:appellation', 'update:group', 'up
 				</div>
 			</form>
 		</main>
-	</transition>
 </template>
 
 <style scoped lang="scss">
-
 input {
 	margin-top: 4%;
 	background-color: rgb(18, 18, 18);

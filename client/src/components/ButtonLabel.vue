@@ -15,7 +15,6 @@ defineEmits(['url'])
 
 <style scoped lang="scss">
 button {
-	@extend %button !optional;
 	padding: 1.5% 5%;
 	margin-top: 4%;
 }

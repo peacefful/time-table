@@ -44,7 +44,7 @@ select {
 }
 
 button {
-	@extend %button;
+	@include button(rgb(106, 0, 255), white);
 	padding: 1% 5%;
 }
 
