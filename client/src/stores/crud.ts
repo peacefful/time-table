@@ -16,13 +16,18 @@ export const useCrud = defineStore('crud', () => {
 	const instance = axios.create({});
 	instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
 
-	const postData = async (apiUrl:string, dataFromPage:object) => {
+	async function postData (apiUrl:string, dataFromPage:object) {
 		try {
 			await instance.post(apiUrl, dataFromPage)
 		} catch (error) {
 			console.log(error);
 		}
 	}
+
+	async function deleteData(apiUrl:string, id:number) {
+		const deleteUrl:string = `${apiUrl}/${id}`
+		await instance.delete(deleteUrl)
+	}
 	
-	return { getDatasFromApi, postData }
+	return { getDatasFromApi, postData, deleteData }
 })
