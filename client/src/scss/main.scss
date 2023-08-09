@@ -67,6 +67,19 @@ a,p {
 	}
 }
 
+.modal-enter-active {
+	transition: all 0.3s ease-out;
+ }
+ 
+ .modal-leave-active {
+	transition: all 0.3s ease-out;
+ }
+ 
+ .modal-enter-from,
+ .modal-leave-to {
+	opacity: 0;
+ }
+
 .registration {
 	padding-top: 10%;
 	padding-bottom: 10%;

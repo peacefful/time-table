@@ -1,6 +1,9 @@
 import router from "@/router"
 
-export const selectIdAndPushRouter = (url:string, paramsObj:object, institutionId:number) => {
-	router.push({ name: url, params: { ...paramsObj }})
-	localStorage.setItem('institutionId', institutionId.toString())
+// url:string, paramsObj:object, 
+
+export const selectIdAndPushRouter = (key:string, id:number):number => {
+	// router.push({ name: url, params: { ...paramsObj }})
+	localStorage.setItem(key, id.toString())
+	return Number(localStorage.getItem(key))
 }

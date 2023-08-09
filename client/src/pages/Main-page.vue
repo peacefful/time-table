@@ -7,7 +7,7 @@ import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 import { selectIdAndPushRouter } from "../handlers/selectId"
 import InputModal from "../components/modal/InputModal.vue"
-import DataModal from "../components/modal/dataModal.vue"
+import DataModal from "../components/modal/DataModal.vue"
 
 const institutionsDatas = ref<object[]>([])
 
@@ -36,14 +36,15 @@ const { animationBoolean } = move(500)
 		<main style="text-align: center;" v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
 			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<!-- @click="selectIdAndPushRouter('institution', { appellation: institution.appellation }, institution.id)" -->
-				<p @click="openDataModal()">
+				<p @click="openDataModal('institutionId', institution.id)">
 					{{ institution.appellation }}
 				</p>
-				<DataModal
-					@close-modal="closeDataModal()"
-					v-if="dataModal"
-				/>
+				<transition name="modal">
+					<DataModal
+						@close-modal="closeDataModal()"
+						v-if="dataModal"
+					/>
+				</transition>
 			</div>
 			<div style="margin-top: 1%;">
 				<button @click="openInputModal()">Добавить организацию</button>
@@ -66,16 +67,15 @@ const { animationBoolean } = move(500)
 .v-enter-active {
   transition: all 0.3s ease-out;
 }
+.v-enter-from,
+.v-leave-to {
+	transform: translateY(20px);
+	opacity: 0;
+}
 
 h3 {
 	display: flex;
 	justify-content: center;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
 }
 
 button {
