@@ -6,10 +6,14 @@ import { ref } from "vue";
 import { useCrud } from "../stores/crud"
 import { closeOpenModal } from "../components/modal/open-close"
 import { selectIdAndPushRouter } from "../handlers/selectId"
-import ModalForm from "../components/modal/ModalForm.vue"
+import InputModal from "../components/modal/InputModal.vue"
+import DataModal from "../components/modal/dataModal.vue"
 
 const institutionsDatas = ref<object[]>([])
-const { show, closeModal, openModal } = closeOpenModal()
+
+const inputModal = ref<boolean>(false)
+const dataModal = ref<boolean>(false)
+const { closeInputModal, openInputModal, openDataModal, closeDataModal } = closeOpenModal(inputModal, dataModal)
 
 const appellation = ref<string>("")
 const directorId:number = Number(localStorage.getItem("id"))
@@ -32,18 +36,23 @@ const { animationBoolean } = move(500)
 		<main style="text-align: center;" v-if="animationBoolean" class="main">
 			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
 			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<p @click="selectIdAndPushRouter('institution', { appellation: institution.appellation }, institution.id)">
+				<!-- @click="selectIdAndPushRouter('institution', { appellation: institution.appellation }, institution.id)" -->
+				<p @click="openDataModal()">
 					{{ institution.appellation }}
 				</p>
+				<DataModal
+					@close-modal="closeDataModal()"
+					v-if="dataModal"
+				/>
 			</div>
 			<div style="margin-top: 1%;">
-				<button id="add" @click="openModal()">Добавить организацию</button>
+				<button @click="openInputModal()">Добавить организацию</button>
 				<transition name="modal">
-					<ModalForm
+					<InputModal
 						@post-data="crud.postData(institutions, institutionData)"
-						@close-modal="closeModal()"
+						@close-modal="closeInputModal()"
 						v-model:appellation="appellation"
-						v-if="show"
+						v-if="inputModal"
 						page="main"
 					/>
 				</transition>
@@ -74,4 +83,4 @@ button {
 	padding: 0.5% 3%;
 	margin-top: 1%;
 }
-</style>
+</style>../components/modals/open-close../components/modals/InputModal.vue../components/modals/ShowDataModal.vue

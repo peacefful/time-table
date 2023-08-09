@@ -1,9 +1,11 @@
 import { ref } from "vue"
 
-export function closeOpenModal () {
-	const show = ref<boolean>(false)
-	const closeModal = ():boolean => show.value = false
-	const openModal = ():boolean => show.value = true
+export function closeOpenModal (inputModal:boolean = false, dataModal:boolean = false) {
+	const closeInputModal = ():boolean => inputModal.value = false
+	const openInputModal = ():boolean => inputModal.value = true
 
-	return { show, closeModal, openModal }
+	const closeDataModal = ():boolean => dataModal.value = false
+	const openDataModal = ():boolean => dataModal.value = true
+
+	return { closeInputModal, openInputModal, closeDataModal, openDataModal }
 }

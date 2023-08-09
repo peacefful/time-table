@@ -5,10 +5,10 @@ import { groups } from '@/API/api-enterprises-institutions';
 import { useCrud } from "../stores/crud"
 import { ref } from 'vue';
 import { closeOpenModal } from "../components/modal/open-close"
-import ModalForm from "../components/modal/ModalForm.vue"
+import ModalForm from "../components/modal/InputModal.vue"
 
 const groupsDatas = ref<object[]>([])
-const { show, closeModal, openModal } = closeOpenModal()
+const { modal, close, open } = closeOpenModal()
 
 const groupName = ref<string>("")
 const course = ref<string>("")
@@ -34,14 +34,14 @@ const { animationBoolean } = move(500)
 				<p>{{ group.groupName }}</p>
 			</div>
 			<div style="margin-top: 1%;">
-				<button id="add" @click="openModal()">Добавить организацию</button>
+				<button id="add" @click="open()">Добавить организацию</button>
 				<transition name="modal">
 					<ModalForm
 						@post-data="crud.postData(groups, groupData)"
-						@close-modal="closeModal()"
+						@close-modal="close()"
 						v-model:group="groupName"
 						v-model:course="course"
-						v-if="show"
+						v-if="modal"
 						page="institution"
 					/>
 				</transition>
@@ -60,4 +60,4 @@ const { animationBoolean } = move(500)
   transform: translateY(20px);
   opacity: 0;
 }
-</style>
+</style>../components/modals/open-close../components/modals/InputModal.vue

@@ -65,37 +65,5 @@ input {
 	margin-top: 4%;
 	background-color: rgb(18, 18, 18);
 }
-main {
-	.modal-form {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100vh;
-		background-color: rgba(0, 0, 0, 0.665);
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		overflow-y: auto;
-		img{
-			position: absolute;
-			left: 90%;
-			top: 4%;
-			cursor: pointer;
-		}
-		.modal-form__box{
-			position: relative;
-			max-width: 500px;
-			background-color: rgb(0, 0, 0);
-			border-radius: 4%;
-			padding: 5% 10%;
-			transition: all 2s;
-		}
-		button {
-			margin-top: 10%;
-			padding: 3% 10%;
-		}
-	}
-}
+
 </style>
