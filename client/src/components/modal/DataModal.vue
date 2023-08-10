@@ -1,29 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useCrud } from "../../stores/crud"
-import { institutions } from '@/API/api-enterprises-institutions';
-import InputModal from "@/components/modal/InputModal.vue"
+import { institutions, groups } from '@/API/api-enterprises-institutions';
 import { closeOpenModal } from "@/components/modal/open-close"
+import InputModal from './InputModal.vue';
+import router from '@/router';
 
-defineProps<{
-	aboutIntitutionData: object[]
-	apiUrlAboutIntitutionData: string
-	localStorageId: string
-
-	apiUrlPostData: string
-}>()
-
-defineEmits(['closeModal'])
+const dataModal = ref<boolean>(false)
+const inputModal = ref<boolean>(false)
+const { closeInputModal } = closeOpenModal(dataModal, inputModal)
 
 const showModal = ref<boolean>(true)
 
-const inputModal = ref<boolean>(false)
-const dataModal = ref<boolean>(false)
-const { openInputModal, closeInputModal } = closeOpenModal(inputModal, dataModal)
+defineEmits(['closeModal'])
 
 const institutionsDatas = ref<object[]>([])
-const institutionId = Number(localStorage.getItem("institutionId"))
-
 const crud = useCrud()
 crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getItem("id")), "directorId")
 </script>
@@ -39,20 +30,22 @@ crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getIte
 							<p
 								style="margin-top: 1%;" 
 								v-for="group in institution.groups" 
-								:key="group.id">
-								{{ group.groupName }} [ {{ group.course }} курс ]
+								:key="group.id"
+								:title="`${group.course} курс`"
+							>
+								{{ group.groupName }} 
 							</p>
 						</div>
 					</div>
-					<button @click="openInputModal" class="modal-form__post">Добавить группу</button>
+					<button @click="router.push('/newgroup')" class="modal-form__post">Создать группу</button>
 					<transition name="modal">
 						<InputModal
-						@close-modal="closeInputModal()"
-						v-if="inputModal"
-						page="institution"
-					/>
+							@close-modal="closeInputModal()"
+							v-if="inputModal"
+							modal="group"
+						/>
 					</transition>
-					<button class="modal-form__delete" @click="crud.deleteData(institutions, institutionId)">Удалить учреждение</button>
+					<button class="modal-form__delete">Удалить учреждение</button>
 				</div>
 			</div>
 		</main>
@@ -64,9 +57,8 @@ crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getIte
 img:hover {
 	opacity: 0.7;
 }
-
 .modal-form__post {
-	@include button(rgb(13, 255, 0), white);
+	@include button(rgb(0, 255, 34), white);
 }
 .modal-form__delete {
 	@include button(red, white);

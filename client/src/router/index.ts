@@ -22,10 +22,10 @@ const router = createRouter({
 	  component: () => import("../pages/Main-page.vue")
 	},
 	{
-	  path: '/institution/:appellation',
-	  name: 'institution',
-	  component: () => import("../pages/Institutions.vue")
-	},
+	  path: '/newgroup',
+	  name: 'group',
+	  component: () => import("../pages/CreateGroup.vue")
+	}
   ]
 })
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
-import { institutions } from "../API/api-enterprises-institutions"
+import { institutions, groups } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
 import { ref } from "vue";
 import { useCrud } from "../stores/crud"
@@ -8,21 +8,19 @@ import { closeOpenModal } from "../components/modal/open-close"
 import InputModal from "../components/modal/InputModal.vue"
 import DataModal from "../components/modal/DataModal.vue"
 
-const institutionsDatas = ref<object[]>([])
-
 const inputModal = ref<boolean>(false)
 const dataModal = ref<boolean>(false)
-const { closeInputModal, openInputModal, openDataModal, closeDataModal } = closeOpenModal(inputModal, dataModal)
+const { openDataModal, closeDataModal, openInputModal, closeInputModal } = closeOpenModal(dataModal, inputModal)
 
 const appellation = ref<string>("")
 const directorId:number = Number(localStorage.getItem("id"))
-
 const institutionData = ref<object>({
 	appellation,
 	directorId
 })
 
 const crud = useCrud()
+const institutionsDatas = ref<object[]>([])
 crud.getDatasFromApi(institutions, institutionsDatas, directorId, "directorId")
 
 console.log(localStorage.getItem("token"));
@@ -49,11 +47,11 @@ const { animationBoolean } = move(500)
 				<button @click="openInputModal()">Добавить организацию</button>
 				<transition name="modal">
 					<InputModal
-						@post-data="crud.postData(institutions, institutionData)"
+						@post-institution="crud.postData(institutions, institutionData)"
 						@close-modal="closeInputModal()"
 						v-model:appellation="appellation"
 						v-if="inputModal"
-						page="main"
+						modal="main"
 					/>
 				</transition>
 			</div>
