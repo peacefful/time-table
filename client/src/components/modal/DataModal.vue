@@ -2,12 +2,27 @@
 import { ref } from 'vue';
 import { useCrud } from "../../stores/crud"
 import { institutions } from '@/API/api-enterprises-institutions';
+import InputModal from "@/components/modal/InputModal.vue"
+import { closeOpenModal } from "@/components/modal/open-close"
 
-const showModal = ref<boolean>(true)
-const institutionsDatas = ref<object[]>([])
-const institutionId = Number(localStorage.getItem("institutionId"))
+defineProps<{
+	aboutIntitutionData: object[]
+	apiUrlAboutIntitutionData: string
+	localStorageId: string
+
+	apiUrlPostData: string
+}>()
 
 defineEmits(['closeModal'])
+
+const showModal = ref<boolean>(true)
+
+const inputModal = ref<boolean>(false)
+const dataModal = ref<boolean>(false)
+const { openInputModal, closeInputModal } = closeOpenModal(inputModal, dataModal)
+
+const institutionsDatas = ref<object[]>([])
+const institutionId = Number(localStorage.getItem("institutionId"))
 
 const crud = useCrud()
 crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getItem("id")), "directorId")
@@ -29,7 +44,15 @@ crud.getDatasFromApi(institutions, institutionsDatas, Number(localStorage.getIte
 							</p>
 						</div>
 					</div>
-					<button @click="crud.deleteData(institutions, institutionId)">Удалить учреждение</button>
+					<button @click="openInputModal" class="modal-form__post">Добавить группу</button>
+					<transition name="modal">
+						<InputModal
+						@close-modal="closeInputModal()"
+						v-if="inputModal"
+						page="institution"
+					/>
+					</transition>
+					<button class="modal-form__delete" @click="crud.deleteData(institutions, institutionId)">Удалить учреждение</button>
 				</div>
 			</div>
 		</main>
@@ -42,7 +65,10 @@ img:hover {
 	opacity: 0.7;
 }
 
-button {
+.modal-form__post {
+	@include button(rgb(13, 255, 0), white);
+}
+.modal-form__delete {
 	@include button(red, white);
 }
 </style>
