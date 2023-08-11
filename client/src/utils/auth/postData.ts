@@ -1,12 +1,13 @@
 import axios from "axios";
 
-export const makeAuthRequest = async (name:string, surname:string, password:string, role:string, authDirectors:string) => {
+export const makeAuthRequest = async (name:string, surname:string, password:string, role:string, authDirectors:string, groupId?:number) => {
 	try {
 		const response = await axios.post(authDirectors, {
 			name,
 			surname,
 			password,
-			role
+			role,
+			groupId
 		});
  
 		return response.data;

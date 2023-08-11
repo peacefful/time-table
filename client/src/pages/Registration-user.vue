@@ -11,6 +11,7 @@ const name = ref<string>("")
 const surname = ref<string>("")
 const password = ref<string>("")
 const role = ref<string>("")
+const groupId = ref<number>(1)
 
 const { animationBoolean } = move(500)
 </script>
@@ -18,7 +19,7 @@ const { animationBoolean } = move(500)
 <template>
 	<Transition name="slide-fade">
 		<main v-if="animationBoolean" class="registration">
-		<form @submit.prevent="registrationUser(name, surname, password, role)">
+		<form @submit.prevent="registrationUser(name, surname, password, role, groupId)">
 			<h3>Регистрация</h3>
 			<div class="registration-login__flex">
 				<RegistrationLoginUser 

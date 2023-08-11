@@ -19,25 +19,25 @@ CREATE TABLE "institutions" (
 );
 
 -- CreateTable
+CREATE TABLE "groups" (
+    "id" SERIAL NOT NULL,
+    "groupName" TEXT NOT NULL,
+    "course" TEXT NOT NULL,
+    "institutionId" INTEGER NOT NULL,
+
+    CONSTRAINT "groups_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "tutors" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "institutionId" INTEGER NOT NULL,
+    "groupId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
 
     CONSTRAINT "tutors_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "groups" (
-    "id" SERIAL NOT NULL,
-    "groupName" TEXT NOT NULL,
-    "course" INTEGER NOT NULL,
-    "tutorId" INTEGER NOT NULL,
-
-    CONSTRAINT "groups_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -54,7 +54,7 @@ CREATE TABLE "students" (
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "timeTableId" INTEGER NOT NULL,
+    "groupId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
 
     CONSTRAINT "students_pkey" PRIMARY KEY ("id")
@@ -64,7 +64,7 @@ CREATE TABLE "students" (
 CREATE TABLE "monday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE "monday" (
 CREATE TABLE "tuesday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE "tuesday" (
 CREATE TABLE "wednesday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE "wednesday" (
 CREATE TABLE "thursday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE "thursday" (
 CREATE TABLE "friday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE "friday" (
 CREATE TABLE "saturday" (
     "id" SERIAL NOT NULL,
     "subject" TEXT NOT NULL,
-    "office" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "beginning" TEXT NOT NULL,
     "end" TEXT NOT NULL,
@@ -148,16 +148,16 @@ CREATE UNIQUE INDEX "timeTables_groupId_key" ON "timeTables"("groupId");
 ALTER TABLE "institutions" ADD CONSTRAINT "institutions_directorId_fkey" FOREIGN KEY ("directorId") REFERENCES "directors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tutors" ADD CONSTRAINT "tutors_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "groups" ADD CONSTRAINT "groups_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "groups" ADD CONSTRAINT "groups_tutorId_fkey" FOREIGN KEY ("tutorId") REFERENCES "tutors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "tutors" ADD CONSTRAINT "tutors_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "timeTables" ADD CONSTRAINT "timeTables_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "students" ADD CONSTRAINT "students_timeTableId_fkey" FOREIGN KEY ("timeTableId") REFERENCES "timeTables"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "students" ADD CONSTRAINT "students_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "monday" ADD CONSTRAINT "monday_timeTableId_fkey" FOREIGN KEY ("timeTableId") REFERENCES "timeTables"("id") ON DELETE CASCADE ON UPDATE CASCADE;

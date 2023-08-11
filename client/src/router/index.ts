@@ -24,7 +24,7 @@ const router = createRouter({
 	{
 	  path: '/newgroup',
 	  name: 'group',
-	  component: () => import("../pages/CreateGroup.vue")
+	  component: () => import("../pages/FormGroup.vue")
 	}
   ]
 })

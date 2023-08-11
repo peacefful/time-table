@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
-import { institutions, groups } from "../API/api-enterprises-institutions"
+import { institutions } from "../API/api-enterprises-institutions"
 import { outSystem } from "../mixins/outSystem"
 import { ref } from "vue";
 import { useCrud } from "../stores/crud"
-import { closeOpenModal } from "../components/modal/open-close"
+import { closeOpenDataModal } from "../components/modal/openCloseDataModal"
+import { closeOpenInputModal } from "../components/modal/openCloseInputModal"
 import InputModal from "../components/modal/InputModal.vue"
 import DataModal from "../components/modal/DataModal.vue"
 
 const inputModal = ref<boolean>(false)
 const dataModal = ref<boolean>(false)
-const { openDataModal, closeDataModal, openInputModal, closeInputModal } = closeOpenModal(dataModal, inputModal)
+const { openDataModal, closeDataModal } = closeOpenDataModal(dataModal)
+const { openInputModal, closeInputModal } = closeOpenInputModal(inputModal)
 
 const appellation = ref<string>("")
 const directorId:number = Number(localStorage.getItem("id"))
@@ -79,4 +81,4 @@ button {
 	padding: 0.5% 3%;
 	margin-top: 1%;
 }
-</style>
+</style>../components/modal/openCloseDataModal

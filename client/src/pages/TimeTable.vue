@@ -6,6 +6,3 @@ import { RouterView } from 'vue-router'
 	<video src="../assets/videos/lonely.mp4" autoplay muted loop></video>
 	<RouterView/>
 </template>
-
-<style scoped>
-</style>
