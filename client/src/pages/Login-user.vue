@@ -5,7 +5,7 @@ import ButtonLabel from "../components/ButtonLabel.vue"
 import { ref } from "vue";
 import router from '../router/index'
 
-import { authUser } from '../mixins/auth'
+import { authUser } from '../utils/auth/auth'
 
 const name = ref<string>("")
 const surname = ref<string>("")
@@ -48,4 +48,4 @@ const { animationBoolean } = move(500)
   transform: translateY(20px);
   opacity: 0;
 }
-</style>../mixins/auth../mixins/reg
+</style>../mixins/auth../mixins/reg../utils/auth

@@ -5,7 +5,7 @@ import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/ButtonLabel.vue"
 import router from '../router/index'
 
-import { registrationUser } from '../mixins/registration'
+import { registrationUser } from '../utils/registration'
 
 const name = ref<string>("")
 const surname = ref<string>("")

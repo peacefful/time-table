@@ -56,3 +56,9 @@ const showPassword = () => {
 		<option value="Студент">Студент</option>
 	</select>
 </template>
+
+<style scoped>
+ input {
+	border: 0;
+ }
+</style>

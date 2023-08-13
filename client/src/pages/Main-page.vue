@@ -1,80 +1,74 @@
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
-import { institutions } from "../API/api-enterprises-institutions"
-import { outSystem } from "../mixins/outSystem"
+import { useCrud } from "@/stores/crud";
+import { directors, institutions } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
-import { useCrud } from "../stores/crud"
-import { closeOpenDataModal } from "../components/modal/openCloseDataModal"
-import { closeOpenInputModal } from "../components/modal/openCloseInputModal"
-import InputModal from "../components/modal/InputModal.vue"
-import DataModal from "../components/modal/DataModal.vue"
+import Header from "@/components/Header.vue";
+import Title from "@/components/Title.vue";
+import axios from "axios";
+import router from "@/router";
 
-const inputModal = ref<boolean>(false)
-const dataModal = ref<boolean>(false)
-const { openDataModal, closeDataModal } = closeOpenDataModal(dataModal)
-const { openInputModal, closeInputModal } = closeOpenInputModal(inputModal)
-
-const appellation = ref<string>("")
-const directorId:number = Number(localStorage.getItem("id"))
-const institutionData = ref<object>({
-	appellation,
-	directorId
-})
-
-const crud = useCrud()
 const institutionsDatas = ref<object[]>([])
-crud.getDatasFromApi(institutions, institutionsDatas, directorId, "directorId")
+const directorsDatas = ref<object>()
+const { getDatasFromApi } = useCrud()
 
-console.log(localStorage.getItem("token"));
-console.log(Number(localStorage.getItem("id")));
+getDatasFromApi(institutions, institutionsDatas)
+
+async function getDirectors() {
+	try {
+		const directorsArr = (await axios.get(directors)).data
+		directorsDatas.value = await directorsArr.find(item => item.institution.appellation === "КВПТК")
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+getDirectors()
 
 const { animationBoolean } = move(500)
 </script>
 <template>
+	<Header/>
 	<transition>
-		<main style="text-align: center;" v-if="animationBoolean" class="main">
-			<h3 style="padding-top: 10%;">Выберите ваше учреждение / организацию</h3>
-			<div style="padding-top: 1%;" v-for="institution in institutionsDatas" :key="institution.id">
-				<p @click="openDataModal('institutionId', institution.id)">
-					{{ institution.appellation }}
-				</p>
-				<transition name="modal">
-					<DataModal
-						@close-modal="closeDataModal()"
-						v-if="dataModal"
-					/>
-				</transition>
+		<main v-if="animationBoolean">
+			<div v-if="institutionsDatas.length">
+				<div v-for="institution in institutionsDatas" :key="institution.id">
+					<Title :title="institution.appellation"/>
+					<p> {{ directorsDatas.name }} {{ directorsDatas.surname }} </p>
+				</div>
 			</div>
-			<div v-if="!institutionsDatas.length">
-				<button @click="openInputModal()">Добавить организацию</button>
-				<transition name="modal">
-					<InputModal
-						@post-institution="crud.postData(institutions, institutionData)"
-						@close-modal="closeInputModal()"
-						v-model:appellation="appellation"
-						v-if="inputModal"
-						modal="main"
-					/>
-				</transition>
+			<div v-else>
+				<div class="line"></div>
+				<div style="margin-top: 2%;" >
+					Учреждения пока нету,<span @click="router.push('/newinstitution')">добавьте новое</span>
+				</div>
 			</div>
-			<button class="button" @click="outSystem()">Выйти</button>
 		</main>
 	</transition>
 </template>
 
 <style scoped lang="scss">
-.v-enter-active {
-  transition: all 0.3s ease-out;
-}
-.v-enter-from,
-.v-leave-to {
-	transform: translateY(20px);
-	opacity: 0;
-}
-
 h3 {
 	display: flex;
 	justify-content: center;
+}
+
+span {
+	cursor: pointer;
+	&:hover{
+		text-decoration: underline;
+	}
+}
+
+ul {
+	margin-top: 2%;
+	li {
+		cursor: pointer;
+		list-style: none;
+		&:hover{
+			color: rgba(255, 255, 255, 0.812);
+		}
+	}
 }
 
 button {

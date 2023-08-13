@@ -22,9 +22,29 @@ const router = createRouter({
 	  component: () => import("../pages/Main-page.vue")
 	},
 	{
-	  path: '/newgroup',
-	  name: 'group',
-	  component: () => import("../pages/FormGroup.vue")
+	  path: '/groups',
+	  name: 'groups',
+	  component: () => import("../pages/Groups.vue")
+	},
+	{
+	  path: '/profile',
+	  name: 'profile',
+	  component: () => import("../pages/Profile-user.vue")
+	},
+	{
+	  path: '/students',
+	  name: 'students',
+	  component: () => import("../pages/Students.vue")
+	},
+	{
+	  path: '/schedule',
+	  name: 'schedule',
+	  component: () => import("../pages/Schedule.vue")
+	},
+	{
+	  path: '/newinstitution',
+	  name: 'newinstitution',
+	  component: () => import("../pages/Add-institution.vue")
 	}
   ]
 })
