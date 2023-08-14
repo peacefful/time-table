@@ -10,7 +10,7 @@ import Title from "@/components/Title.vue";
 const groupsDatas = ref<object[]>([])
 const { getDatasFromApi } = useCrud()
 
-getDatasFromApi(groups, groupsDatas)
+getDatasFromApi(groups, groupsDatas, Number(localStorage.getItem("institutionId")), "institutionId")
 
 const { animationBoolean } = move(500)
 </script>
@@ -19,26 +19,16 @@ const { animationBoolean } = move(500)
 	<Header/>
 	<transition>
 		<main v-if="animationBoolean">
+			<div class="line"></div>
 			<Title title="Группы"/>
 			<div v-if="groupsDatas.length">
-				<div v-for="group in groupsDatas" :key="group.id">
+				<div style="margin-top: 2%;" v-for="group in groupsDatas" :key="group.id">
 					<p>{{ group.groupName }}</p>
 				</div>
 			</div>
-			<div style="margin-top: 1%;" v-else>
+			<div v-else style="margin-top: 1%;">
 				Групп пока нету,<span @click="router.push({ name: 'newgroup', params: { form: 'add-group' }})">добавьте новую</span>
 			</div>
 		</main>
 	</transition>
 </template>
-
-<style scoped lang="scss">
-@import "../scss/variables.scss";
-
-select{
-	padding: 2%;
-}
-.form-group__post{
-	@include button(rgb(0, 231, 0), white)
-}
-</style>@/components/modal/openCloseDataModal

@@ -5,6 +5,7 @@ import router from '@/router';
 import { ref } from "vue";
 import axios from "axios";
 import { directors } from "@/API/api-enterprises-institutions";
+import { use } from 'passport';
 
 interface IPages {
 	groups: {

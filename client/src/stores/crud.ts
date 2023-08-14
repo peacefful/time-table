@@ -6,7 +6,7 @@ export const useCrud = defineStore('crud', () => {
 		try {
 			const response = (await axios.get(apiUrl)).data
 			if (response) {
-				arrayDatas.value = response.filter(( item: { [x: string]: number } ) => item[findItem] === id)
+				arrayDatas.value = response.filter(item => item[findItem] === id)
 			}
 		} catch (error) {
 			console.log(error);

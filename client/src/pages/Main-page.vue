@@ -1,30 +1,34 @@
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
 import { useCrud } from "@/stores/crud";
-import { directors, institutions } from "@/API/api-enterprises-institutions";
+import { directors, groups, institutions } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import Header from "@/components/Header.vue";
 import Title from "@/components/Title.vue";
-import axios from "axios";
 import router from "@/router";
+import axios from "axios";
 
+const institutionData = ref<object>()
+const directorData = ref<object>()
 
-const institutionsDatas = ref<object[]>([])
-const directorsDatas = ref<object>()
 const { getDatasFromApi } = useCrud()
 
-getDatasFromApi(institutions, institutionsDatas)
+getDatasFromApi(directors, directorData, Number(localStorage.getItem("id")), 'id')
 
-async function getDirectors() {
-	try {
-		const directorsArr = (await axios.get(directors)).data
-		directorsDatas.value = await directorsArr.find(item => item.institution.appellation === "КВПТК")
-	} catch (error) {
-		console.log(error);
-	}
+async function getInstitutionData() {
+	const result = (await axios.get(institutions)).data
+	institutionData.value = result.find(item => item.directorId === Number(localStorage.getItem("id")))
+	localStorage.setItem("institutionId", institutionData.value.id)
 }
+getInstitutionData()
 
-getDirectors()
+// async function getGroupDatas () {
+// 	const result = (await axios.get(groups)).data
+// 	const ownGroup = result.find(item => item.institutionId === Number(localStorage.getItem("institutionId")))
+// 	localStorage.setItem("institutionId", institutionData.value.id)
+// }
+
+// getGroupDatas()
 
 const { animationBoolean } = move(500)
 </script>
@@ -32,14 +36,17 @@ const { animationBoolean } = move(500)
 	<Header/>
 	<transition>
 		<main v-if="animationBoolean">
-			<div v-if="institutionsDatas.length">
-				<div v-for="institution in institutionsDatas" :key="institution.id">
-					<Title :title="institution.appellation"/>
-					<p> {{ directorsDatas.name }} {{ directorsDatas.surname }} </p>
+			<div class="line"></div>
+			<div v-if="institutionData">
+				<Title :title="institutionData.appellation" />
+				<div style="margin-top: 2%;">
+					<h3>Директор</h3>
+					<div v-for="director in directorData" :key="director.id">
+						<p style="margin-top: 0.5%;">{{ director.name }} {{ director.surname }}</p>
+					</div>
 				</div>
 			</div>
 			<div v-else>
-				<div class="line"></div>
 				<div style="margin-top: 2%;" >
 					Учреждения пока нету,
 					<span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
@@ -52,10 +59,7 @@ const { animationBoolean } = move(500)
 </template>
 
 <style scoped lang="scss">
-h3 {
-	display: flex;
-	justify-content: center;
-}
+
 
 ul {
 	margin-top: 2%;

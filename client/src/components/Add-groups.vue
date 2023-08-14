@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { directors, groups } from "@/API/api-enterprises-institutions";
+import { directors, groups, institutions } from "@/API/api-enterprises-institutions";
 import router from "@/router";
 import axios from "axios";
 import { ref } from "vue"
@@ -8,12 +8,11 @@ const group = ref<string>("")
 const course = ref<string>("")
 
 async function getInstitutionId() {
-	const data = (await axios.get(directors)).data
-	const director = data.find(item => item.id === Number(localStorage.getItem("id")))
-	if (director.institution) {
-		localStorage.setItem("institutionId", director.institution.id)
-	}
+	const data = (await axios.get(institutions)).data
+	const institution = data.find(item => item.directorId === Number(localStorage.getItem("id")))
+	localStorage.setItem("institutionId", institution.id)
 }
+
 getInstitutionId()
 
 const instance = axios.create({

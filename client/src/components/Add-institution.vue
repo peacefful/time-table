@@ -5,7 +5,7 @@ import router from '@/router';
 import axios from 'axios';
 
 const institution = ref<string>()
-const directordId = Number(localStorage.getItem("id"))
+const directorId = Number(localStorage.getItem("id"))
 
 const instance = axios.create({
 	baseURL: institutions
@@ -16,9 +16,10 @@ async function postInstitutions() {
 	try {
 		await instance.post(institutions, {
 			appellation: institution.value,
-			directorId: directordId
+			directorId: directorId
 		})
-		localStorage.setItem("institution", institution.value)
+		localStorage.setItem("directorId", directorId)
+		localStorage.setItem("appellation", institution.value)
 		router.push('/main')
 	} catch (error) {
 		console.log(error);

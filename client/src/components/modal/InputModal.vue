@@ -7,8 +7,6 @@ defineProps<{
 	appellation?: string
 }>()
 
-console.log(localStorage.getItem("institutionId"));
-
 defineEmits(['closeModal', 'postData', 'postGroup', 'update:appellation', 'update:group', 'update:course'])
 </script>
 
