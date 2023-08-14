@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
+import { ref } from 'vue';
+import { useCrud } from '@/stores/crud';
+import { groups } from '@/API/api-enterprises-institutions';
+import router from "@/router";
 import Header from '@/components/Header.vue';
 import Title from "@/components/Title.vue";
+
+const groupsDatas = ref<object[]>([])
+const { getDatasFromApi } = useCrud()
+
+getDatasFromApi(groups, groupsDatas)
 
 const { animationBoolean } = move(500)
 </script>
@@ -11,6 +20,14 @@ const { animationBoolean } = move(500)
 	<transition>
 		<main v-if="animationBoolean">
 			<Title title="Группы"/>
+			<div v-if="groupsDatas.length">
+				<div v-for="group in groupsDatas" :key="group.id">
+					<p>{{ group.groupName }}</p>
+				</div>
+			</div>
+			<div style="margin-top: 1%;" v-else>
+				Групп пока нету,<span @click="router.push({ name: 'newgroup', params: { form: 'add-group' }})">добавьте новую</span>
+			</div>
 		</main>
 	</transition>
 </template>
@@ -24,24 +41,4 @@ select{
 .form-group__post{
 	@include button(rgb(0, 231, 0), white)
 }
-// .form-group {
-// 	text-align: center;
-// 	position: fixed;
-// 	top: 0;
-// 	left: 0;
-// 	width: 100%;
-// 	height: 100vh;
-// 	padding-top: 5%;
-// 	background-color: rgba(0, 0, 0, 0.304);
-// 	display: flex;
-// 	justify-content: center;
-// 	overflow-y: auto;
-// 	.form-group__flex {
-		
-// 		max-height: 90vh;
-// 		margin-top: 4%;
-// 		display: flex;
-// 		flex-direction: column;
-// 	}
-// }
 </style>@/components/modal/openCloseDataModal

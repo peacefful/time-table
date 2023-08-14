@@ -8,6 +8,7 @@ import Title from "@/components/Title.vue";
 import axios from "axios";
 import router from "@/router";
 
+
 const institutionsDatas = ref<object[]>([])
 const directorsDatas = ref<object>()
 const { getDatasFromApi } = useCrud()
@@ -40,7 +41,10 @@ const { animationBoolean } = move(500)
 			<div v-else>
 				<div class="line"></div>
 				<div style="margin-top: 2%;" >
-					Учреждения пока нету,<span @click="router.push('/newinstitution')">добавьте новое</span>
+					Учреждения пока нету,
+					<span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
+						добавьте новое
+					</span>
 				</div>
 			</div>
 		</main>
@@ -51,13 +55,6 @@ const { animationBoolean } = move(500)
 h3 {
 	display: flex;
 	justify-content: center;
-}
-
-span {
-	cursor: pointer;
-	&:hover{
-		text-decoration: underline;
-	}
 }
 
 ul {

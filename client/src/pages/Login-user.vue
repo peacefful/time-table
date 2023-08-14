@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { move } from "../hooks/useAnimation"
+import { ref } from "vue";
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/ButtonLabel.vue"
-import { ref } from "vue";
 import router from '../router/index'
 
 import { authUser } from '../utils/auth/auth'

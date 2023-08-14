@@ -42,9 +42,16 @@ const router = createRouter({
 	  component: () => import("../pages/Schedule.vue")
 	},
 	{
-	  path: '/newinstitution',
+	  path: '/newinstitution/:form',
 	  name: 'newinstitution',
-	  component: () => import("../pages/Add-institution.vue")
+	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  props: true
+	},
+	{
+	  path: '/newgroup/:form',
+	  name: 'newgroup',
+	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  props: true
 	}
   ]
 })
