@@ -8,9 +8,9 @@ import Header from '@/components/Header.vue';
 import Title from "@/components/Title.vue";
 
 const groupsDatas = ref<object[]>([])
-const { getDatasFromApi } = useCrud()
+const { getDatas } = useCrud()
 
-getDatasFromApi(groups, groupsDatas, Number(localStorage.getItem("institutionId")), "institutionId")
+getDatas(groups, groupsDatas, Number(localStorage.getItem("institutionId")), "institutionId")
 
 const { animationBoolean } = move(500)
 </script>

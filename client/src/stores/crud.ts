@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from "axios"
 
 export const useCrud = defineStore('crud', () => {
-	async function getDatasFromApi(apiUrl:string, arrayDatas:object[], id?:number, findItem?:string) {
+	async function getDatas(apiUrl:string, arrayDatas:object[], id?:number, findItem?:string) {
 		try {
 			const response = (await axios.get(apiUrl)).data
 			if (response) {
@@ -29,5 +29,5 @@ export const useCrud = defineStore('crud', () => {
 		await instance.delete(deleteUrl)
 	}
 	
-	return { getDatasFromApi, postData, deleteData }
+	return { getDatas, postData, deleteData }
 })

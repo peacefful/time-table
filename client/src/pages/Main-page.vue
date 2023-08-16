@@ -11,9 +11,9 @@ import axios from "axios";
 const institutionData = ref<object>()
 const directorData = ref<object>()
 
-const { getDatasFromApi } = useCrud()
+const { getDatas } = useCrud()
 
-getDatasFromApi(directors, directorData, Number(localStorage.getItem("id")), 'id')
+getDatas(directors, directorData, Number(localStorage.getItem("id")), 'id')
 
 async function getInstitutionData() {
 	const result = (await axios.get(institutions)).data
@@ -21,14 +21,6 @@ async function getInstitutionData() {
 	localStorage.setItem("institutionId", institutionData.value.id)
 }
 getInstitutionData()
-
-// async function getGroupDatas () {
-// 	const result = (await axios.get(groups)).data
-// 	const ownGroup = result.find(item => item.institutionId === Number(localStorage.getItem("institutionId")))
-// 	localStorage.setItem("institutionId", institutionData.value.id)
-// }
-
-// getGroupDatas()
 
 const { animationBoolean } = move(500)
 </script>

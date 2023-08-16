@@ -1,17 +1,32 @@
 import router from "@/router"
-import { directors, students, tutors } from "@/API/api-enterprises-institutions"
+import { directors, institutions, students } from "@/API/api-enterprises-institutions"
 import { makeAuthRequest } from "../utils/auth/postData"
+import axios from "axios"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
 
-export const registrationUser = async (name:string, surname:string, password:string, role:string, groupId:number) => {
+export const registrationUser = async (name:string, surname:string, password:string, role:string, groupOrAppellation:string) => {
 	try {
 		if (role == "") {
 			throw new Error("Ошибка, не все поля были заполнены")
 		} else {
 			if (name.length >= 2 || surname.length >= 2 || password.length >= 8 && symbols.includes(password)){
-				await makeAuthRequest(name, surname, password, role, role === "Куратор" ? tutors : role === "Студент" ? students : directors, groupId);
-				router.push("/");
+				if (role === "Студент" || role === "Куратор") {
+					// eslint-disable-next-line no-inner-declarations
+					async function registrationStudentsTutors() {
+						const result:object[] = (await axios.get(institutions)).data
+						const institution:object = result.find(item => item.appellation === groupOrAppellation)
+				
+						const groups:object[] = institution.groups
+						const studentsTutorsGroup = groups.find(item => item.groupName === "Учащиеся")
+						await makeAuthRequest(name, surname, password, role, students, studentsTutorsGroup.id);
+						router.push("/");
+					}
+					registrationStudentsTutors()
+				} else {
+					await makeAuthRequest(name, surname, password, role, directors);
+					router.push("/");
+				}
 			} else {
 				throw new Error("Не корректные данные")
 			}
@@ -20,3 +35,22 @@ export const registrationUser = async (name:string, surname:string, password:str
 		console.log(error);
 	}
 }
+
+
+
+// export const registrationUser = async (name:string, surname:string, password:string, role:string, groupId:number) => {
+// 	try {
+// 		if (role == "") {
+// 			throw new Error("Ошибка, не все поля были заполнены")
+// 		} else {
+// 			if (name.length >= 2 || surname.length >= 2 || password.length >= 8 && symbols.includes(password)){
+// 				await makeAuthRequest(name, surname, password, role, role === "Куратор" ? tutors : role === "Студент" ? students : directors, groupId);
+// 				router.push("/");
+// 			} else {
+// 				throw new Error("Не корректные данные")
+// 			}
+// 		}
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// }

@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
-import router from '@/router';
-import { ref } from "vue";
-import axios from "axios";
 import { directors } from "@/API/api-enterprises-institutions";
-import { use } from 'passport';
+import { ref } from "vue";
+import router from '@/router';
+import axios from "axios";
 
 interface IPages {
 	groups: {
