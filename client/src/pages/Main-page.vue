@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
 import { useCrud } from "@/stores/crud";
-import { directors, groups, institutions } from "@/API/api-enterprises-institutions";
+import { directors, institutions } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import Header from "@/components/Header.vue";
 import Title from "@/components/Title.vue";
@@ -41,7 +41,7 @@ const { animationBoolean } = move(500)
 			<div v-else>
 				<div style="margin-top: 2%;" >
 					Учреждения пока нету,
-					<span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
+					 <span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
 						добавьте новое
 					</span>
 				</div>

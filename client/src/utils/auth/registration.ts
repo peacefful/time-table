@@ -1,6 +1,6 @@
 import router from "@/router"
 import { directors, institutions, students } from "@/API/api-enterprises-institutions"
-import { makeAuthRequest } from "../utils/auth/postData"
+import { makeAuthRequest } from "./postData"
 import axios from "axios"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
@@ -20,6 +20,7 @@ export const registrationUser = async (name:string, surname:string, password:str
 						const groups:object[] = institution.groups
 						const studentsTutorsGroup = groups.find(item => item.groupName === "Учащиеся")
 						await makeAuthRequest(name, surname, password, role, students, studentsTutorsGroup.id);
+
 						router.push("/");
 					}
 					registrationStudentsTutors()
@@ -35,22 +36,3 @@ export const registrationUser = async (name:string, surname:string, password:str
 		console.log(error);
 	}
 }
-
-
-
-// export const registrationUser = async (name:string, surname:string, password:string, role:string, groupId:number) => {
-// 	try {
-// 		if (role == "") {
-// 			throw new Error("Ошибка, не все поля были заполнены")
-// 		} else {
-// 			if (name.length >= 2 || surname.length >= 2 || password.length >= 8 && symbols.includes(password)){
-// 				await makeAuthRequest(name, surname, password, role, role === "Куратор" ? tutors : role === "Студент" ? students : directors, groupId);
-// 				router.push("/");
-// 			} else {
-// 				throw new Error("Не корректные данные")
-// 			}
-// 		}
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// }

@@ -1,5 +1,5 @@
 import router from "@/router"
-import { authDirectors, groups, institutions } from "@/API/api-enterprises-institutions"
+import { authDirectors, institutions } from "@/API/api-enterprises-institutions"
 import { makeAuthRequest } from "@/utils/auth/postData"
 import { saveIdUser } from "@/utils/saveIdToken"
 import axios from "axios"
@@ -21,8 +21,6 @@ export const authUser = async (name:string, surname:string, password:string, rol
 				
 						const groups:object[] = institution.groups
 						const studentsGroup = groups.find(item => item.groupName === "Учащиеся")
-
-						console.log(groups);
 
 						const response = await makeAuthRequest(name, surname, password, role, authDirectors, studentsGroup.id);
 						if (response && response.token && response.id) {

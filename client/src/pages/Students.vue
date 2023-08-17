@@ -21,7 +21,7 @@ const { animationBoolean } = move(500)
 		<main v-if="animationBoolean">
 			<Title title="Студенты / Кураторы"/>
 			<div v-if="studentsData.length">
-				<div style="margin-top: 1%;" v-for="student in studentsData" :key="index">
+				<div style="margin-top: 1%;" v-for="student in studentsData" :key="student.id">
 					<p>{{ student.name }} {{ student.surname }} ({{ student.role }})</p>
 				</div>
 			</div>

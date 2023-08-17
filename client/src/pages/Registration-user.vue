@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { move } from "../hooks/useAnimation"
-import { registrationUser } from '../utils/registration'
+import { registrationUser } from '../utils/auth/registration'
 import { institutions } from "@/API/api-enterprises-institutions"
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/ButtonLabel.vue"
@@ -75,4 +75,4 @@ const { animationBoolean } = move(500)
   transform: translateY(20px);
   opacity: 0;
 }
-</style>../mixins/auth../mixins/auth
+</style>../mixins/auth../mixins/auth../utils/auth/registration

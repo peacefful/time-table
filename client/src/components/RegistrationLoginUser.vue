@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { computed } from 'vue'
 
-const props = defineProps<{
+defineProps<{
 	name: string
 	surname: string
 	password: string
 }>()
 
-const emit = defineEmits(['update:name', 'update:surname', 'update:password'])
+defineEmits(['update:name', 'update:surname', 'update:password'])
 
 let boolean = ref<boolean>(false)
 let type = ref<string>("password")
