@@ -8,10 +8,11 @@ import Title from "@/components/Title.vue";
 import axios from 'axios';
 
 const groupsDatas = ref<object[]>([])
+const institutionId:number = Number(localStorage.getItem('institutionId'))
 
 async function getStudenst() {
 	const data:object[] = (await axios.get(groups)).data
-	groupsDatas.value = data.filter(item => item.groupName !== "Учащиеся")
+	groupsDatas.value = data.filter(item => item.groupName !== "Учащиеся" && item.institutionId === institutionId)
 }
 
 getStudenst()
@@ -32,8 +33,10 @@ const { animationBoolean } = move(500)
 				>
 					Добавить группу
 				</p>
-				<div style="margin-top: 3%;" v-for="group in groupsDatas" :key="group.id">
-					<p>{{ group.groupName }}</p>
+				<div style="margin-top: 4%;">
+					<div style="margin-top: 1%;" v-for="group in groupsDatas" :key="group.id">
+						<p>{{ group.groupName }}</p>
+					</div>
 				</div>
 			</div>
 			<div v-else style="margin-top: 1%;">

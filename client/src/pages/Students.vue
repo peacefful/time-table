@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
-import { students } from '@/API/api-enterprises-institutions';
+import { groups } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
 import Header from '@/components/Header.vue';
 import Title from '@/components/Title.vue';
 import axios from 'axios';
 
 const studentsData = ref<object[]>([])
+const institutionId:number = Number(localStorage.getItem("institutionId"))
+
 async function getStudents() {
-	studentsData.value = (await axios.get(students)).data
+	const data:object[] = (await axios.get(groups)).data
+	const ownGroups:object[] = data.filter(item => item.institutionId === institutionId)
+	ownGroups.forEach(item => {
+		const students:object[] = item.students
+		for (const iterator of students) {
+			studentsData.value.push({ name: iterator.name, surname: iterator.surname, role: iterator.role })
+		}
+	})
 }
 
 getStudents()

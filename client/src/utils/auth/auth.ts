@@ -33,7 +33,7 @@ export const authUser = async (name:string, surname:string, password:string, rol
 					}
 					checkInstitutionGroup()
 				} else {
-					const response = await makeAuthRequest(name, surname, password, role, authDirectors);
+					const response = await makeAuthRequest(name, surname, password, role);
 					if (response && response.token && response.id) {
 						saveIdUser(response.token, response.id);
 						router.push("/main");

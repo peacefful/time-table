@@ -1,4 +1,4 @@
-import { directors, students, tutors } from "@/API/api-enterprises-institutions";
+import { authDirectors, directors, students, tutors } from "@/API/api-enterprises-institutions";
 import axios from "axios";
 
 export const makeAuthRequest = async (name:string, surname:string, password:string, role:string, userId?:number) => {
@@ -22,7 +22,7 @@ export const makeAuthRequest = async (name:string, surname:string, password:stri
 			});
 			return response.data;
 		} else {
-			const response = await axios.post(directors, {
+			const response = await axios.post(authDirectors, {
 				name,
 				surname,
 				password,
