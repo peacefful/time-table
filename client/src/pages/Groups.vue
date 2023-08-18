@@ -25,7 +25,7 @@ const { animationBoolean } = move(500)
 		<main v-if="animationBoolean">
 			<div class="line"></div>
 			<Title title="Группы"/>
-			<p 
+			<p
 				style="padding-top: 1%;"
 				@click="router.push({ name: 'newgroup', params: { form: 'add-group' }})"
 			>

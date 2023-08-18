@@ -96,19 +96,41 @@ export const deleteStudent = async (req: Request, res: Response):Promise<void> =
 
 export const changeStudent = async (req: Request, res: Response):Promise<void> => {
 	try {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			res.status(400).json({ errors: errors.array() })
+		} else {
+			const id:number = parseInt(req.params.id)
+			const { name, surname, password, groupId, role }:IStudent = req.body
+			const students = await prisma.students.update({
+				where: {
+					id
+				},
+				data: {
+					name, 
+					surname,
+					password,
+					groupId,
+					role
+				}
+			})
+			res.send(students)
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export const updateGroupId = async (req: Request, res: Response):Promise<void> => {
+	try {
 		const id:number = parseInt(req.params.id)
-		const { name, surname, password, groupId, role }:IStudent = req.body
-		// const hashedPassword:string = await hashPassword(password); ???
+		const { groupId }:IStudent = req.body
 		const students = await prisma.students.update({
 			where: {
 				id
 			},
 			data: {
-				name, 
-				surname,
-				password,
 				groupId,
-				role
 			}
 		})
 		res.send(students)
@@ -116,3 +138,22 @@ export const changeStudent = async (req: Request, res: Response):Promise<void> =
 		console.log(error);
 	}
 }
+
+// export const updatePassword = async (req: Request, res: Response):Promise<void> => {
+// 	try {
+// 		const id:number = parseInt(req.params.id)
+// 		const { password }:IStudent = req.body
+// 		const hashedPassword:string = await hashPassword(password);
+// 		const students = await prisma.students.update({
+// 			where: {
+// 				id
+// 			},
+// 			data: {
+// 				password: hashedPassword,
+// 			}
+// 		})
+// 		res.send(students)
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { groups, institutions, students } from "@/API/api-enterprises-institutions";
-import { computed, ref, watch } from "vue"
+import { groups, institutions, changeGroupStudents } from "@/API/api-enterprises-institutions";
+import { ref, watch } from "vue"
 import router from "@/router";
 import axios from "axios";
 import SelectStudentsTutors from "./SelectStudentsTutors.vue";
@@ -16,27 +16,22 @@ async function getInstitutionId() {
 
 getInstitutionId()
 
-const instance = axios.create({
-	baseURL : groups
-});
-instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
-
 const ids = ref<string[]>([])
 
 async function addGroup () {
 	try {
-		await instance.post(groups, {
+		await axios.post(groups, {
 			groupName: group.value,
 			course: course.value,
 			institutionId: Number(localStorage.getItem('institutionId'))
 		}).then(res => localStorage.setItem("groupId", res.data.id))
 		ids.value.forEach(async item => {
-			const putUrl:string = `${students}/${item}`
-			await instance.put(putUrl, {
+			const putUrl:string = `${changeGroupStudents}/${item}`
+			await axios.put(putUrl, {
 				groupId: Number(localStorage.getItem("groupId"))
 			})
+			router.push("/groups")
 		})
-		router.push("/groups")
 	} catch (error) {
 		console.log(error);
 	}

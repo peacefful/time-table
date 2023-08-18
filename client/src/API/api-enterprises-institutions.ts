@@ -7,4 +7,6 @@ export const students:string = "http://localhost:3000/api/students"
 
 export const authDirectors:string = "http://localhost:3000/api/authdirectors"
 export const authTutors:string = "http://localhost:3000/api/authtutors"
+
 export const authStudents:string = "http://localhost:3000/api/authstudents"
+export const changeGroupStudents:string = "http://localhost:3000/api/students/updategroup"
