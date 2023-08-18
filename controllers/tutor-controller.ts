@@ -25,7 +25,7 @@ export const addTutor = async (req: Request, res: Response):Promise<void> => {
 		if(!errors.isEmpty()) {
 			res.status(400).json({ errors: errors.array() })
 		} else {
-			const { name, surname, password, groupId, role }:ITutor = req.body
+			const { name, surname, password, groupId, role, userId }:ITutor = req.body
 			const hashedPassword:string = await hashPassword(password);
 			const tutors = await prisma.tutor.create({
 				data: {
@@ -33,6 +33,7 @@ export const addTutor = async (req: Request, res: Response):Promise<void> => {
 					surname,
 					password:hashedPassword,
 					groupId,
+					userId,
 					role
 				}
 			})

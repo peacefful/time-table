@@ -4,5 +4,6 @@ export interface IStudent {
 	surname: string
 	password: string
 	groupId: number
+	userId: number
 	role: string
 }

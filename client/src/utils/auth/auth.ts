@@ -19,10 +19,11 @@ export const authUser = async (name:string, surname:string, password:string, rol
 						const result:object[] = (await axios.get(institutions)).data
 						const institution:object = result.find(item => item.appellation === groupOrAppellation)
 				
-						const groups:object[] = institution.groups
-						const studentsGroup = groups.find(item => item.groupName === "Учащиеся")
+						const groups:object[] = institution.users
+						console.log(groups);
+						const users = groups.find(item => item.name === "Учащиеся")
 
-						const response = await makeAuthRequest(name, surname, password, role, authDirectors, studentsGroup.id);
+						const response = await makeAuthRequest(name, surname, password, role, authDirectors, users.id);
 						if (response && response.token && response.id) {
 							saveIdUser(response.token, response.id);
 							router.push("/main");

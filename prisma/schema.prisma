@@ -17,13 +17,25 @@ model Director {
 	@@map("directors")
 }
 
+
 model Institution {
 	id Int @id @default(autoincrement())
 	appellation String
 	directorId Int @unique
 	groups Groups[]
+	users Users?
 	institution Director @relation(fields: [directorId], references: [id], onDelete: Cascade)
 	@@map("institutions")
+}
+
+model Users {
+	id Int @id @default(autoincrement())
+	name String
+	institutionId Int @unique
+	tutors Tutor[]
+	students Students[]
+	users Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+	@@map("users")
 }
 
 model Groups {
@@ -43,9 +55,11 @@ model Tutor {
 	name String
 	surname String
 	password String
-	groupId Int
+	groupId Int?
+	userId Int
 	role String
-	Tutor Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	tutor Groups? @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 	@@map("tutors")
 }
 
@@ -67,9 +81,11 @@ model Students {
 	name String
 	surname String
 	password String
-	groupId Int
+	groupId Int?
+	userId Int
 	role String
-	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	group Groups? @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 	@@map("students")
 }
 

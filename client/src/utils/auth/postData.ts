@@ -1,23 +1,32 @@
+import { directors, students, tutors } from "@/API/api-enterprises-institutions";
 import axios from "axios";
 
-export const makeAuthRequest = async (name:string, surname:string, password:string, role:string, authApi:string, groupId?:number) => {
+export const makeAuthRequest = async (name:string, surname:string, password:string, role:string, userId?:number) => {
 	try {
-		if (role === "Куратор" || role === "Студент") {
-			const response = await axios.post(authApi, {
+		if (role === "Куратор") {
+			const response = await axios.post(tutors, {
 				name,
 				surname,
 				password,
 				role,
-				groupId: groupId
+				userId: userId
+			});
+			return response.data;
+		} else if (role === "Студент") {
+			const response = await axios.post(students, {
+				name,
+				surname,
+				password,
+				role,
+				userId: userId
 			});
 			return response.data;
 		} else {
-			const response = await axios.post(authApi, {
+			const response = await axios.post(directors, {
 				name,
 				surname,
 				password,
-				role,
-				groupId
+				role
 			});
 			return response.data;
 		}

@@ -4,5 +4,6 @@ export interface ITutor {
 	surname: string
 	password: string
 	groupId: number
+	userId: number
 	role: string
 }

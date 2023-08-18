@@ -10,7 +10,8 @@ export const getInstitutions = async (req: Request, res: Response):Promise<void>
 	try {
 		const institutions = await prisma.institution.findMany({
 			include: {
-				groups: true
+				groups: true,
+				users: true
 			}
 		})
 		res.json(institutions)

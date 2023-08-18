@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { institutions } from '@/API/api-enterprises-institutions';
+import { institutions, users } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
 import router from '@/router';
 import axios from 'axios';
@@ -17,6 +17,11 @@ async function postInstitutions() {
 		await instance.post(institutions, {
 			appellation: institution.value,
 			directorId: directorId
+		}).then(async () => {
+			await axios.post(users, {
+				name: "Учащиеся",
+				institutionId: directorId
+			})
 		})
 		localStorage.setItem("directorId", directorId)
 		localStorage.setItem("appellation", institution.value)

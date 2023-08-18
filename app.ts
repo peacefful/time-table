@@ -12,6 +12,7 @@ import studentsRouter from "./routers/students-router"
 import timeTablesRouter from "./routers/timeTables-router"
 import tutorsRouter from "./routers/weekdays-router"
 import weekdaysRouter from "./routers/tutors-router"
+import usersRouter from "./routers/users-router"
 
 import { checkingSqlInjection } from "./middlewares/validateDatas";
 import { limiter } from "./middlewares/requestLimit"
@@ -43,6 +44,7 @@ app.use(groupsRouter)
 app.use(studentsRouter)
 app.use(timeTablesRouter)
 app.use(tutorsRouter)
+app.use(usersRouter)
 
 app.use(weekdaysRouter)
 

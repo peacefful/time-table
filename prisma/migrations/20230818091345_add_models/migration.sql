@@ -19,6 +19,15 @@ CREATE TABLE "institutions" (
 );
 
 -- CreateTable
+CREATE TABLE "users" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "institutionId" INTEGER NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "groups" (
     "id" SERIAL NOT NULL,
     "groupName" TEXT NOT NULL,
@@ -35,6 +44,7 @@ CREATE TABLE "tutors" (
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "groupId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
 
     CONSTRAINT "tutors_pkey" PRIMARY KEY ("id")
@@ -55,6 +65,7 @@ CREATE TABLE "students" (
     "surname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "groupId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "role" TEXT NOT NULL,
 
     CONSTRAINT "students_pkey" PRIMARY KEY ("id")
@@ -142,10 +153,16 @@ CREATE TABLE "saturday" (
 CREATE UNIQUE INDEX "institutions_directorId_key" ON "institutions"("directorId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_institutionId_key" ON "users"("institutionId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "timeTables_groupId_key" ON "timeTables"("groupId");
 
 -- AddForeignKey
 ALTER TABLE "institutions" ADD CONSTRAINT "institutions_directorId_fkey" FOREIGN KEY ("directorId") REFERENCES "directors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "users" ADD CONSTRAINT "users_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "groups" ADD CONSTRAINT "groups_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "institutions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -154,10 +171,16 @@ ALTER TABLE "groups" ADD CONSTRAINT "groups_institutionId_fkey" FOREIGN KEY ("in
 ALTER TABLE "tutors" ADD CONSTRAINT "tutors_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "tutors" ADD CONSTRAINT "tutors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "timeTables" ADD CONSTRAINT "timeTables_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "students" ADD CONSTRAINT "students_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "students" ADD CONSTRAINT "students_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "monday" ADD CONSTRAINT "monday_timeTableId_fkey" FOREIGN KEY ("timeTableId") REFERENCES "timeTables"("id") ON DELETE CASCADE ON UPDATE CASCADE;

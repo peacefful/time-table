@@ -25,14 +25,14 @@ const { animationBoolean } = move(500)
 		<main v-if="animationBoolean">
 			<div class="line"></div>
 			<Title title="Группы"/>
-			<p
-				style="padding-top: 1%;"
-				@click="router.push({ name: 'newgroup', params: { form: 'add-group' }})"
-			>
-				Новая группа
-			</p>
 			<div v-if="groupsDatas.length">
-				<div style="margin-top: 2%;" v-for="group in groupsDatas" :key="group.id">
+				<p
+					style="padding-top: 1%;"
+					@click="router.push({ name: 'newgroup', params: { form: 'add-group' }})"
+				>
+					Добавить группу
+				</p>
+				<div style="margin-top: 3%;" v-for="group in groupsDatas" :key="group.id">
 					<p>{{ group.groupName }}</p>
 				</div>
 			</div>

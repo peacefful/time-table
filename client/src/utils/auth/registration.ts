@@ -17,10 +17,10 @@ export const registrationUser = async (name:string, surname:string, password:str
 						const result:object[] = (await axios.get(institutions)).data
 						const institution:object = result.find(item => item.appellation === groupOrAppellation)
 				
-						const groups:object[] = institution.groups
-						const studentsTutorsGroup = groups.find(item => item.groupName === "Учащиеся")
-						await makeAuthRequest(name, surname, password, role, students, studentsTutorsGroup.id);
-
+						const users:object[] = institution.users
+						// console.log(groups);
+						// const users = groups.find(item => item.name === "Учащиеся")
+						await makeAuthRequest(name, surname, password, role, users.id);
 						router.push("/");
 					}
 					registrationStudentsTutors()
