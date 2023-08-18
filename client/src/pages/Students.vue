@@ -14,8 +14,12 @@ async function getStudents() {
 	const ownGroups:object[] = data.filter(item => item.institutionId === institutionId)
 	ownGroups.forEach(item => {
 		const students:object[] = item.students
-		for (const iterator of students) {
-			studentsData.value.push({ name: iterator.name, surname: iterator.surname, role: iterator.role })
+		for (const student of students) {
+			studentsData.value.push({ 
+				name: student.name, 
+				surname: student.surname, 
+				role: student.role 
+			})
 		}
 	})
 }

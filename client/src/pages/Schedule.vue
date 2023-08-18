@@ -2,6 +2,8 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue';
 import { timetables } from "@/API/api-enterprises-institutions"
+import { isLogin } from '@/utils/isLogin';
+import router from '@/router';
 import Header from '@/components/Header.vue';
 import Title from '@/components/Title.vue';
 import axios from 'axios';
@@ -20,12 +22,21 @@ const { animationBoolean } = move(500)
 	<Header/>
 	<transition>
 		<main v-if="animationBoolean">
-			<Title title="Расписание" />
-			<div v-if="schedulesData.length">
-
+			<div class="line"></div>
+			<div v-if="isLogin()">
+				<Title title="Расписание" />
+				<div v-if="schedulesData.length">
+				</div>
+				<div v-else style="margin-top: 1%;">
+					Расписаний пока нету, добавьте новое
+				</div>
 			</div>
-			<div v-else style="margin-top: 1%;">
-				Расписаний пока нету, добавьте новое
+			<div v-else>
+				<p style="margin-top: 2%; text-align: center;">
+					<h2 @click="router.push('/')">
+						Войдите
+					</h2>
+				</p>
 			</div>
 		</main>
 	</transition>

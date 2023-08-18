@@ -1,0 +1,1 @@
+export const isLogin = ():boolean => Boolean(Number(localStorage.getItem("id")))

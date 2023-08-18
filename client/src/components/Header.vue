@@ -3,6 +3,8 @@
 import { move } from '@/hooks/useAnimation';
 import { directors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
+import { isLogin } from '@/utils/isLogin';
+
 import router from '@/router';
 import axios from "axios";
 
@@ -58,27 +60,45 @@ const { animationBoolean } = move(400)
 
 <template>
 	<transition>
-		<header v-if="animationBoolean" class="header">
-			<div class="header__nav">
-				<ul v-for="page in pages" :key="page">
-					<nav>
-						<div class="header__nav-line"></div>
-						<p @click="router.push(page.url)">{{ page.nameNav }}</p>
-					</nav>
-				</ul>
+		<header v-if="animationBoolean">
+			<div v-if="isLogin() === false" class="header">
+				<div class="header__nav">
+					<ul v-for="page in pages" :key="page">
+						<nav style="pointer-events: none;">
+							<div class="header__nav-line"></div>
+							<p @click="router.push(page.url)">{{ page.nameNav }}</p>
+						</nav>
+					</ul>
+				</div>
+				<h3 v-if="authUser">
+					<p @click="router.push('/profile')">{{ authUser.name }}</p>
+				</h3>
+				<h3 v-else>
+					<p>Гость</p>
+				</h3>
 			</div>
-			<h3 v-if="authUser">
-				<p @click="router.push('/profile')">{{ authUser.name }}</p>
-			</h3>
-			<h3 v-else>
-				<p>Гость</p>
-			</h3>
+			<div v-else class="header">
+				<div class="header__nav">
+					<ul v-for="page in pages" :key="page">
+						<nav>
+							<div class="header__nav-line"></div>
+							<p @click="router.push(page.url)">{{ page.nameNav }}</p>
+						</nav>
+					</ul>
+				</div>
+				<h3 v-if="authUser">
+					<p @click="router.push('/profile')">{{ authUser.name }}</p>
+				</h3>
+				<h3 v-else>
+					<p>Гость</p>
+				</h3>
+			</div>
 		</header>
 	</transition>
 </template>
 
 <style scoped lang="scss">
-header {
+.header {
 	border-radius: 15px;
 	margin-top: 1%;
 	padding: 1%;
@@ -98,4 +118,4 @@ header {
 		align-items: center;
 	}
 }
-</style>
+</style>@/utils/isLogin
