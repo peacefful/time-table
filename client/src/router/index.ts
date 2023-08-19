@@ -52,6 +52,12 @@ const router = createRouter({
 	  name: 'newgroup',
 	  component: () => import("../pages/Add-enterprises-institutions.vue"),
 	  props: true
+	},
+	{
+	  path: '/newschedule/:form',
+	  name: 'newschedule',
+	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  props: true
 	}
   ]
 })

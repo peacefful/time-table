@@ -28,7 +28,10 @@ const { animationBoolean } = move(500)
 				<div v-if="schedulesData.length">
 				</div>
 				<div v-else style="margin-top: 1%;">
-					Расписаний пока нету, добавьте новое
+					Расписаний пока нету, 
+					<span @click="router.push({ name:'newschedule', params:{form: 'add-schedules'} })">
+						добавьте новое
+					</span>
 				</div>
 			</div>
 			<div v-else>

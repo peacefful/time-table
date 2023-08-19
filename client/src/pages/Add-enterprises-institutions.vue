@@ -3,6 +3,7 @@ import { move } from '@/hooks/useAnimation';
 import Header from '@/components/Header.vue';
 import AddInstitution from '@/components/Add-institution.vue';
 import AddGroups from '@/components/Add-groups.vue';
+import AddSchedules from '@/components/Add-schedules.vue';
 
 defineProps<{
 	form: string
@@ -20,6 +21,9 @@ const { animationBoolean } = move(600)
 			</div>
 			<div v-else-if="form === 'add-group'">
 				<AddGroups/>
+			</div>
+			<div v-else-if="form === 'add-schedules'">
+				<AddSchedules/>
 			</div>
 		</main>
 	</transition>

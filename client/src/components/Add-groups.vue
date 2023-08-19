@@ -37,8 +37,6 @@ async function addGroup () {
 	}
 }
 
-watch(ids, x => console.log(x))
-
 const isShowModal = ref<boolean>()
 const openModal = () => isShowModal.value = true
 const closeModal = () => isShowModal.value = false
