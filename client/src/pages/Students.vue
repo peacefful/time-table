@@ -32,7 +32,7 @@ const { animationBoolean } = move(500)
 	<Header/>
 	<transition>
 		<main v-if="animationBoolean">
-			<Title title="Студенты / Кураторы"/>
+			<Title title="Студенты"/>
 			<div v-if="studentsData.length">
 				<div style="margin-top: 1%;" v-for="student in studentsData" :key="student.id">
 					<p>{{ student.name }} {{ student.surname }} ({{ student.role }})</p>
