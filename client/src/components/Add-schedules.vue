@@ -1,37 +1,39 @@
 <script setup lang="ts">
-import { tutors } from '@/API/api-enterprises-institutions';
-import { ref, reactive, watch } from 'vue';
+import { groups, timetables, tutors } from '@/API/api-enterprises-institutions';
+import { ref, reactive } from 'vue';
 import axios from 'axios';
+import MondayTable from './weekdays/MondayTable.vue';
+import TuesdayTable from './weekdays/TuesdayTable.vue';
+import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 
 const tutorsData = ref<object[]>([])
 
 async function getTutorsData() {
 	const data:object[] = (await axios.get(tutors)).data
-	tutorsData.value = data.filter(item => item.userId ===  Number(localStorage.getItem('institutionId')))
+	tutorsData.value = data.filter(item => item.userId === Number(localStorage.getItem('institutionId')))
 }
 
 getTutorsData()
 
-interface ICouple {
-	subject: string
-	room: string
-	tutor: string
-	begin: string
-	end: string
+const groupsData = ref<object[]>([])
+
+async function getGroups() {
+	const data:object[] = (await axios.get(groups)).data
+	groupsData.value = data.filter(item => item.institutionId === Number(localStorage.getItem('institutionId')))
 }
 
-const couple:ICouple = reactive({
-	subject: "",
-	room: "",
-	tutor: "",
-	begin: "",
-	end: ""
-})
+getGroups()
 
-const couples = ref<object[]>([couple])
 
-function addCouple() {
-	return couples.value.push(reactive({
+const couplesMonday = ref<object[]>([])
+const couplesTuesday = ref<object[]>([])
+const couplesWednesday = ref<object[]>([])
+const couplesThursday = ref<object[]>([])
+const couplesFriday = ref<object[]>([])
+const couplesSaturday = ref<object[]>([])
+
+function addCouple(couples:object[]) {
+	return couples.push(reactive({
 		subject: "",
 		room: "",
 		tutor: "",
@@ -40,144 +42,70 @@ function addCouple() {
 	}))
 }
 
-function deleteCouple (index:number) {
-	return couples.value.splice(index, 1)
+const groupId = ref<string>('')
+
+async function createSchedulesTable() {
+	await axios.post(timetables, {
+		groupId: groupId.value
+	}).then(async res => {
+		couplesMonday.value.forEach(async couple => {
+			await axios.post(monday, {
+				subject: couple.subject,
+				office: couple.room,
+				teacher: couple.tutor,
+				beginning: couple.begin,
+				end: couple.end,
+				timeTableId: res.data.id
+			})
+		})
+		couplesTuesday.value.forEach(async couple => {
+			await axios.post(tuesday, {
+				subject: couple.subject,
+				office: couple.room,
+				teacher: couple.tutor,
+				beginning: couple.begin,
+				end: couple.end,
+				timeTableId: res.data.id
+			})
+		})
+	})
 }
+
+
 
 </script>
 
 <template>
 	<main style="margin-top: 2%;" class="main">
-		<div class="main__schedule">
+		<form @submit="createSchedulesTable()">
+			<div class="main__schedule">
 			<h1>Новое расписание</h1>
-			<form 
-				class="main__schedule-form" 
-				v-for="(couple, index) in couples" 
-				:key="couple"
-			>
-				<div class="main__schedule-input-text">
-					<input v-model="couple.subject" type="text" placeholder="Предмет">
-					<input v-model="couple.room" type="text" placeholder="Кабинет">
-					<select v-model="couple.tutor">
-						<option disabled value="">Преподаватель</option>
-						<option v-for="tutor in tutorsData" :key="tutor.id">
-							{{ tutor.name }} {{ tutor.surname }}
-						</option>
-					</select>
-				</div>
-				<div class="main__schedule-input-time">
-					<p>Начало</p>
-					<input
-						v-model="couple.begin"
-						type="time" 
-						placeholder="8"
-						max="24"
-						min="0"
-					>
-					<p>Конец</p>
-					<input 
-						v-model="couple.end"
-						type="time" 
-						placeholder="13"
-						max="24"
-						min="0"
-					>
-				</div>
-				<button class="remove-couple" @click.prevent="deleteCouple(index)">Удалить</button>
-			</form>
+			<MondayTable
+				style="margin-top: 2%;"
+				:couples-monday="couplesMonday"
+				@add="addCouple(couplesMonday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
+			<TuesdayTable
+				:couples-tuesday="couplesTuesday"
+				@add="addCouple(couplesTuesday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
+			{{ couplesMonday }}
+			{{ couplesTuesday }}
 			<div>
-				<button @click="addCouple()" class="add-couple">Добавить пару</button>
+				<select v-model="groupId">
+					<option disabled value="">Выберите группу</option>
+					<option v-for="group in groupsData" :key="group.id" :value="group.id">
+						{{ group.groupName }}
+					</option>
+				</select>
 			</div>
+			{{ groupId }}
 			<button type="submit" style="margin-top: 1%;">Сохранить</button>
 		</div>
+		</form>
 	</main>
 </template>
-
-<style scoped lang="scss">
-@import "../scss/mixins";
-
-.remove-couple {
-	@include button(red, white);
-	margin-left: 1%;
-	padding: 0.5%;
-}
-.add-couple {
-	@include button(rgb(64, 255, 0), white);
-	margin-top: 2%;
-}
-
-input[type='text'] {
-	padding: 0.5%;
-	margin: 0;
-	border: 0;
-	max-width: 300px;
-}
-
-select {
-	margin-top: 1%;
-	padding: 0.5%;
-}
-
-input[type='number'] {
-	text-align: center;
-	margin: 0;
-	border: 0;
-	padding: 0.5%;
-	max-width: 100px;
-}
-.main {
-	.main__schedule {
-		.main__schedule-form {
-			display: flex;
-			align-items: center;
-			.main__schedule-input-text {
-				max-width: 1000px;
-				width: 1000px;
-				justify-content: space-between;
-				display: flex;
-				input {
-					margin-top: 1%;
-				}
-			}
-			.main__schedule-input-time{
-				width: 500px;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				margin-left: 2%;
-			}
-		}
-	}
-}
-
-
-@media screen and (max-width: 1385px) {
-	.main {
-	.main__schedule {
-		text-align: center;
-	}
-	.main__schedule-form {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		.main__schedule-input-text {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			input {
-				margin-top: 1%;
-			}
-		}
-		.main__schedule-input-time{
-			margin-top: 2%;
-			width: 500px;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			justify-content: space-between;
-			margin-left: 2%;
-		}
-	}
-}
-}
-</style>

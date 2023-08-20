@@ -61,3 +61,11 @@ const closeModal = () => isShowModal.value = false
 		</div>
 	</main>
 </template>
+
+<style scoped>
+
+input {
+	margin-top: 1%;
+}
+
+</style>
