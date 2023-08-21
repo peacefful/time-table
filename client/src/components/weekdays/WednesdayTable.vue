@@ -2,7 +2,7 @@
 import { removeCouple } from "@/utils/removeCouple";
 
 defineProps<{
-	couplesMonday: object[]
+	couplesWednesday: object[]
 	getTutorsData: Function
 	tutorsData: object[]
 }>()
@@ -13,12 +13,12 @@ defineEmits(['add', 'getTutorsData'])
 
 <template>
 	<main>
-		<div style="color: rgba(240, 248, 255, 0.613);">
-			<h3>Понедельник</h3>
+		<div style="color: rgba(240, 248, 255, 0.613); margin-top: 1%;">
+			<h3>Среда</h3>
 		</div>
 			<div 
 				class="main__schedule-form" 
-				v-for="(couple, index) in couplesMonday" 
+				v-for="(couple, index) in couplesWednesday" 
 				:key="couple"
 			>
 				<div class="main__schedule-input-text">
@@ -34,22 +34,22 @@ defineEmits(['add', 'getTutorsData'])
 			<div class="main__schedule-input-time">
 				<p>Начало</p>
 				<input
-				v-model="couple.beginning"
-				type="time" 
-				placeholder="8"
-				max="24"
-				min="0"
+					v-model="couple.beginning"
+					type="time" 
+					placeholder="8"
+					max="24"
+					min="0"
 				>
 				<p>Конец</p>
 				<input 
-				v-model="couple.end"
-				type="time" 
-				placeholder="13"
-				max="24"
-				min="0"
+					v-model="couple.end"
+					type="time" 
+					placeholder="13"
+					max="24"
+					min="0"
 				>
 			</div>
-			<button class="remove-couple" @click.prevent="removeCouple(index, couplesMonday)">Удалить</button>
+			<button class="remove-couple" @click.prevent="removeCouple(index, couplesWednesday)">Удалить</button>
 		</div>
 		<div>
 			<button @click.prevent="$emit('add')" class="add-couple">Добавить пару</button>

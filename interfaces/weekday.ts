@@ -5,5 +5,5 @@ export interface IWeekday {
 	teacher: string
 	beginning: string
 	end: string
-	timeTableId: number
+	groupId: number
 }

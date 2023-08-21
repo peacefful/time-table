@@ -13,7 +13,9 @@ defineEmits(['add', 'getTutorsData'])
 
 <template>
 	<main>
-		<div style="color: rgba(240, 248, 255, 0.613); margin-top: 1%;">Вторник</div>
+		<div style="color: rgba(240, 248, 255, 0.613); margin-top: 1%;">
+			<h3>Вторник</h3>
+		</div>
 			<div 
 				class="main__schedule-form" 
 				v-for="(couple, index) in couplesTuesday" 
@@ -21,8 +23,8 @@ defineEmits(['add', 'getTutorsData'])
 			>
 				<div class="main__schedule-input-text">
 				<input v-model="couple.subject" type="text" placeholder="Предмет">
-				<input v-model="couple.room" type="text" placeholder="Кабинет">
-				<select v-model="couple.tutor">
+				<input v-model="couple.office" type="text" placeholder="Кабинет">
+				<select v-model="couple.teacher">
 					<option disabled value="">Преподаватель</option>
 					<option v-for="tutor in tutorsData" :key="tutor.id">
 						{{ tutor.name }} {{ tutor.surname }}
@@ -32,7 +34,7 @@ defineEmits(['add', 'getTutorsData'])
 			<div class="main__schedule-input-time">
 				<p>Начало</p>
 				<input
-					v-model="couple.begin"
+					v-model="couple.beginning"
 					type="time" 
 					placeholder="8"
 					max="24"

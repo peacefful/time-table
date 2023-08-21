@@ -42,7 +42,7 @@ app.use(institutionsRouter)
 app.use(directorsRouter)
 app.use(groupsRouter)
 app.use(studentsRouter)
-app.use(timeTablesRouter)
+// app.use(timeTablesRouter)
 app.use(tutorsRouter)
 app.use(usersRouter)
 

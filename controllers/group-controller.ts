@@ -8,7 +8,12 @@ export const getGroups = async (req: Request, res: Response):Promise<void> => {
 	try {
 		const groups = await prisma.groups.findMany({
 			include: {
-				timeTable: true,
+				monday: true,
+				tuesday: true,
+				wednesday: true,
+				thursday: true,
+				friday: true,
+				saturday: true,
 				tutors: true,
 				students: true
 			}

@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { groups, timetables, tutors } from '@/API/api-enterprises-institutions';
+import { groups, tutors } from '@/API/api-enterprises-institutions';
 import { ref, reactive } from 'vue';
+import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 import axios from 'axios';
 import MondayTable from './weekdays/MondayTable.vue';
 import TuesdayTable from './weekdays/TuesdayTable.vue';
-import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
+import WednesdayTable from './weekdays/WednesdayTable.vue';
+import ThursdayTable from './weekdays/ThursdayTable.vue';
+import FridayTable from './weekdays/FridayTable.vue';
+import SaturdayTable from './weekdays/SaturdayTable.vue';
 
 const tutorsData = ref<object[]>([])
 
@@ -24,7 +28,6 @@ async function getGroups() {
 
 getGroups()
 
-
 const couplesMonday = ref<object[]>([])
 const couplesTuesday = ref<object[]>([])
 const couplesWednesday = ref<object[]>([])
@@ -35,44 +38,33 @@ const couplesSaturday = ref<object[]>([])
 function addCouple(couples:object[]) {
 	return couples.push(reactive({
 		subject: "",
-		room: "",
-		tutor: "",
-		begin: "",
-		end: ""
+		office: "",
+		teacher: "",
+		beginning: "",
+		end: "",
+		groupId: null
 	}))
 }
 
 const groupId = ref<string>('')
 
+const couples:object[] = [
+	{ object: couplesMonday.value, api: monday },
+	{ object: couplesTuesday.value, api: tuesday },
+	{ object: couplesWednesday.value, api: wednesday },
+	{ object: couplesThursday.value, api: thursday },
+	{ object: couplesFriday.value, api: friday },
+	{ object: couplesSaturday.value, api: saturday },
+]
+
 async function createSchedulesTable() {
-	await axios.post(timetables, {
-		groupId: groupId.value
-	}).then(async res => {
-		couplesMonday.value.forEach(async couple => {
-			await axios.post(monday, {
-				subject: couple.subject,
-				office: couple.room,
-				teacher: couple.tutor,
-				beginning: couple.begin,
-				end: couple.end,
-				timeTableId: res.data.id
-			})
-		})
-		couplesTuesday.value.forEach(async couple => {
-			await axios.post(tuesday, {
-				subject: couple.subject,
-				office: couple.room,
-				teacher: couple.tutor,
-				beginning: couple.begin,
-				end: couple.end,
-				timeTableId: res.data.id
-			})
+	couples.forEach(async couple => {
+		couple.object.forEach(async item => {
+			item.groupId = groupId.value
+			await axios.post(couple.api, item)
 		})
 	})
 }
-
-
-
 </script>
 
 <template>
@@ -93,8 +85,30 @@ async function createSchedulesTable() {
 				:tutors-data="tutorsData"
 				:get-tutors-data="getTutorsData"
 			/>
-			{{ couplesMonday }}
-			{{ couplesTuesday }}
+			<WednesdayTable
+				:couples-wednesday="couplesWednesday"
+				@add="addCouple(couplesWednesday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
+			<ThursdayTable
+				:couples-thursday="couplesThursday"
+				@add="addCouple(couplesThursday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
+			<FridayTable
+				:couples-friday="couplesFriday"
+				@add="addCouple(couplesFriday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
+			<SaturdayTable
+				:couples-saturday="couplesSaturday"
+				@add="addCouple(couplesSaturday)"
+				:tutors-data="tutorsData"
+				:get-tutors-data="getTutorsData"
+			/>
 			<div>
 				<select v-model="groupId">
 					<option disabled value="">Выберите группу</option>
@@ -103,9 +117,22 @@ async function createSchedulesTable() {
 					</option>
 				</select>
 			</div>
-			{{ groupId }}
 			<button type="submit" style="margin-top: 1%;">Сохранить</button>
 		</div>
 		</form>
 	</main>
 </template>
+
+<style>
+input[type='text'] {
+	padding: 0.5%;
+	margin: 0;
+	border: 0;
+	max-width: 300px;
+}
+
+select {
+	margin-top: 1%;
+	padding: 0.5%;
+}
+</style>

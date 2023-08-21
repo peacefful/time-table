@@ -43,9 +43,14 @@ model Groups {
 	groupName String
 	course String
 	institutionId Int
-	timeTable TimeTable[]
 	tutors Tutor[]
 	students Students[]
+	monday Monday[]
+	tuesday Tuesday[]
+	wednesday Wednesday[]
+	thursday Thursday[] 
+	friday Friday[] 
+	saturday Saturday[] 
 	group Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
 	@@map("groups")
 }
@@ -63,18 +68,13 @@ model Tutor {
 	@@map("tutors")
 }
 
-model TimeTable {
-	id Int @id @default(autoincrement())
-	groupId Int @unique
-	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
-	monday Monday[]
-	tuesday Tuesday[]
-	wednesday Wednesday[]
-	thursday Thursday[] 
-	friday Friday[] 
-	saturday Saturday[] 
-	@@map("timeTables")
-}
+// model TimeTable {
+// 	id Int @id @default(autoincrement())
+// 	groupId Int @unique
+// 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
+	
+// 	@@map("timeTables")
+// }
 
 model Students {
 	id Int @id @default(autoincrement())
@@ -96,8 +96,8 @@ model Monday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("monday")
 }
 
@@ -108,8 +108,8 @@ model Tuesday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int 
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("tuesday")
 }
 
@@ -120,8 +120,8 @@ model Wednesday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("wednesday")
 }
 
@@ -132,8 +132,8 @@ model Thursday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int 
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("thursday")
 }
 
@@ -144,8 +144,8 @@ model Friday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int 
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("friday")
 }
 
@@ -156,7 +156,7 @@ model Saturday {
 	teacher String
 	beginning String
 	end String
-	timeTableId Int 
-	timeTable TimeTable @relation(fields: [timeTableId], references: [id], onDelete: Cascade)
+	groupId Int @unique
+	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("saturday")
 }
