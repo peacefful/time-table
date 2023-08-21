@@ -48,7 +48,7 @@ const closeModal = () => isShowModal.value = false
 			<h1>Новая группа</h1>
 			<form class="add-enterprises-institutions__form" @submit.prevent="addGroup()">
 				<input type="text" placeholder="Группа" v-model="group">
-				<input type="text" placeholder="Курс" v-model="course">
+				<input style="margin-top: 1%;" type="text" placeholder="Курс" v-model="course">
 				<button @click.prevent="openModal()">Добавить студентов</button>
 				<SelectStudentsTutors
 					v-model:ids="ids"
@@ -61,11 +61,3 @@ const closeModal = () => isShowModal.value = false
 		</div>
 	</main>
 </template>
-
-<style scoped>
-
-input {
-	margin-top: 1%;
-}
-
-</style>

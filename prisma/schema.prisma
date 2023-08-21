@@ -96,7 +96,7 @@ model Monday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("monday")
 }
@@ -108,7 +108,7 @@ model Tuesday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("tuesday")
 }
@@ -120,7 +120,7 @@ model Wednesday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("wednesday")
 }
@@ -132,7 +132,7 @@ model Thursday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int 
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("thursday")
 }
@@ -144,7 +144,7 @@ model Friday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int 
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("friday")
 }
@@ -156,7 +156,7 @@ model Saturday {
 	teacher String
 	beginning String
 	end String
-	groupId Int @unique
+	groupId Int 
 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
 	@@map("saturday")
 }

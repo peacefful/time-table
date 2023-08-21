@@ -14,7 +14,7 @@ defineEmits(['add', 'getTutorsData'])
 <template>
 	<main>
 		<div style="color: rgba(240, 248, 255, 0.613); margin-top: 1%;">
-			<h3>Пятнница</h3>
+			<h3>Суббота</h3>
 		</div>
 			<div 
 				class="main__schedule-form" 
