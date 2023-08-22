@@ -9,7 +9,6 @@ import institutionsRouter from "./routers/institutions-router"
 import directorsRouter from "./routers/directors-router"
 import groupsRouter from "./routers/groups-router"
 import studentsRouter from "./routers/students-router"
-import timeTablesRouter from "./routers/timeTables-router"
 import tutorsRouter from "./routers/weekdays-router"
 import weekdaysRouter from "./routers/tutors-router"
 import usersRouter from "./routers/users-router"
@@ -42,7 +41,6 @@ app.use(institutionsRouter)
 app.use(directorsRouter)
 app.use(groupsRouter)
 app.use(studentsRouter)
-// app.use(timeTablesRouter)
 app.use(tutorsRouter)
 app.use(usersRouter)
 

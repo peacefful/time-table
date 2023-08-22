@@ -61,8 +61,6 @@ const { animationBoolean } = move(500)
 </template>
 
 <style scoped lang="scss">
-
-
 ul {
 	margin-top: 2%;
 	li {

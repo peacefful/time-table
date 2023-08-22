@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { groups, tutors } from '@/API/api-enterprises-institutions';
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 import axios from 'axios';
 import MondayTable from './weekdays/MondayTable.vue';
@@ -28,6 +28,15 @@ async function getGroups() {
 
 getGroups()
 
+// const example = reactive({
+// 	subject: "",
+// 	office: "",
+// 	teacher: "",
+// 	beginning: "",
+// 	end: "",
+// 	groupId: null
+// })
+
 const couplesMonday = ref<object[]>([])
 const couplesTuesday = ref<object[]>([])
 const couplesWednesday = ref<object[]>([])
@@ -46,7 +55,7 @@ function addCouple(couples:object[]) {
 	}))
 }
 
-const groupId = ref<string>('')
+const groupId = ref<number>()
 
 const couples:object[] = [
 	{ object: couplesMonday.value, api: monday },
@@ -58,18 +67,21 @@ const couples:object[] = [
 ]
 
 async function createSchedulesTable() {
-	couples.forEach(async couple => {
-		couple.object.forEach(async item => {
-			item.groupId = groupId.value
-			await axios.post(couple.api, item)
-		})
-	})
+	for (const couple of couples) {
+		for (const item of couple.object) {
+			item.groupId = groupId.value;
+			await axios.post(couple.api, item);
+			setTimeout(() => {
+				location.reload()
+			}, 100);
+		}
+	}
 }
 </script>
 
 <template>
 	<main style="margin-top: 2%;" class="main">
-		<form @submit="createSchedulesTable()">
+		<form @submit.prevent="createSchedulesTable()">
 			<div class="main__schedule">
 			<h1>Новое расписание</h1>
 			<MondayTable
@@ -124,13 +136,6 @@ async function createSchedulesTable() {
 </template>
 
 <style>
-input[type='text'] {
-	padding: 0.5%;
-	margin: 0;
-	border: 0;
-	max-width: 300px;
-}
-
 select {
 	margin-top: 1%;
 	padding: 0.5%;

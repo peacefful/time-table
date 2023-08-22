@@ -28,7 +28,3 @@ const { animationBoolean } = move(600)
 		</main>
 	</transition>
 </template>
-
-<style scoped lang="scss">
-
-</style>

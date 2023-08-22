@@ -84,6 +84,10 @@ a,p {
 	display: flex;
 	text-align: center;
 	justify-content: center;
+	input {
+		margin-top: 5%;
+		padding: 6%;
+	}
 	h3{
 		font-size: 50px;
 	}
@@ -100,10 +104,7 @@ a,p {
 		align-items: center;
 		padding: 0% 30%;
 	}
-	input {
-		margin-top: 5%;
-		padding: 6%;
-	}
+	
 	label {
 		padding: 5%;
 		width: 300px;
@@ -191,6 +192,13 @@ input[type='number'] {
 			display: flex;
 			align-items: center;
 			.main__schedule-input-text {
+				input[type='text'] {
+					padding: 0.5%;
+					margin: 0;
+					border: 0;
+					max-width: 300px;
+				}
+				margin-top: 0.5%;
 				max-width: 1000px;
 				width: 1000px;
 				justify-content: space-between;
