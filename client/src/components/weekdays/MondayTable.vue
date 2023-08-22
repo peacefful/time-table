@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { removeCouple } from "@/utils/removeCouple";
+import { removeCouple } from "@/utils/crud/deleteCouple";
 
 defineProps<{
 	couplesMonday: object[]
@@ -22,7 +22,12 @@ defineEmits(['add', 'getTutorsData'])
 				:key="couple"
 			>
 				<div class="main__schedule-input-text">
-				<input v-model="couple.subject" type="text" placeholder="Предмет">
+				<input 
+					v-model="couple.subject" 
+					type="text" 
+					placeholder="Предмет"
+					@input="checkTime(couple.subject)"
+				>
 				<input v-model="couple.office" type="text" placeholder="Кабинет">
 				<select v-model="couple.teacher">
 					<option disabled value="">Преподаватель</option>
@@ -34,19 +39,15 @@ defineEmits(['add', 'getTutorsData'])
 			<div class="main__schedule-input-time">
 				<p>Начало</p>
 				<input
-				v-model="couple.beginning"
-				type="time" 
-				placeholder="8"
-				max="24"
-				min="0"
+					v-model="couple.beginning"
+					type="time"
+					placeholder="8"
 				>
 				<p>Конец</p>
 				<input 
-				v-model="couple.end"
-				type="time" 
-				placeholder="13"
-				max="24"
-				min="0"
+					v-model="couple.end"
+					type="time" 
+					placeholder="13"
 				>
 			</div>
 			<button class="remove-couple" @click.prevent="removeCouple(index, couplesMonday)">Удалить</button>
@@ -55,4 +56,4 @@ defineEmits(['add', 'getTutorsData'])
 			<button @click.prevent="$emit('add')" class="add-couple">Добавить пару</button>
 		</div>
 	</main>
-</template>
+</template>@/utils/deleteCouple@/utils/crud/deleteCouple

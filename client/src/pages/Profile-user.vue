@@ -29,15 +29,17 @@ getUserData()
 
 <style scoped lang="scss">
 .main {
-	width: 1000px;
-	margin: auto;
 	.main__wrapper{
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
 		div{
+			color: rgba(240, 255, 255, 0.579);
 			margin-top: 1%;
+			&:hover {
+				color: white;
+			}
 		}
 		button {
 			margin-top: 2%;

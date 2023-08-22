@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue';
-import { isLogin } from '@/utils/isLogin';
+import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import router from '@/router';
 import Header from '@/components/Header.vue';
-import Title from '@/components/Title.vue';
-import axios from 'axios';
+import Title from '@/components/TitlePage.vue';
 
 const schedulesData = ref<object[]>([])
 
@@ -16,7 +15,7 @@ const { animationBoolean } = move(500)
 	<transition>
 		<main v-if="animationBoolean">
 			<div class="line"></div>
-			<div v-if="isLogin()">
+			<div v-if="isEmptyLogin()">
 				<Title title="Расписание" />
 				<div v-if="schedulesData.length">
 				</div>
@@ -36,4 +35,4 @@ const { animationBoolean } = move(500)
 			</div>
 		</main>
 	</transition>
-</template>
+</template>@/utils/isEmptyLogin

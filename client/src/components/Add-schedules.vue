@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { groups, tutors } from '@/API/api-enterprises-institutions';
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 import axios from 'axios';
 import MondayTable from './weekdays/MondayTable.vue';
@@ -28,15 +28,6 @@ async function getGroups() {
 
 getGroups()
 
-// const example = reactive({
-// 	subject: "",
-// 	office: "",
-// 	teacher: "",
-// 	beginning: "",
-// 	end: "",
-// 	groupId: null
-// })
-
 const couplesMonday = ref<object[]>([])
 const couplesTuesday = ref<object[]>([])
 const couplesWednesday = ref<object[]>([])
@@ -45,7 +36,7 @@ const couplesFriday = ref<object[]>([])
 const couplesSaturday = ref<object[]>([])
 
 function addCouple(couples:object[]) {
-	return couples.push(reactive({
+	couples.push(reactive({
 		subject: "",
 		office: "",
 		teacher: "",
@@ -55,7 +46,7 @@ function addCouple(couples:object[]) {
 	}))
 }
 
-const groupId = ref<number>()
+const groupId = ref<string>('')
 
 const couples:object[] = [
 	{ object: couplesMonday.value, api: monday },
@@ -71,9 +62,7 @@ async function createSchedulesTable() {
 		for (const item of couple.object) {
 			item.groupId = groupId.value;
 			await axios.post(couple.api, item);
-			setTimeout(() => {
-				location.reload()
-			}, 100);
+			setTimeout(() => location.reload(), 100);
 		}
 	}
 }

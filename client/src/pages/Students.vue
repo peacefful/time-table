@@ -1,30 +1,39 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+<!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
-import { groups } from '@/API/api-enterprises-institutions';
+import { groups, students } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
 import Header from '@/components/Header.vue';
-import Title from '@/components/Title.vue';
+import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
 
 const studentsData = ref<object[]>([])
 const institutionId:number = Number(localStorage.getItem("institutionId"))
+const role = localStorage.getItem("role")
 
-async function getStudents() {
-	const data:object[] = (await axios.get(groups)).data
-	const ownGroups:object[] = data.filter(item => item.institutionId === institutionId)
-	ownGroups.forEach(item => {
-		const students:object[] = item.students
-		for (const student of students) {
-			studentsData.value.push({ 
-				name: student.name, 
-				surname: student.surname, 
-				role: student.role 
-			})
-		}
-	})
+if (role === "Директор") {
+	async function getStudents() {
+		const data:object[] = (await axios.get(groups)).data
+		const ownGroups:object[] = data.filter(item => item.institutionId === institutionId)
+		ownGroups.forEach(item => {
+			const students:object[] = item.students
+			for (const student of students) {
+				studentsData.value.push({ 
+					name: student.name, 
+					surname: student.surname, 
+					role: student.role 
+				})
+			}
+		})
+	}
+	getStudents()
+} else if (role === "Студент") {
+	async function getStudents() {
+		studentsData.value = (await axios.get(students)).data
+	}
+	getStudents()
 }
-
-getStudents()
 
 const { animationBoolean } = move(500)
 </script>

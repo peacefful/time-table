@@ -1,19 +1,20 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
-import { directors } from "@/API/api-enterprises-institutions";
+import { directors, students } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
-import { isLogin } from '@/utils/isLogin';
+import { isEmptyLogin } from '@/utils/isEmptyLogin';
 
 import router from '@/router';
 import axios from "axios";
+const role = localStorage.getItem("role")
 
 interface IPages {
 	groups: {
 		nameNav: string
 		url: string
 	},
-	students: {
+	students?: {
 		nameNav: string
 		url: string
 	},
@@ -48,12 +49,20 @@ const pages:IPages = {
 
 const authUser = ref<object>({})
 
-async function getAuthUser (api:string) {
-	const users = (await axios.get(api)).data
-	authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+async function getAuthUser () {
+	if (role === 'Студент') {
+		const users = (await axios.get(students)).data
+		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+	} else if (role === 'Директор') {
+		const users = (await axios.get(directors)).data
+		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+	}
 }
 
-getAuthUser(directors)
+getAuthUser()
+
+console.log(localStorage.getItem('role'));
+console.log(localStorage.getItem('id'));
 
 const { animationBoolean } = move(400)
 </script>
@@ -61,7 +70,7 @@ const { animationBoolean } = move(400)
 <template>
 	<transition>
 		<header v-if="animationBoolean">
-			<div v-if="isLogin() === false" class="header">
+			<div v-if="isEmptyLogin() === false && role === 'Студент'" class="header">
 				<div class="header__nav">
 					<ul v-for="page in pages" :key="page">
 						<nav style="pointer-events: none;">
@@ -118,4 +127,4 @@ const { animationBoolean } = move(400)
 		align-items: center;
 	}
 }
-</style>@/utils/isLogin
+</style>

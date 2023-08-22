@@ -58,18 +58,20 @@ export const checkDirector = async (req: Request, res: Response): Promise<void> 
 					role
 				},
 			});
-
 			if (director) {
 				const passwordMatch = await bcrypt.compare(password, director.password);
 				if (passwordMatch) {
 					const token = jwt.sign({
-						directorId: director.id,
 						name: director.name,
 						surname: director.surname,
 						password: director.password,
 						role: director.role,
 					}, keyJwt, { expiresIn: "1h" })
-					res.status(200).json({ token: `Bearer ${token}`, id: director.id });
+					res.status(200).json({ 
+						token: `Bearer ${token}`, 
+						id: director.id,
+						role:director.role
+					});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

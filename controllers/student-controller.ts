@@ -57,7 +57,6 @@ export const checkStudent = async (req: Request, res: Response): Promise<void> =
 					role
 				},
 			});
-
 			if (student) {
 				const passwordMatch = await bcrypt.compare(password, student.password);
 				if (passwordMatch) {
@@ -68,7 +67,11 @@ export const checkStudent = async (req: Request, res: Response): Promise<void> =
 						studentId: student.id,
 						role: student.role
 					}, keyJwt, { expiresIn: 60 * 60 })
-					res.status(200).json({token: `Bearer ${token}`, id: student.id});
+					res.status(200).json({
+						token: `Bearer ${token}`, 
+						id: student.id,
+						role: student.role,
+					});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

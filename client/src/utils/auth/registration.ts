@@ -1,6 +1,6 @@
 import router from "@/router"
-import { directors, institutions, students } from "@/API/api-enterprises-institutions"
-import { makeAuthRequest } from "./postData"
+import { directors, institutions } from "@/API/api-enterprises-institutions"
+import { makeRegRequest } from "./regData"
 import axios from "axios"
 
 const symbols:string[] = ["!", "@", "#", "$", "%", "^", "&", "*", "_"]
@@ -18,14 +18,12 @@ export const registrationUser = async (name:string, surname:string, password:str
 						const institution:object = result.find(item => item.appellation === groupOrAppellation)
 				
 						const users:object[] = institution.users
-						// console.log(groups);
-						// const users = groups.find(item => item.name === "Учащиеся")
-						await makeAuthRequest(name, surname, password, role, users.id);
+						await makeRegRequest(name, surname, password, role, users.id);
 						router.push("/");
 					}
 					registrationStudentsTutors()
 				} else {
-					await makeAuthRequest(name, surname, password, role, directors);
+					await makeRegRequest(name, surname, password, role, directors);
 					router.push("/");
 				}
 			} else {

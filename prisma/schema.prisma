@@ -68,14 +68,6 @@ model Tutor {
 	@@map("tutors")
 }
 
-// model TimeTable {
-// 	id Int @id @default(autoincrement())
-// 	groupId Int @unique
-// 	group Groups @relation(fields: [groupId], references: [id], onDelete: Cascade)
-	
-// 	@@map("timeTables")
-// }
-
 model Students {
 	id Int @id @default(autoincrement())
 	name String

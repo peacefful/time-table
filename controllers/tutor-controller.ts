@@ -68,7 +68,11 @@ export const checkTutor = async (req: Request, res: Response): Promise<void> => 
 						tutorId: tutor.id,
 						role: tutor.role
 					}, keyJwt, { expiresIn: 60 * 60 })
-					res.status(200).json({token: `Bearer ${token}`, id: tutor.id});
+					res.status(200).json({
+						token: `Bearer ${token}`, 
+						id: tutor.id,
+						role: tutor.role
+					});
 				} else {
 					res.status(401).json({ message: 'Invalid credentials' });
 				}

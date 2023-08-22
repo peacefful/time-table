@@ -10,12 +10,12 @@ const props = defineProps<{
 const emit = defineEmits(['closeModal', 'update:ids'])
 
 const ids = computed({
-  get() {
-    return props.ids
-  },
-  set(value) {
-    emit('update:ids', value)
-  }
+	get() {
+		return props.ids
+	},
+	set(value) {
+		emit('update:ids', value)
+	}
 })
 
 const isShowModal = ref<boolean>(true)

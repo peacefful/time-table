@@ -48,7 +48,7 @@ const { animationBoolean } = move(500)
 					</select>
 					<select
 						v-model="groupOrAppellation"
-						v-if="role === 'Куратор'"
+						v-if="role === 'Куратор' || role === 'Студент'"
 						style="margin-top: 8%;" 
 					>
 						<option disabled value="">Ваше учреждение</option>

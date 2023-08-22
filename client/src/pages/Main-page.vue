@@ -1,27 +1,38 @@
+<!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
 import { useCrud } from "@/stores/crud";
 import { directors, institutions } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
-import { isLogin } from "@/utils/isLogin";
+import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import Header from "@/components/Header.vue";
-import Title from "@/components/Title.vue";
+import Title from "@/components/TitlePage.vue";
 import router from "@/router";
 import axios from "axios";
 
 const institutionData = ref<object>()
 const directorData = ref<object>()
+const appellation = ref<string|null>(localStorage.getItem('appellation'))
+const role = localStorage.getItem('role')
 
 const { getDatas } = useCrud()
 
-getDatas(directors, directorData, Number(localStorage.getItem("id")), 'id')
+if (role === "Директор") {
+	getDatas(directors, directorData, Number(localStorage.getItem("id")), 'id')
 
-async function getInstitutionData() {
-	const result = (await axios.get(institutions)).data
-	institutionData.value = result.find(item => item.directorId === Number(localStorage.getItem("id")))
-	localStorage.setItem("institutionId", institutionData.value.id)
+	async function getInstitutionData() {
+		const result = (await axios.get(institutions)).data
+		institutionData.value = result.find(item => item.directorId === Number(localStorage.getItem("id")))
+		localStorage.setItem("institutionId", institutionData.value.id)
+	}
+	getInstitutionData()
+} else if (role === "Студент") {
+	async function getDirector() {
+		const data:object[] = (await axios.get(directors)).data
+		directorData.value = data.find(director => director.institution.appellation === appellation.value)
+	}
+	getDirector()
 }
-getInstitutionData()
 
 const { animationBoolean } = move(500)
 </script>
@@ -30,22 +41,31 @@ const { animationBoolean } = move(500)
 	<transition>
 		<main v-if="animationBoolean">
 			<div class="line"></div>
-			<div v-if="isLogin()">
-				<div v-if="institutionData">
-					<Title :title="institutionData.appellation" />
+			<div v-if="isEmptyLogin()">
+				<div v-if="role === 'Студент'">
+					<Title :title="appellation" />
 					<div style="margin-top: 2%;">
 						<h3>Директор</h3>
-						<div v-for="director in directorData" :key="director.id">
-							<p style="margin-top: 0.5%;">{{ director.name }} {{ director.surname }}</p>
-						</div>
+						<p style="margin-top: 0.5%;">{{ directorData.name }} {{ directorData.surname }}</p>
 					</div>
 				</div>
-				<div v-else>
-					<div style="margin-top: 2%;" >
-						Учреждения пока нету,
-						<span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
-							добавьте новое
-						</span>
+				<div v-else-if="role === 'Директор'">
+					<div v-if="institutionData">
+						<Title :title="institutionData.appellation" />
+						<div style="margin-top: 2%;">
+							<h3>Директор</h3>
+							<div v-for="director in directorData" :key="director.id">
+								<p style="margin-top: 0.5%;">{{ director.name }} {{ director.surname }}</p>
+							</div>
+						</div>
+					</div>
+					<div v-else>
+						<div style="margin-top: 2%;" >
+							Учреждения пока нету,
+							<span @click="router.push({ name: 'newinstitution', params: { form: 'add-institution' }})">
+								добавьте новое
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -76,4 +96,4 @@ button {
 	padding: 0.5% 3%;
 	margin-top: 1%;
 }
-</style>../components/modal/openCloseDataModal
+</style>../components/modal/openCloseDataModal@/utils/isEmptyLogin

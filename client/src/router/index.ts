@@ -39,7 +39,7 @@ const router = createRouter({
 	{
 	  path: '/schedule',
 	  name: 'schedule',
-	  component: () => import("../pages/Schedule.vue")
+	  component: () => import("../pages/Schedule-table.vue")
 	},
 	{
 	  path: '/newinstitution/:form',
