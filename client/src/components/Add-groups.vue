@@ -32,6 +32,7 @@ async function addGroup () {
 			})
 			router.push("/groups")
 		})
+		router.push("/groups")
 	} catch (error) {
 		console.log(error);
 	}

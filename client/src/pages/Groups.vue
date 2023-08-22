@@ -34,7 +34,7 @@ const { animationBoolean } = move(500)
 						style="padding-top: 1%;"
 						@click="router.push({ name: 'newgroup', params: { form: 'add-group' }})"
 					>
-						Добавить группу
+						Создать группу
 					</p>
 					<div style="margin-top: 4%;">
 						<div style="margin-top: 1%;" v-for="group in groupsDatas" :key="group.id">
