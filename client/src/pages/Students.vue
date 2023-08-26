@@ -2,8 +2,9 @@
 <!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
-import { groups, students } from '@/API/api-enterprises-institutions';
+import { institutions, users } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
+import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
@@ -14,23 +15,29 @@ const role = localStorage.getItem("role")
 
 if (role === "Директор") {
 	async function getStudents() {
-		const data:object[] = (await axios.get(groups)).data
-		const ownGroups:object[] = data.filter(item => item.institutionId === institutionId)
-		ownGroups.forEach(item => {
-			const students:object[] = item.students
-			for (const student of students) {
-				studentsData.value.push({ 
-					name: student.name, 
-					surname: student.surname, 
-					role: student.role 
-				})
-			}
+		const data:object[] = (await axios.get(users)).data
+		const ownGroups:object[] = data.find(item => item.institutionId === institutionId)
+
+		const students = ownGroups.students
+		students.forEach(student => {
+			studentsData.value.push({ 
+				name: student.name, 
+				surname: student.surname, 
+				role: student.role 
+			})
 		})
 	}
 	getStudents()
 } else if (role === "Студент") {
 	async function getStudents() {
-		studentsData.value = (await axios.get(students)).data
+		const dataInstitutions:object[] = (await axios.get(institutions)).data
+		const appellation = dataInstitutions.find(item => item.appellation === localStorage.getItem("appellation"))
+		const usersInstitutionId = appellation.id
+		
+		const dataUsers:object[] = (await axios.get(users)).data
+		const ownUsers = dataUsers.find(users => users.institutionId === usersInstitutionId)
+		
+		studentsData.value = ownUsers.students
 	}
 	getStudents()
 }
@@ -41,13 +48,23 @@ const { animationBoolean } = move(500)
 	<Header/>
 	<transition>
 		<main v-if="animationBoolean">
-			<Title title="Студенты"/>
-			<div v-if="studentsData.length">
-				<div style="margin-top: 1%;" v-for="student in studentsData" :key="student.id">
-					<p>{{ student.name }} {{ student.surname }} ({{ student.role }})</p>
+			<div class="line"></div>
+			<div v-if="isEmptyLogin()">
+				<Title title="Студенты"/>
+				<div v-if="studentsData.length">
+					<div style="margin-top: 1%;" v-for="student in studentsData" :key="student.id">
+						<p>{{ student.name }} {{ student.surname }} ({{ student.role }})</p>
+					</div>
 				</div>
+				<div style="margin-top: 2%;" v-else>Студентов пока нет.</div>
 			</div>
-			<div style="margin-top: 2%;" v-else>Студентов пока нету</div>
+			<div v-else>
+				<p style="margin-top: 2%; text-align: center;">
+					<h2 @click="router.push('/')">
+						Войдите
+					</h2>
+				</p>
+			</div>
 		</main>
 	</transition>
 </template>

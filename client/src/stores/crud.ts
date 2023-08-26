@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 import axios from "axios"
 
 export const useCrud = defineStore('crud', () => {
-	async function getDatas(apiUrl:string, arrayDatas:object[], id?:number, findItem?:string) {
+	async function getDatas(apiUrl:string, arrayDatas:object[], ownItem?:number, findItem?:string) {
 		try {
 			const response = (await axios.get(apiUrl)).data
 			if (response) {
-				arrayDatas.value = response.filter(item => item[findItem] === id)
+				arrayDatas.value = response.filter(item => item[findItem] === ownItem)
 			}
 		} catch (error) {
 			console.log(error);

@@ -1,6 +1,5 @@
 import { authDirectors, institutions } from "@/API/api-enterprises-institutions"
 import { makeAuthRequest } from "@/utils/auth/authData"
-import { saveIdUser } from "@/utils/saveIdToken"
 import router from "@/router"
 import axios from "axios"
 
@@ -16,13 +15,15 @@ export const authUser = async (name:string, surname:string, password:string, rol
 					// eslint-disable-next-line no-inner-declarations
 					async function checkInstitutionGroup () {
 						const result:object[] = (await axios.get(institutions)).data
-						const institution:object = result.find(item => item.appellation === groupOrAppellation)
+						const institution:object|undefined = result.find(item => item.appellation === groupOrAppellation)
 						const groups:object[] = institution.users
 						const response = await makeAuthRequest(name, surname, password, role, authDirectors, groups.institutionId);
 
-						if (response.token && response.id) {
+						if (response) {
 							localStorage.setItem("appellation", groupOrAppellation)
-							saveIdUser(response.token, response.id, response.role);
+							localStorage.setItem("token", response.token)
+							localStorage.setItem("id", response.id)
+							localStorage.setItem("role", response.role)
 							router.push("/main");
 						} else {
 							throw new Error("Ответ сервера содержит некорректные данные");
@@ -32,8 +33,10 @@ export const authUser = async (name:string, surname:string, password:string, rol
 				} else {
 					const response = await makeAuthRequest(name, surname, password, role);
 
-					if (response.token && response.id) {
-						saveIdUser(response.token, response.id, response.role);
+					if (response) {
+						localStorage.setItem("token", response.token)
+						localStorage.setItem("id", response.id)
+						localStorage.setItem("role", response.role)
 						router.push("/main");
 					} else {
 						throw new Error("Ответ сервера содержит некорректные данные");

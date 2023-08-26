@@ -4,9 +4,9 @@ import { move } from '@/hooks/useAnimation';
 import { directors, students } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
-
 import router from '@/router';
 import axios from "axios";
+
 const role = localStorage.getItem("role")
 
 interface IPages {
@@ -60,9 +60,6 @@ async function getAuthUser () {
 }
 
 getAuthUser()
-
-console.log(localStorage.getItem('role'));
-console.log(localStorage.getItem('id'));
 
 const { animationBoolean } = move(400)
 </script>

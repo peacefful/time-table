@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { groups, tutors } from '@/API/api-enterprises-institutions';
 import { ref, reactive, onMounted } from 'vue';
 import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
@@ -14,7 +14,7 @@ const tutorsData = ref<object[]>([])
 
 async function getTutorsData() {
 	const data:object[] = (await axios.get(tutors)).data
-	tutorsData.value = data.filter(item => item.userId === Number(localStorage.getItem('institutionId')))
+	tutorsData.value = data.filter(item => item.userId === Number(localStorage.getItem("institutionId")))
 }
 
 getTutorsData()
@@ -23,7 +23,7 @@ const groupsData = ref<object[]>([])
 
 async function getGroups() {
 	const data:object[] = (await axios.get(groups)).data
-	groupsData.value = data.filter(item => item.institutionId === Number(localStorage.getItem('institutionId')))
+	groupsData.value = data.filter(item => item.institutionId === Number(localStorage.getItem("institutionId")))
 }
 
 getGroups()
@@ -62,7 +62,9 @@ async function createSchedulesTable() {
 		for (const item of couple.object) {
 			item.groupId = groupId.value;
 			await axios.post(couple.api, item);
-			setTimeout(() => location.reload(), 100);
+			setTimeout(() => {
+				location.reload()
+			}, 350);
 		}
 	}
 }

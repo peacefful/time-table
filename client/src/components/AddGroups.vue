@@ -8,13 +8,13 @@ import SelectStudentsTutors from "./SelectStudentsTutors.vue";
 const group = ref<string>()
 const course = ref<string>()
 
-async function getInstitutionId() {
-	const data = (await axios.get(institutions)).data
-	const institution = data.find(item => item.directorId === Number(localStorage.getItem("id")))
-	localStorage.setItem("institutionId", institution.id)
-}
+// async function getInstitutionId() {
+// 	const data = (await axios.get(institutions)).data
+// 	const institution = data.find(item => item.directorId === Number(useData.id))
+// 	localStorage.setItem("institutionId", institution.id)
+// }
 
-getInstitutionId()
+// getInstitutionId()
 
 const ids = ref<string[]>([])
 
@@ -23,7 +23,7 @@ async function addGroup () {
 		await axios.post(groups, {
 			groupName: group.value,
 			course: course.value,
-			institutionId: Number(localStorage.getItem('institutionId'))
+			institutionId: Number(localStorage.getItem("institutionId"))
 		}).then(res => localStorage.setItem("groupId", res.data.id))
 		ids.value.forEach(async item => {
 			const putUrl:string = `${changeGroupStudents}/${item}`

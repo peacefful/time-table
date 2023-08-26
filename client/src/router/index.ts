@@ -7,19 +7,19 @@ const router = createRouter({
 	{
 	  path: '/',
 	  name: 'login',
-	  component: () => import("../pages/Login-user.vue"),
+	  component: () => import("../pages/LoginUser.vue"),
 	  beforeEnter: isAuth
 	},
 	{
 	  path: '/registration',
 	  name: 'registration',
-	  component: () => import("../pages/Registration-user.vue"),
+	  component: () => import("../pages/RegistrationUser.vue"),
 	  beforeEnter: isAuth
 	},
 	{
 	  path: '/main',
 	  name: 'main',
-	  component: () => import("../pages/Main-page.vue")
+	  component: () => import("../pages/MainPage.vue")
 	},
 	{
 	  path: '/groups',
@@ -29,7 +29,7 @@ const router = createRouter({
 	{
 	  path: '/profile',
 	  name: 'profile',
-	  component: () => import("../pages/Profile-user.vue")
+	  component: () => import("../pages/ProfileUser.vue")
 	},
 	{
 	  path: '/students',
@@ -39,24 +39,24 @@ const router = createRouter({
 	{
 	  path: '/schedule',
 	  name: 'schedule',
-	  component: () => import("../pages/Schedule-table.vue")
+	  component: () => import("../pages/ScheduleTable.vue")
 	},
 	{
 	  path: '/newinstitution/:form',
 	  name: 'newinstitution',
-	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
 	  props: true
 	},
 	{
 	  path: '/newgroup/:form',
 	  name: 'newgroup',
-	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
 	  props: true
 	},
 	{
 	  path: '/newschedule/:form',
 	  name: 'newschedule',
-	  component: () => import("../pages/Add-enterprises-institutions.vue"),
+	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
 	  props: true
 	}
   ]

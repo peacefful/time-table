@@ -13,7 +13,7 @@ import axios from "axios";
 const institutionData = ref<object>()
 const directorData = ref<object>()
 const appellation = ref<string|null>(localStorage.getItem('appellation'))
-const role = localStorage.getItem('role')
+const role = localStorage.getItem("role")
 
 const { getDatas } = useCrud()
 

@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
 import Header from '@/components/Header.vue';
-import AddInstitution from '@/components/Add-institution.vue';
-import AddGroups from '@/components/Add-groups.vue';
-import AddSchedules from '@/components/Add-schedules.vue';
+import AddInstitution from '@/components/AddInstitution.vue';
+import AddGroups from '@/components/AddGroups.vue';
+import AddSchedules from '@/components/AddSchedules.vue';
 
 defineProps<{
 	form: string
 }>()
+
+
 
 const { animationBoolean } = move(600)
 </script>

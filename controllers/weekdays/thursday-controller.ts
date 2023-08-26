@@ -16,10 +16,11 @@ export const getSubjectsOnThursday = async (req:Request, res: Response):Promise<
 export const addSubjectsOnThursday = async (req:Request, res: Response):Promise<void> => {
 	try {
 		const data:IWeekday = req.body
-		const subjectsOnThursday = await prisma.thursday.create({
+		const subjectsOnThursday = await prisma.thursday.createMany({
 			data: {
 				...data
-			}
+			},
+			skipDuplicates: true
 		})
 		res.json(subjectsOnThursday)
 	} catch (error) {

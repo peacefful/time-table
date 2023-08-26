@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { removeCouple } from "@/utils/crud/deleteCouple";
+import { removeCouple } from "@/utils/deleteCouple";
 
 defineProps<{
 	couplesThursday: object[]
@@ -55,4 +55,4 @@ defineEmits(['add', 'getTutorsData'])
 			<button @click.prevent="$emit('add')" class="add-couple">Добавить пару</button>
 		</div>
 	</main>
-</template>@/utils/deleteCouple@/utils/crud/deleteCouple
+</template>@/utils/deleteCouple@/utils/crud/deleteCouple@/utils/deleteCouple

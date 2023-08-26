@@ -2,7 +2,7 @@
 import { move } from "../hooks/useAnimation"
 import { ref } from "vue";
 import { authUser } from '../utils/auth/auth'
-import { institutions, groups } from "@/API/api-enterprises-institutions";
+import { institutions } from "@/API/api-enterprises-institutions";
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
 import ButtonLabel from "../components/ButtonLabel.vue"
 import router from '../router/index'
@@ -15,16 +15,8 @@ const role = ref<string>("")
 const groupOrAppellation = ref<string>("")
 
 const institutionsData = ref<object[]>([])
-async function getInstitutions() {
-	institutionsData.value = (await axios.get(institutions)).data
-}
+const getInstitutions = async () => institutionsData.value = (await axios.get(institutions)).data 
 getInstitutions()
-
-const groupsData = ref<object[]>([])
-async function getGroups() {
-	groupsData.value = (await axios.get(groups)).data
-}
-getGroups()
 
 const { animationBoolean } = move(500)
 </script>
