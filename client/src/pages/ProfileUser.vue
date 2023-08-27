@@ -1,7 +1,8 @@
+<!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { outSystem } from '@/utils/outSystem';
 import { ref } from 'vue';
-import { directors, groups, students } from '@/API/api-enterprises-institutions';
+import { directors, groups, students, tutors } from '@/API/api-enterprises-institutions';
 import axios from 'axios';
 
 const user = ref<object[]>([])
@@ -10,7 +11,6 @@ const role = localStorage.getItem("role")
 const group = ref<string>()
 
 if (role === "Директор") {
-	// eslint-disable-next-line no-inner-declarations
 	async function getUserData() {
 		const dataUser:object[] = (await axios.get(directors)).data
 		user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
@@ -19,10 +19,24 @@ if (role === "Директор") {
 
 	getUserData()
 } else if (role === "Студент") {
-	// eslint-disable-next-line no-inner-declarations
 	async function getUserData() {
 		try {
 			const dataUser:object[] = (await axios.get(students)).data
+			user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
+			
+			const dataGroup:object[] = (await axios.get(groups)).data
+			const ownGroup:object = dataGroup.find(group => group.id === user.value.groupId)
+			
+			group.value = ownGroup.groupName
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	getUserData()
+} else if (role === "Куратор") {
+	async function getUserData() {
+		try {
+			const dataUser:object[] = (await axios.get(tutors)).data
 			user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
 			
 			const dataGroup:object[] = (await axios.get(groups)).data

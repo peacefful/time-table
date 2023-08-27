@@ -4,7 +4,7 @@
 import { move } from '@/hooks/useAnimation';
 import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
-import { groups, institutions, students } from '@/API/api-enterprises-institutions';
+import { groups, institutions, students, tutors } from '@/API/api-enterprises-institutions';
 import router from "@/router";
 import Header from '@/components/Header.vue';
 import Title from "@/components/TitlePage.vue";
@@ -13,22 +13,21 @@ import axios from 'axios';
 const role = localStorage.getItem("role")
 
 const groupsDatas = ref<object[]>([])
-const groupName = ref<string>()
+
 const studentGroupId = ref<object[]>([])
+const tutorGroupId = ref<object[]>([])
 
 if (role === "Директор") {
 	async function getGroups() {
 		const data:object[] = (await axios.get(groups)).data
 		groupsDatas.value = data.filter(item => item.institutionId === Number(localStorage.getItem('institutionId')))
 	}
-
 	getGroups()
 } else if (role === "Студент") {
 	async function getStudent() {
 		const data:object[] = (await axios.get(students)).data
 		studentGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
 	}
-
 	getStudent()
 
 	async function getGroup() {
@@ -38,27 +37,31 @@ if (role === "Директор") {
 				const students:object[] = item.students
 				return students.find(student => student.id === Number(localStorage.getItem("id")))
 			})
-			
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	getGroup()
+} else if (role === "Куратор") {
+	async function getStudent() {
+		const data:object[] = (await axios.get(tutors)).data
+		tutorGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
+	}
+	getStudent()
 
-			// const data:object[] = (await axios.get(groups)).data
-			// data.find(item => {
-			// 	groupName.value = item.groupName
-			// 	const students:object[] = item.students
-			// 	for (const student of students) {
-			// 		groupsDatas.value.push({
-			// 			name: student.name,
-			// 			surname: student.surname,
-			// 			role: student.role,
-			// 		})
-			// 	}
-			// })
+	async function getGroup() {
+		try {
+			const data:object[] = (await axios.get(groups)).data
+			groupsDatas.value = data.find(item => {
+				const tutors:object[] = item.tutors
+				return tutors.find(tutor => tutor.id === Number(localStorage.getItem("id")))
+			})
 		} catch (error) {
 			console.log(error);
 		}
 	}
 	getGroup()
 }
-
 
 const { animationBoolean } = move(500)
 </script>
@@ -101,6 +104,21 @@ const { animationBoolean } = move(500)
 					</div>
 					<div v-else style="margin-top: 1%;">
 						Групп пока нету, <span @click="router.push({ name: 'newgroup', params: { form: 'add-group' }})">добавьте новую</span>
+					</div>
+				</div>
+				<div v-if="role === 'Куратор'">
+					<div style="margin-top: 2%;" v-if="tutorGroupId.groupId === null">
+						Подождите пока вас добавят в группу
+					</div>
+					<div v-else>
+						<Title :title="groupsDatas.groupName"/>
+						<p 
+							style="margin-top: 1%;"
+							v-for="student in groupsDatas.students" 
+							:key="student.id"
+						>
+							{{ student.name }} {{ student.surname }} ({{ student.role }})
+						</p>
 					</div>
 				</div>
 			</div>

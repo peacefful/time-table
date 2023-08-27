@@ -7,12 +7,13 @@ import router from '@/router';
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
-import { groups, students } from '@/API/api-enterprises-institutions';
+import { groups, students, tutors } from '@/API/api-enterprises-institutions';
 
 const role = localStorage.getItem("role")
 const schedulesData = ref<object[]>([])
 const groupsHasSchedules = ref<object[]>([])
 const student = ref<object[]>([])
+const tutor = ref<object[]>([])
 
 if (role === "Студент") {
 	async function getStudent() {
@@ -36,6 +37,21 @@ if (role === "Студент") {
 		groupsHasSchedules.value = selectGroups.filter(group => group.monday.length !== 0)
 	}
 	getGroups()
+} else if (role === "Куратор") {
+	async function getStudent() {
+		const data:object[] = (await axios.get(tutors)).data
+		tutor.value = data.find(item => item.id === Number(localStorage.getItem("id")))
+	}
+	getStudent()
+
+	async function getSchedules() {
+		const data:object[] = (await axios.get(groups)).data
+		schedulesData.value = data.find(item => {
+			const tutors:object[] = item.tutors
+			return tutors.find(tutor => tutor.id === Number(localStorage.getItem("id")))
+		})
+	}
+	getSchedules()
 }
 
 const { animationBoolean } = move(500)
@@ -46,8 +62,8 @@ const { animationBoolean } = move(500)
 		<main v-if="animationBoolean">
 			<div class="line"></div>
 			<div v-if="isEmptyLogin()">
-				<div v-if="role === 'Студент'">
-					<div style="margin-top: 2%;" v-if="student.groupId === null">
+				<div v-if="role === 'Студент' || role === 'Куратор'">
+					<div style="margin-top: 2%;" v-if="student.groupId === null || tutor.groupId === null">
 						Вы не состоите в группе
 					</div>
 					<div v-else>

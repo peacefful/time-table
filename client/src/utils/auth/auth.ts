@@ -47,11 +47,13 @@ export const authUser = async (name:string, surname:string, password:string, rol
 					checkStudentGroup()
 				} else {
 					const response = await makeAuthRequest(name, surname, password, role);
-
+					console.log();
+					
 					if (response) {
 						localStorage.setItem("token", response.token)
 						localStorage.setItem("id", response.id)
 						localStorage.setItem("role", response.role)
+						localStorage.setItem("appellation", groupOrAppellation || null)
 						router.push("/main");
 					} else {
 						throw new Error("Ответ сервера содержит некорректные данные");

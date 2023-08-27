@@ -32,6 +32,12 @@ if (role === "Директор") {
 		directorData.value = data.find(director => director.institution.appellation === appellation.value)
 	}
 	getDirector()
+} else if (role === "Куратор") {
+	async function getDirector() {
+		const data:object[] = (await axios.get(directors)).data
+		directorData.value = data.find(director => director.institution.appellation === appellation.value)
+	}
+	getDirector()
 }
 
 const { animationBoolean } = move(500)
@@ -66,6 +72,13 @@ const { animationBoolean } = move(500)
 								добавьте новое
 							</span>
 						</div>
+					</div>
+				</div>
+				<div v-if="role === 'Куратор'">
+					<Title :title="appellation" />
+					<div style="margin-top: 2%;">
+						<h3>Директор</h3>
+						<p style="margin-top: 0.5%;">{{ directorData.name }} {{ directorData.surname }}</p>
 					</div>
 				</div>
 			</div>

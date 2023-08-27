@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
-import { directors, students } from "@/API/api-enterprises-institutions";
+import { directors, students, tutors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import router from '@/router';
@@ -56,10 +56,16 @@ async function getAuthUser () {
 	} else if (role === 'Директор') {
 		const users = (await axios.get(directors)).data
 		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+	} else if (role === 'Куратор') {
+		const users = (await axios.get(tutors)).data
+		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
 	}
 }
 
 getAuthUser()
+
+console.log(localStorage.getItem("role"));
+console.log(localStorage.getItem("id"));
 
 const { animationBoolean } = move(400)
 </script>
@@ -69,7 +75,7 @@ const { animationBoolean } = move(400)
 		<header v-if="animationBoolean">
 			<div v-if="isEmptyLogin() === false && role === 'Студент'" class="header">
 				<div class="header__nav">
-					<ul v-for="page in pages" :key="page">
+					<ul v-for="(page, index) in pages" :key="index">
 						<nav style="pointer-events: none;">
 							<div class="header__nav-line"></div>
 							<p @click="router.push(page.url)">{{ page.nameNav }}</p>
@@ -85,7 +91,7 @@ const { animationBoolean } = move(400)
 			</div>
 			<div v-else class="header">
 				<div class="header__nav">
-					<ul v-for="page in pages" :key="page">
+					<ul v-for="(page, index) in pages" :key="index">
 						<nav>
 							<div class="header__nav-line"></div>
 							<p @click="router.push(page.url)">{{ page.nameNav }}</p>

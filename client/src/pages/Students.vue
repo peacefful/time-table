@@ -28,7 +28,7 @@ if (role === "Директор") {
 		})
 	}
 	getStudents()
-} else if (role === "Студент") {
+} else if (role === "Студент" || role === "Куратор") {
 	async function getStudents() {
 		const dataInstitutions:object[] = (await axios.get(institutions)).data
 		const appellation = dataInstitutions.find(item => item.appellation === localStorage.getItem("appellation"))
