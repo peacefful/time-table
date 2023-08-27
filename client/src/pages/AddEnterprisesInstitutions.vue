@@ -9,8 +9,6 @@ defineProps<{
 	form: string
 }>()
 
-
-
 const { animationBoolean } = move(600)
 </script>
 <template>

@@ -1,4 +1,5 @@
-import { authDirectors, institutions } from "@/API/api-enterprises-institutions"
+/* eslint-disable no-inner-declarations */
+import { authDirectors, institutions, users } from "@/API/api-enterprises-institutions"
 import { makeAuthRequest } from "@/utils/auth/authData"
 import router from "@/router"
 import axios from "axios"
@@ -12,24 +13,38 @@ export const authUser = async (name:string, surname:string, password:string, rol
 		} else {
 			if (name.length >= 2 || surname.length >= 2 || (password.length >= 8 && symbols.includes(password))) {
 				if (role === "Студент") {
-					// eslint-disable-next-line no-inner-declarations
-					async function checkInstitutionGroup () {
-						const result:object[] = (await axios.get(institutions)).data
-						const institution:object|undefined = result.find(item => item.appellation === groupOrAppellation)
-						const groups:object[] = institution.users
-						const response = await makeAuthRequest(name, surname, password, role, authDirectors, groups.institutionId);
+					async function checkStudentGroup() {
+						const institutionsData:object[] = (await axios.get(institutions)).data
+						const institution = institutionsData.find(institution => institution.appellation === groupOrAppellation)
+						const institutionId:object[] = institution.id
 
-						if (response) {
-							localStorage.setItem("appellation", groupOrAppellation)
-							localStorage.setItem("token", response.token)
-							localStorage.setItem("id", response.id)
-							localStorage.setItem("role", response.role)
-							router.push("/main");
+						const usersData:object[] = await (await axios.get(users)).data
+						const institutionUsers = usersData.find(user => user.institutionId === institutionId)
+
+						const students:object[] = institutionUsers.students
+						
+						const isStudent = students.find(student => {
+							return student.name === name && student.surname === surname && student.role === role
+						})
+
+						if (isStudent) {
+							const response = await makeAuthRequest(name, surname, password, role);
+
+							if (response) {
+								localStorage.setItem("appellation", groupOrAppellation)
+								localStorage.setItem("token", response.token)
+								localStorage.setItem("id", response.id)
+								localStorage.setItem("role", response.role)
+								router.push("/main");
+							} else {
+								throw new Error("Ответ сервера содержит некорректные данные");
+							}
 						} else {
-							throw new Error("Ответ сервера содержит некорректные данные");
+							throw new Error("Пользователя в этом учреждении не существует")
 						}
 					}
-					checkInstitutionGroup()
+
+					checkStudentGroup()
 				} else {
 					const response = await makeAuthRequest(name, surname, password, role);
 
