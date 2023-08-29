@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { groups } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
-import axios from 'axios';
 import Title from './TitlePage.vue';
+import { getData } from '@/utils/findItem';
 
 const schedulesData = ref<object[]>([])
 
-async function getSchedules() {
-	const data:object[] = (await axios.get(groups)).data
-	schedulesData.value = data.find(item => item.id === Number(localStorage.getItem("scheduleId")))
-}
-getSchedules()
+getData(groups, schedulesData, "id", Number(localStorage.getItem("scheduleId")))
+
+// async function getSchedules() {
+// 	const data:object[] = (await axios.get(groups)).data
+// 	schedulesData.value = data.find(item => item.id === Number(localStorage.getItem("scheduleId")))
+// }
+// getSchedules()
 
 const isShowModal = ref<boolean>(true)
 </script>

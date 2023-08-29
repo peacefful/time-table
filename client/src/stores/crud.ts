@@ -2,16 +2,6 @@ import { defineStore } from 'pinia'
 import axios from "axios"
 
 export const useCrud = defineStore('crud', () => {
-	async function getDatas(apiUrl:string, arrayDatas:object[], ownItem?:number, findItem?:string) {
-		try {
-			const response = (await axios.get(apiUrl)).data
-			if (response) {
-				arrayDatas.value = response.filter(item => item[findItem] === ownItem)
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}
 
 	const instance = axios.create({});
 	instance.defaults.headers.common['Authorization'] = localStorage.getItem("token");
@@ -23,11 +13,6 @@ export const useCrud = defineStore('crud', () => {
 			console.log(error);
 		}
 	}
-
-	async function deleteData(apiUrl:string, id:number) {
-		const deleteUrl:string = `${apiUrl}/${id}`
-		await instance.delete(deleteUrl)
-	}
 	
-	return { getDatas, postData, deleteData }
+	return { postData }
 })

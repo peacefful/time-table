@@ -31,7 +31,21 @@ async function getStudents() {
 getStudents()
 
 const findStudent = () => {
-	return studentsData.value.filter(student => student.name.includes(search.value) || student.surname.includes(search.value))
+	const searchValueParts = search.value.split(" ")
+
+	if (searchValueParts.length === 1) {
+		return studentsData.value.filter(student => student.name.includes(search.value) || student.surname.includes(search.value))
+	} else if (searchValueParts.length === 2) {
+		const firstNamePart = searchValueParts[0];
+		const lastNamePart = searchValueParts[1];
+
+		return studentsData.value.filter(student => {
+			return (student.name.includes(firstNamePart) && student.surname.includes(lastNamePart)) ||
+			(student.name.includes(lastNamePart) && student.surname.includes(firstNamePart))
+		})
+	} else {
+		return [];
+	}
 }
 
 </script>

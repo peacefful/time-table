@@ -15,10 +15,19 @@ const directorData = ref<object>()
 const appellation = ref<string|null>(localStorage.getItem('appellation'))
 const role = localStorage.getItem("role")
 
-const { getDatas } = useCrud()
-
 if (role === "Директор") {
-	getDatas(directors, directorData, Number(localStorage.getItem("id")), 'id')
+	async function getDatas() {
+		try {
+			const response = (await axios.get(directors)).data
+			if (response) {
+				directorData.value = response.filter(item => item.id ===  Number(localStorage.getItem("id")))
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	getDatas()
 
 	async function getInstitutionData() {
 		const result = (await axios.get(institutions)).data

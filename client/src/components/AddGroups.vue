@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { changeGroupStudents, groups, institutions } from "@/API/api-enterprises-institutions";
+import { changeGroupStudents, groups } from "@/API/api-enterprises-institutions";
 import { ref } from "vue"
 import router from "@/router";
 import axios from "axios";

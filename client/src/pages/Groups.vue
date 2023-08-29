@@ -4,7 +4,8 @@
 import { move } from '@/hooks/useAnimation';
 import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
-import { groups, institutions, students, tutors } from '@/API/api-enterprises-institutions';
+import { groups, students, tutors } from '@/API/api-enterprises-institutions';
+import { getData } from '@/utils/findItem';
 import router from "@/router";
 import Header from '@/components/Header.vue';
 import Title from "@/components/TitlePage.vue";
@@ -24,12 +25,7 @@ if (role === "Директор") {
 	}
 	getGroups()
 } else if (role === "Студент") {
-	async function getStudent() {
-		const data:object[] = (await axios.get(students)).data
-		studentGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	}
-	getStudent()
-
+	getData(students, studentGroupId, "id", Number(localStorage.getItem("id")))
 	async function getGroup() {
 		try {
 			const data:object[] = (await axios.get(groups)).data
@@ -43,11 +39,12 @@ if (role === "Директор") {
 	}
 	getGroup()
 } else if (role === "Куратор") {
-	async function getStudent() {
-		const data:object[] = (await axios.get(tutors)).data
-		tutorGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	}
-	getStudent()
+	getData(tutors, tutorGroupId, "id", Number(localStorage.getItem("id")))
+	// async function getStudent() {
+	// 	const data:object[] = (await axios.get(tutors)).data
+	// 	tutorGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
+	// }
+	// getStudent()
 
 	async function getGroup() {
 		try {

@@ -8,6 +8,7 @@ import router from '@/router';
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
+import { getData } from '@/utils/findItem';
 
 const role = localStorage.getItem("role")
 
@@ -17,11 +18,12 @@ const student = ref<object[]>([])
 const tutor = ref<object[]>([])
 
 if (role === "Студент") {
-	async function getStudent() {
-		const data:object[] = (await axios.get(students)).data
-		student.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	}
-	getStudent()
+	getData(students, student, "id", Number(localStorage.getItem("id")))
+	// async function getStudent() {
+	// 	const data:object[] = (await axios.get(students)).data
+	// 	student.value = data.find(item => item.id === Number(localStorage.getItem("id")))
+	// }
+	// getStudent()
 
 	async function getSchedules() {
 		const data:object[] = (await axios.get(groups)).data
@@ -39,11 +41,12 @@ if (role === "Студент") {
 	}
 	getGroups()
 } else if (role === "Куратор") {
-	async function getStudent() {
-		const data:object[] = (await axios.get(tutors)).data
-		tutor.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	}
-	getStudent()
+	getData(tutors, tutor, "id", Number(localStorage.getItem("id")))
+	// async function getStudent() {
+	// 	const data:object[] = (await axios.get(tutors)).data
+	// 	tutor.value = data.find(item => item.id === Number(localStorage.getItem("id")))
+	// }
+	// getStudent()
 
 	async function getSchedules() {
 		const data:object[] = (await axios.get(groups)).data
