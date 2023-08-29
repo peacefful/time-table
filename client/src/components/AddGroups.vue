@@ -7,15 +7,6 @@ import SelectStudentsTutors from "./SelectStudentsTutors.vue";
 
 const group = ref<string>()
 const course = ref<string>()
-
-// async function getInstitutionId() {
-// 	const data = (await axios.get(institutions)).data
-// 	const institution = data.find(item => item.directorId === Number(useData.id))
-// 	localStorage.setItem("institutionId", institution.id)
-// }
-
-// getInstitutionId()
-
 const ids = ref<string[]>([])
 
 async function addGroup () {

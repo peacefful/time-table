@@ -64,9 +64,6 @@ async function getAuthUser () {
 
 getAuthUser()
 
-console.log(localStorage.getItem("role"));
-console.log(localStorage.getItem("id"));
-
 const { animationBoolean } = move(400)
 </script>
 

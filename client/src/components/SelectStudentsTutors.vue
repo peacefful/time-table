@@ -21,12 +21,19 @@ const ids = computed({
 const isShowModal = ref<boolean>(true)
 
 const studentsData = ref<object[]>([])
+const search = ref<string>("")
+
 async function getStudents() {
 	const data:object[] = (await axios.get(students)).data
 	studentsData.value = data.filter(item => item.role !== "Куратор")
 }
 
 getStudents()
+
+const findStudent = () => {
+	return studentsData.value.filter(student => student.name.includes(search.value) || student.surname.includes(search.value))
+}
+
 </script>
 
 <template>
@@ -34,9 +41,9 @@ getStudents()
 		<form class="modal__form">
 			<div class="modal__box">
 				<img @click.prevent="$emit('closeModal')" src="../assets/icons/close-icon.svg">
-				<input type="text" placeholder="Поиск" >
-				<div style="padding-top: 3%;" v-for="student in studentsData" :key="student.id">
-					<div>{{ student.name }}
+				<input type="text" placeholder="Поиск" v-model="search">
+				<div style="padding-top: 3%;" v-for="student in findStudent()" :key="student.id">
+					<div>{{ student.name }} {{ student.surname }}
 						<input 
 							type="checkbox" 
 							:value="student.id"
@@ -58,35 +65,5 @@ input[type='text'] {
 }
 input[type='checkbox'] {
 	margin-left: 5%;
-}
-.modal__form {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background-color: rgba(21, 21, 21, 0.665);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	overflow-y: auto;
-	img{
-		position: absolute;
-		left: 90%;
-		top: 4%;
-		cursor: pointer;
-		&:hover{
-			opacity: 0.7;
-		}
-	}
-	.modal__box{
-		position: relative;
-		max-width: 500px;
-		background-color: rgb(0, 0, 0);
-		border-radius: 4%;
-		padding: 5% 10%;
-		transition: all 2s;
-	}
 }
 </style>

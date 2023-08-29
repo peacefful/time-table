@@ -3,13 +3,14 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
+import { groups, students, tutors } from '@/API/api-enterprises-institutions';
 import router from '@/router';
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
-import { groups, students, tutors } from '@/API/api-enterprises-institutions';
 
 const role = localStorage.getItem("role")
+
 const schedulesData = ref<object[]>([])
 const groupsHasSchedules = ref<object[]>([])
 const student = ref<object[]>([])
@@ -52,6 +53,11 @@ if (role === "Студент") {
 		})
 	}
 	getSchedules()
+}
+
+const getIdGroup = (id:number) => {
+	localStorage.setItem("scheduleId", id.toString())
+	router.push({ name: 'showschedule', params: { form: 'show-schedules' }})
 }
 
 const { animationBoolean } = move(500)
@@ -123,8 +129,8 @@ const { animationBoolean } = move(500)
 					<Title title="Расписание" />
 					<div style="margin-top: 1%;">
 						<div v-if="groupsHasSchedules.length">
-							<div v-for="groups in groupsHasSchedules" :key="groups.id">
-								<p>{{ groups.groupName }}</p>
+							<div v-for="group in groupsHasSchedules" :key="group.id">
+								<p @click="getIdGroup(group.id)">{{ group.groupName }}</p>
 							</div>
 						</div>
 						<div v-else>
@@ -146,14 +152,3 @@ const { animationBoolean } = move(500)
 		</main>
 	</transition>
 </template>
-
-<style scoped lang="scss">
-.schedules-flex{
-	margin-top: 2%;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(3, 1fr);
-	grid-column-gap: 15px;
-	grid-row-gap: 15px;
-}
-</style>

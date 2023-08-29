@@ -58,6 +58,12 @@ const router = createRouter({
 	  name: 'newschedule',
 	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
 	  props: true
+	},
+	{
+	  path: '/showschedule/:form',
+	  name: 'showschedule',
+	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
+	  props: true
 	}
   ]
 })

@@ -3,7 +3,7 @@
 import { move } from "@/hooks/useAnimation";
 import { useCrud } from "@/stores/crud";
 import { directors, institutions } from "@/API/api-enterprises-institutions";
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import Header from "@/components/Header.vue";
 import Title from "@/components/TitlePage.vue";
@@ -39,6 +39,9 @@ if (role === "Директор") {
 	}
 	getDirector()
 }
+
+
+
 
 const { animationBoolean } = move(500)
 </script>
