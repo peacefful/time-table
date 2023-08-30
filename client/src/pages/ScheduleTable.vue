@@ -3,15 +3,14 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
-import { groups, students, tutors } from '@/API/api-enterprises-institutions';
-import router from '@/router';
-import Header from '@/components/Header.vue';
-import Title from '@/components/TitlePage.vue';
-import axios from 'axios';
+import { students, tutors } from '@/API/api-enterprises-institutions';
 import { getData } from '@/utils/findItem';
 import { useStudentStore } from "@/stores/studentStore"
 import { useDirectorStore } from "@/stores/directorStore"
 import { useTutorStore } from "@/stores/tutorStore"
+import router from '@/router';
+import Header from '@/components/Header.vue';
+import Title from '@/components/TitlePage.vue';
 
 const role = localStorage.getItem("role")
 
@@ -108,7 +107,8 @@ const { animationBoolean } = move(500)
 					<Title title="Расписание" />
 					<div style="margin-top: 1%;">
 						<div v-if="groupsHasSchedules.length">
-							<div v-for="group in groupsHasSchedules" :key="group.id">
+							<p @click="router.push({ name:'newschedule', params:{form: 'add-schedules'} })">Добавить расписание</p>
+							<div style="margin-top: 2%;" v-for="group in groupsHasSchedules" :key="group.id">
 								<p @click="getIdGroup(group.id)">{{ group.groupName }}</p>
 							</div>
 						</div>

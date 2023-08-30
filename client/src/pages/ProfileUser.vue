@@ -2,11 +2,9 @@
 <script setup lang="ts">
 import { outSystem } from '@/utils/outSystem';
 import { ref } from 'vue';
-import { directors, groups, students, tutors } from '@/API/api-enterprises-institutions';
 import { useStudentStore } from "@/stores/studentStore"
 import { useDirectorStore } from "@/stores/directorStore"
 import { useTutorStore } from "@/stores/tutorStore"
-import axios from 'axios';
 
 const user = ref<object[]>([])
 const appellation = ref<string>()

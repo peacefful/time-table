@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { groups, tutors } from '@/API/api-enterprises-institutions';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive } from 'vue';
 import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 import axios from 'axios';
 import MondayTable from './weekdays/MondayTable.vue';
@@ -62,9 +62,12 @@ async function createSchedulesTable() {
 		for (const item of couple.object) {
 			item.groupId = groupId.value;
 			await axios.post(couple.api, item);
-			setTimeout(() => {
-				location.reload()
-			}, 350);
+
+			item.subject = "";
+			item.office = "";
+			item.teacher = "";
+			item.beginning = "";
+			item.end = "";
 		}
 	}
 }

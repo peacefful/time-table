@@ -1,7 +1,7 @@
 <!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
-import { directors, institutions } from "@/API/api-enterprises-institutions";
+import { directors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import { getDatas } from "@/utils/findItem";
@@ -10,7 +10,6 @@ import { useDirectorStore } from "@/stores/directorStore"
 import Header from "@/components/Header.vue";
 import Title from "@/components/TitlePage.vue";
 import router from "@/router";
-import axios from "axios";
 
 const institutionData = ref<object>()
 const directorData = ref<object>()
