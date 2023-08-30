@@ -3,6 +3,9 @@
 import { outSystem } from '@/utils/outSystem';
 import { ref } from 'vue';
 import { directors, groups, students, tutors } from '@/API/api-enterprises-institutions';
+import { useStudentStore } from "@/stores/studentStore"
+import { useDirectorStore } from "@/stores/directorStore"
+import { useTutorStore } from "@/stores/tutorStore"
 import axios from 'axios';
 
 const user = ref<object[]>([])
@@ -10,44 +13,16 @@ const appellation = ref<string>()
 const role = localStorage.getItem("role")
 const group = ref<string>()
 
-if (role === "Директор") {
-	async function getUserData() {
-		const dataUser:object[] = (await axios.get(directors)).data
-		user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
-		appellation.value = user.value.institution.appellation
-	}
+const { getStudentData } = useStudentStore()
+const { getDirectorData } = useDirectorStore()
+const { getTutorData } = useTutorStore()
 
-	getUserData()
+if (role === "Директор") {
+	getDirectorData(user, appellation)
 } else if (role === "Студент") {
-	async function getUserData() {
-		try {
-			const dataUser:object[] = (await axios.get(students)).data
-			user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
-			
-			const dataGroup:object[] = (await axios.get(groups)).data
-			const ownGroup:object = dataGroup.find(group => group.id === user.value.groupId)
-			
-			group.value = ownGroup.groupName
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	getUserData()
+	getStudentData(user, group)
 } else if (role === "Куратор") {
-	async function getUserData() {
-		try {
-			const dataUser:object[] = (await axios.get(tutors)).data
-			user.value = dataUser.find(item => item.id === Number(localStorage.getItem("id")))
-			
-			const dataGroup:object[] = (await axios.get(groups)).data
-			const ownGroup:object = dataGroup.find(group => group.id === user.value.groupId)
-			
-			group.value = ownGroup.groupName
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	getUserData()
+	getTutorData(user, group)
 }
 
 </script>

@@ -9,6 +9,9 @@ import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 import axios from 'axios';
 import { getData } from '@/utils/findItem';
+import { useStudentStore } from "@/stores/studentStore"
+import { useDirectorStore } from "@/stores/directorStore"
+import { useTutorStore } from "@/stores/tutorStore"
 
 const role = localStorage.getItem("role")
 
@@ -17,45 +20,18 @@ const groupsHasSchedules = ref<object[]>([])
 const student = ref<object[]>([])
 const tutor = ref<object[]>([])
 
+const { getStudentSchedules } = useStudentStore()
+const { getGroups } = useDirectorStore()
+const { getTutorSchedules } = useTutorStore()
+
 if (role === "Студент") {
 	getData(students, student, "id", Number(localStorage.getItem("id")))
-	// async function getStudent() {
-	// 	const data:object[] = (await axios.get(students)).data
-	// 	student.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	// }
-	// getStudent()
-
-	async function getSchedules() {
-		const data:object[] = (await axios.get(groups)).data
-		schedulesData.value = data.find(item => {
-			const students:object[] = item.students
-			return students.find(student => student.id === Number(localStorage.getItem("id")))
-		})
-	}
-	getSchedules()
+	getStudentSchedules(schedulesData)
 } else if (role === "Директор") {
-	async function getGroups() {
-		const data:object[] = (await axios.get(groups)).data
-		const selectGroups:object[] = data.filter(item => item.institutionId === Number(localStorage.getItem("id")))
-		groupsHasSchedules.value = selectGroups.filter(group => group.monday.length !== 0)
-	}
-	getGroups()
+	getGroups(groupsHasSchedules)
 } else if (role === "Куратор") {
 	getData(tutors, tutor, "id", Number(localStorage.getItem("id")))
-	// async function getStudent() {
-	// 	const data:object[] = (await axios.get(tutors)).data
-	// 	tutor.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	// }
-	// getStudent()
-
-	async function getSchedules() {
-		const data:object[] = (await axios.get(groups)).data
-		schedulesData.value = data.find(item => {
-			const tutors:object[] = item.tutors
-			return tutors.find(tutor => tutor.id === Number(localStorage.getItem("id")))
-		})
-	}
-	getSchedules()
+	getTutorSchedules(schedulesData)
 }
 
 const getIdGroup = (id:number) => {

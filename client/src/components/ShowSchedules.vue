@@ -5,14 +5,7 @@ import Title from './TitlePage.vue';
 import { getData } from '@/utils/findItem';
 
 const schedulesData = ref<object[]>([])
-
 getData(groups, schedulesData, "id", Number(localStorage.getItem("scheduleId")))
-
-// async function getSchedules() {
-// 	const data:object[] = (await axios.get(groups)).data
-// 	schedulesData.value = data.find(item => item.id === Number(localStorage.getItem("scheduleId")))
-// }
-// getSchedules()
 
 const isShowModal = ref<boolean>(true)
 </script>

@@ -5,59 +5,30 @@ import { move } from '@/hooks/useAnimation';
 import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import { groups, students, tutors } from '@/API/api-enterprises-institutions';
-import { getData } from '@/utils/findItem';
+import { getData, getDatas } from '@/utils/findItem';
+import { useStudentStore } from '@/stores/studentStore';
+import { useTutorStore } from '@/stores/tutorStore';
 import router from "@/router";
 import Header from '@/components/Header.vue';
 import Title from "@/components/TitlePage.vue";
-import axios from 'axios';
 
 const role = localStorage.getItem("role")
 
 const groupsDatas = ref<object[]>([])
-
 const studentGroupId = ref<object[]>([])
 const tutorGroupId = ref<object[]>([])
 
+const { getGroup } = useStudentStore()
+const { findAuthTutor } = useTutorStore()
+
 if (role === "Директор") {
-	async function getGroups() {
-		const data:object[] = (await axios.get(groups)).data
-		groupsDatas.value = data.filter(item => item.institutionId === Number(localStorage.getItem('institutionId')))
-	}
-	getGroups()
+	getDatas(groups, groupsDatas, "institutionId", Number(localStorage.getItem('institutionId')))
 } else if (role === "Студент") {
 	getData(students, studentGroupId, "id", Number(localStorage.getItem("id")))
-	async function getGroup() {
-		try {
-			const data:object[] = (await axios.get(groups)).data
-			groupsDatas.value = data.find(item => {
-				const students:object[] = item.students
-				return students.find(student => student.id === Number(localStorage.getItem("id")))
-			})
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	getGroup()
+	getGroup(groupsDatas)
 } else if (role === "Куратор") {
 	getData(tutors, tutorGroupId, "id", Number(localStorage.getItem("id")))
-	// async function getStudent() {
-	// 	const data:object[] = (await axios.get(tutors)).data
-	// 	tutorGroupId.value = data.find(item => item.id === Number(localStorage.getItem("id")))
-	// }
-	// getStudent()
-
-	async function getGroup() {
-		try {
-			const data:object[] = (await axios.get(groups)).data
-			groupsDatas.value = data.find(item => {
-				const tutors:object[] = item.tutors
-				return tutors.find(tutor => tutor.id === Number(localStorage.getItem("id")))
-			})
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	getGroup()
+	findAuthTutor(groupsDatas)
 }
 
 const { animationBoolean } = move(500)

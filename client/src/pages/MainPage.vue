@@ -1,10 +1,12 @@
 <!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from "@/hooks/useAnimation";
-import { useCrud } from "@/stores/crud";
 import { directors, institutions } from "@/API/api-enterprises-institutions";
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
+import { getDatas } from "@/utils/findItem";
+import { useStudentStore } from "@/stores/studentStore"
+import { useDirectorStore } from "@/stores/directorStore"
 import Header from "@/components/Header.vue";
 import Title from "@/components/TitlePage.vue";
 import router from "@/router";
@@ -15,42 +17,17 @@ const directorData = ref<object>()
 const appellation = ref<string|null>(localStorage.getItem('appellation'))
 const role = localStorage.getItem("role")
 
+const { getDirector } = useStudentStore()
+const { getInstitutionData } = useDirectorStore()
+
 if (role === "Директор") {
-	async function getDatas() {
-		try {
-			const response = (await axios.get(directors)).data
-			if (response) {
-				directorData.value = response.filter(item => item.id ===  Number(localStorage.getItem("id")))
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	getDatas()
-
-	async function getInstitutionData() {
-		const result = (await axios.get(institutions)).data
-		institutionData.value = result.find(item => item.directorId === Number(localStorage.getItem("id")))
-		localStorage.setItem("institutionId", institutionData.value.id)
-	}
-	getInstitutionData()
+	getDatas(directors, directorData, "id", Number(localStorage.getItem('id')))
+	getInstitutionData(institutionData)
 } else if (role === "Студент") {
-	async function getDirector() {
-		const data:object[] = (await axios.get(directors)).data
-		directorData.value = data.find(director => director.institution.appellation === appellation.value)
-	}
-	getDirector()
+	getDirector(directorData, appellation)
 } else if (role === "Куратор") {
-	async function getDirector() {
-		const data:object[] = (await axios.get(directors)).data
-		directorData.value = data.find(director => director.institution.appellation === appellation.value)
-	}
-	getDirector()
+	getDirector(directorData, appellation)
 }
-
-
-
 
 const { animationBoolean } = move(500)
 </script>
