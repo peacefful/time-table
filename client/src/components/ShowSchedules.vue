@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { groups } from '@/API/api-enterprises-institutions';
 import { ref } from 'vue';
-import Title from './TitlePage.vue';
 import { getData } from '@/utils/findItem';
+import Title from './TitlePage.vue';
+import router from '@/router';
 
 const schedulesData = ref<object[]>([])
 getData(groups, schedulesData, "id", Number(localStorage.getItem("scheduleId")))
@@ -58,7 +59,11 @@ const isShowModal = ref<boolean>(true)
 									</div>
 								</div>
 							</div>
-							<button class="schedules-update">Изменить</button>
+							<button 
+								@click="router.push({ name: 'updateschedule', params: { form: 'update' }})"
+								class="schedules-update">
+								Изменить
+							</button>
 							<button class="schedules-remove">Удалить</button>
 		</div>
 	</main>

@@ -5,6 +5,7 @@ import AddInstitution from '@/components/AddInstitution.vue';
 import AddGroups from '@/components/AddGroups.vue';
 import AddSchedules from '@/components/AddSchedules.vue';
 import ShowSchedules from '@/components/ShowSchedules.vue';
+import UpdateSchedules from '@/components/UpdateSchedules.vue';
 
 defineProps<{
 	form: string
@@ -23,11 +24,14 @@ const { animationBoolean } = move(600)
 			<div v-else-if="form === 'add-group'">
 				<AddGroups/>
 			</div>
-			<div v-else-if="form === 'add-schedules'">
+			<div v-else-if="form === 'create'">
 				<AddSchedules/>
 			</div>
-			<div v-else-if="form === 'show-schedules'">
+			<div v-else-if="form === 'schedules'">
 				<ShowSchedules/>
+			</div>
+			<div v-else-if="form === 'update'">
+				<UpdateSchedules/>
 			</div>
 		</main>
 	</transition>

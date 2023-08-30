@@ -19,7 +19,7 @@ defineEmits(['add', 'getTutorsData'])
 			<div 
 				class="main__schedule-form" 
 				v-for="(couple, index) in couplesTuesday" 
-				:key="couple"
+				:key="couple.id"
 			>
 				<div class="main__schedule-input-text">
 				<input v-model="couple.subject" type="text" placeholder="Предмет">

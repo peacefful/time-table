@@ -64,6 +64,12 @@ const router = createRouter({
 	  name: 'showschedule',
 	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
 	  props: true
+	},
+	{
+	  path: '/updateschedule/:form',
+	  name: 'updateschedule',
+	  component: () => import("../pages/AddEnterprisesInstitutions.vue"),
+	  props: true
 	}
   ]
 })

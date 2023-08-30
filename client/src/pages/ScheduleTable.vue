@@ -35,7 +35,7 @@ if (role === "Студент") {
 
 const getIdGroup = (id:number) => {
 	localStorage.setItem("scheduleId", id.toString())
-	router.push({ name: 'showschedule', params: { form: 'show-schedules' }})
+	router.push({ name: 'showschedule', params: { form: 'schedules' }})
 }
 
 const { animationBoolean } = move(500)
@@ -107,14 +107,14 @@ const { animationBoolean } = move(500)
 					<Title title="Расписание" />
 					<div style="margin-top: 1%;">
 						<div v-if="groupsHasSchedules.length">
-							<p @click="router.push({ name:'newschedule', params:{form: 'add-schedules'} })">Добавить расписание</p>
+							<p @click="router.push({ name:'newschedule', params:{form: 'create'} })">Добавить расписание</p>
 							<div style="margin-top: 2%;" v-for="group in groupsHasSchedules" :key="group.id">
 								<p @click="getIdGroup(group.id)">{{ group.groupName }}</p>
 							</div>
 						</div>
 						<div v-else>
 							Расписаний пока нету, 
-							<span @click="router.push({ name:'newschedule', params:{form: 'add-schedules'} })">
+							<span @click="router.push({ name:'newschedule', params:{form: 'create'} })">
 								добавьте новое
 							</span>
 						</div>

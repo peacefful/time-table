@@ -6,7 +6,6 @@ import { ref } from "vue";
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import router from '@/router';
 import axios from "axios";
-import { getData } from '@/utils/findItem';
 
 const role = localStorage.getItem("role")
 

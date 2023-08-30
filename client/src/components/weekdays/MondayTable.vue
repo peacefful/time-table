@@ -9,6 +9,10 @@ defineProps<{
 
 defineEmits(['add', 'getTutorsData'])
 
+const getInputId = (id:number) => {
+	console.log(id);
+}
+
 </script>
 
 <template>
@@ -16,17 +20,17 @@ defineEmits(['add', 'getTutorsData'])
 		<div style="color: rgba(240, 248, 255, 0.613);">
 			<h3>Понедельник</h3>
 		</div>
-			<div 
+		<div 
 				class="main__schedule-form" 
 				v-for="(couple, index) in couplesMonday" 
-				:key="couple"
+				:key="couple.id"
 			>
 				<div class="main__schedule-input-text">
-				<input 
+				<input
+					@click="getInputId(couple.id)"
 					v-model="couple.subject" 
 					type="text" 
 					placeholder="Предмет"
-					@input="checkTime(couple.subject)"
 				>
 				<input v-model="couple.office" type="text" placeholder="Кабинет">
 				<select v-model="couple.teacher">
