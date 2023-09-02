@@ -5,8 +5,8 @@ import { directors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import { getDatas } from "@/utils/findItem";
-import { useStudentStore } from "@/stores/studentStore"
-import { useDirectorStore } from "@/stores/directorStore"
+import { getDirector } from "@/API/student"
+import { getInstitutionData } from "@/API/director"
 import Header from "@/components/Header.vue";
 import Title from "@/components/TitlePage.vue";
 import router from "@/router";
@@ -15,9 +15,6 @@ const institutionData = ref<object>()
 const directorData = ref<object>()
 const appellation = ref<string|null>(localStorage.getItem('appellation'))
 const role = localStorage.getItem("role")
-
-const { getDirector } = useStudentStore()
-const { getInstitutionData } = useDirectorStore()
 
 if (role === "Директор") {
 	getDatas(directors, directorData, "id", Number(localStorage.getItem('id')))
@@ -97,4 +94,4 @@ button {
 	padding: 0.5% 3%;
 	margin-top: 1%;
 }
-</style>../components/modal/openCloseDataModal@/utils/isEmptyLogin
+</style>../components/modal/openCloseDataModal@/utils/isEmptyLogin@/API/director

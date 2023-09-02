@@ -23,7 +23,7 @@ async function postInstitutions() {
 				institutionId: directorId
 			})
 		})
-		localStorage.setItem("directorId", directorId)
+		localStorage.setItem("directorId", directorId.toString())
 		localStorage.setItem("appellation", institution.value)
 		router.push('/main')
 	} catch (error) {

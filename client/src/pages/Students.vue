@@ -4,17 +4,14 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue';
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
-import { useStudentStore } from "@/stores/studentStore"
-import { useDirectorStore } from "@/stores/directorStore"
+import { getStudents } from "@/API/student"
+import { getStudentsForDirector } from "@/API/director"
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
 
 const studentsData = ref<object[]>([])
 const institutionId:number = Number(localStorage.getItem("institutionId"))
 const role = localStorage.getItem("role")
-
-const { getStudents } = useStudentStore()
-const { getStudentsForDirector } = useDirectorStore()
 
 if (role === "Директор") {
 	getStudentsForDirector(studentsData, institutionId)
@@ -47,4 +44,4 @@ const { animationBoolean } = move(500)
 			</div>
 		</main>
 	</transition>
-</template>
+</template>@/API/director

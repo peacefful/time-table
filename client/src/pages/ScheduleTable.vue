@@ -5,9 +5,9 @@ import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import { students, tutors } from '@/API/api-enterprises-institutions';
 import { getData } from '@/utils/findItem';
-import { useStudentStore } from "@/stores/studentStore"
-import { useDirectorStore } from "@/stores/directorStore"
-import { useTutorStore } from "@/stores/tutorStore"
+import { getStudentSchedules } from "@/API/student"
+import { getGroups } from "@/API/director"
+import { useTutorStore } from "@/API/tutor"
 import router from '@/router';
 import Header from '@/components/Header.vue';
 import Title from '@/components/TitlePage.vue';
@@ -19,8 +19,6 @@ const groupsHasSchedules = ref<object[]>([])
 const student = ref<object[]>([])
 const tutor = ref<object[]>([])
 
-const { getStudentSchedules } = useStudentStore()
-const { getGroups } = useDirectorStore()
 const { getTutorSchedules } = useTutorStore()
 
 if (role === "Студент") {
@@ -130,4 +128,4 @@ const { animationBoolean } = move(500)
 			</div>
 		</main>
 	</transition>
-</template>
+</template>@/API/director

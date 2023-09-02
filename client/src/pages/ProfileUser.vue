@@ -2,17 +2,15 @@
 <script setup lang="ts">
 import { outSystem } from '@/utils/outSystem';
 import { ref } from 'vue';
-import { useStudentStore } from "@/stores/studentStore"
-import { useDirectorStore } from "@/stores/directorStore"
-import { useTutorStore } from "@/stores/tutorStore"
+import { getStudentData } from "@/API/student"
+import { getDirectorData } from "@/API/director"
+import { useTutorStore } from "@/API/tutor"
 
 const user = ref<object[]>([])
 const appellation = ref<string>()
 const role = localStorage.getItem("role")
 const group = ref<string>()
 
-const { getStudentData } = useStudentStore()
-const { getDirectorData } = useDirectorStore()
 const { getTutorData } = useTutorStore()
 
 if (role === "Директор") {
@@ -66,4 +64,4 @@ if (role === "Директор") {
 		}
 	}
 }
-</style>
+</style>@/API/director

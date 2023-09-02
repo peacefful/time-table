@@ -4,29 +4,11 @@ import { move } from '@/hooks/useAnimation';
 import { directors, students, tutors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
+import { IPages } from "../interfaces/iPages"
 import router from '@/router';
 import axios from "axios";
 
 const role = localStorage.getItem("role")
-
-interface IPages {
-	groups: {
-		nameNav: string
-		url: string
-	},
-	students?: {
-		nameNav: string
-		url: string
-	},
-	schedule: {
-		nameNav: string
-		url: string
-	},
-	main: {
-		nameNav: string
-		url: string
-	}
-}
 
 const pages:IPages = {
 	main: {
@@ -52,13 +34,13 @@ const authUser = ref<object>({})
 async function getAuthUser () {
 	if (role === 'Студент') {
 		const users = (await axios.get(students)).data
-		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+		authUser.value = await users.find((user: { id: number }) => user.id === Number(localStorage.getItem("id")))
 	} else if (role === 'Директор') {
 		const users = (await axios.get(directors)).data
-		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+		authUser.value = await users.find((user: { id: number })=> user.id === Number(localStorage.getItem("id")))
 	} else if (role === 'Куратор') {
 		const users = (await axios.get(tutors)).data
-		authUser.value = await users.find(user => user.id === Number(localStorage.getItem("id")))
+		authUser.value = await users.find((user: { id: number }) => user.id === Number(localStorage.getItem("id")))
 	}
 }
 
@@ -74,7 +56,6 @@ const { animationBoolean } = move(400)
 				<div class="header__nav">
 					<ul v-for="(page, index) in pages" :key="index">
 						<nav style="pointer-events: none;">
-							<div class="header__nav-line"></div>
 							<p @click="router.push(page.url)">{{ page.nameNav }}</p>
 						</nav>
 					</ul>
@@ -90,7 +71,6 @@ const { animationBoolean } = move(400)
 				<div class="header__nav">
 					<ul v-for="(page, index) in pages" :key="index">
 						<nav>
-							<div class="header__nav-line"></div>
 							<p @click="router.push(page.url)">{{ page.nameNav }}</p>
 						</nav>
 					</ul>
@@ -115,11 +95,6 @@ const { animationBoolean } = move(400)
 	justify-content: space-between;
 	
 	.header__nav {
-		.header__nav-line{
-			width: auto;
-			height: 0.5px;
-			background-color: rgba(255, 255, 255, 0.36);
-		}
 		font-size: 25px;
 		width: 600px;
 		display: flex;

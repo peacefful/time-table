@@ -7,7 +7,7 @@ defineProps<{
 	tutorsData: object[]
 }>()
 
-defineEmits(['add', 'getTutorsData'])
+defineEmits(['add', 'getTutorsData', "getId"])
 
 </script>
 
@@ -17,6 +17,7 @@ defineEmits(['add', 'getTutorsData'])
 			<h3>Суббота</h3>
 		</div>
 			<div 
+				@click.prevent="$emit(`getId`, couple.id)"
 				class="main__schedule-form" 
 				v-for="(couple, index) in couplesSaturday" 
 				:key="couple.id"

@@ -6,11 +6,11 @@ import { ref } from 'vue';
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
 import { groups, students, tutors } from '@/API/api-enterprises-institutions';
 import { getData, getDatas } from '@/utils/findItem';
-import { useStudentStore } from '@/stores/studentStore';
-import { useTutorStore } from '@/stores/tutorStore';
-import router from "@/router";
+import { getGroup } from '@/API/student';
+import { useTutorStore } from '@/API/tutor';
 import Header from '@/components/Header.vue';
 import Title from "@/components/TitlePage.vue";
+import router from '@/router';
 
 const role = localStorage.getItem("role")
 
@@ -18,7 +18,6 @@ const groupsDatas = ref<object[]>([])
 const studentGroupId = ref<object[]>([])
 const tutorGroupId = ref<object[]>([])
 
-const { getGroup } = useStudentStore()
 const { findAuthTutor } = useTutorStore()
 
 if (role === "Директор") {
@@ -64,10 +63,8 @@ const { animationBoolean } = move(500)
 						>
 							Создать группу
 						</p>
-						<div style="margin-top: 4%;">
-							<div style="margin-top: 1%;" v-for="group in groupsDatas" :key="group.id">
-								<p>{{ group.groupName }}</p>
-							</div>
+						<div style="margin-top: 2%;" v-for="group in groupsDatas" :key="group.id">
+							<p @click="router.push({ name: 'showschedule', params: { form: 'schedules' }})">{{ group.groupName }}</p>
 						</div>
 					</div>
 					<div v-else style="margin-top: 1%;">

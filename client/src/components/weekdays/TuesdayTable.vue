@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { tuesday } from "@/API/api-weekday";
+import { useSaveId } from "@/stores/saveId";
 import { removeCouple } from "@/utils/deleteCouple";
 
 defineProps<{
@@ -7,7 +9,7 @@ defineProps<{
 	tutorsData: object[]
 }>()
 
-defineEmits(['add', 'getTutorsData'])
+defineEmits(['add', 'getTutorsData', "getId"])
 
 </script>
 
@@ -17,6 +19,7 @@ defineEmits(['add', 'getTutorsData'])
 			<h3>Вторник</h3>
 		</div>
 			<div 
+				@click.prevent="$emit(`getId`, couple.id)"
 				class="main__schedule-form" 
 				v-for="(couple, index) in couplesTuesday" 
 				:key="couple.id"

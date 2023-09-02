@@ -23,7 +23,7 @@ const groupsData = ref<object[]>([])
 
 async function getGroups() {
 	const data:object[] = (await axios.get(groups)).data
-	groupsData.value = data.filter(item => item.institutionId === Number(localStorage.getItem("institutionId")))
+	groupsData.value = data.filter((item) => item.institutionId === Number(localStorage.getItem("institutionId")))
 }
 
 getGroups()

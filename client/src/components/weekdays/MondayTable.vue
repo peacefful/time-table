@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { removeCouple } from "@/utils/deleteCouple";
+import { useSaveId } from "@/stores/saveId"
+import { monday } from "@/API/api-weekday";
 
 defineProps<{
 	couplesMonday: object[]
-	getTutorsData: Function
 	tutorsData: object[]
+	getTutorsData: Function
 }>()
 
-defineEmits(['add', 'getTutorsData'])
-
-const getInputId = (id:number) => {
-	console.log(id);
-}
+defineEmits(['add', 'getTutorsData', "getId"])
 
 </script>
 
@@ -21,18 +19,22 @@ const getInputId = (id:number) => {
 			<h3>Понедельник</h3>
 		</div>
 		<div 
-				class="main__schedule-form" 
-				v-for="(couple, index) in couplesMonday" 
-				:key="couple.id"
+			@click.prevent="$emit(`getId`, couple.id)"
+			class="main__schedule-form" 
+			v-for="(couple, index) in couplesMonday" 
+			:key="couple.id"
+		>
+			<div class="main__schedule-input-text">
+			<input
+				v-model="couple.subject" 
+				type="text" 
+				placeholder="Предмет"
 			>
-				<div class="main__schedule-input-text">
-				<input
-					@click="getInputId(couple.id)"
-					v-model="couple.subject" 
-					type="text" 
-					placeholder="Предмет"
-				>
-				<input v-model="couple.office" type="text" placeholder="Кабинет">
+			<input
+				v-model="couple.office" 
+				type="text" 
+				placeholder="Кабинет"
+			>
 				<select v-model="couple.teacher">
 					<option disabled value="">Преподаватель</option>
 					<option v-for="tutor in tutorsData" :key="tutor.id">
@@ -60,4 +62,4 @@ const getInputId = (id:number) => {
 			<button @click.prevent="$emit('add')" class="add-couple">Добавить пару</button>
 		</div>
 	</main>
-</template>@/utils/deleteCouple@/utils/crud/deleteCouple@/utils/deleteCouple
+</template>

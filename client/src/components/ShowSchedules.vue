@@ -8,6 +8,11 @@ import router from '@/router';
 const schedulesData = ref<object[]>([])
 getData(groups, schedulesData, "id", Number(localStorage.getItem("scheduleId")))
 
+function getId (id:number) {
+	console.log(id);
+	
+}
+
 const isShowModal = ref<boolean>(true)
 </script>
 
