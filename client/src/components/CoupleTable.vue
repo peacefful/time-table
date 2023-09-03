@@ -1,27 +1,33 @@
 <script setup lang="ts">
 import { removeCouple } from "@/utils/deleteCouple";
-import { useSaveId } from "@/stores/saveId"
-import { monday } from "@/API/api-weekday";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 defineProps<{
-	couplesMonday: object[]
+	couples: object[]
 	tutorsData: object[]
-	getTutorsData: Function
+	title:string
 }>()
 
-defineEmits(['add', 'getTutorsData', "getId"])
+defineEmits(['add'])
+
+const router = useRoute()
+const isAddCouples = ref<boolean>(true)
+
+if (router.path.includes("update")) {
+	isAddCouples.value = false
+}
 
 </script>
 
 <template>
-	<main>
+	<main style="margin-top: 2%;">
 		<div style="color: rgba(240, 248, 255, 0.613);">
-			<h3>Понедельник</h3>
+			<h3>{{ title }}</h3>
 		</div>
-		<div 
-			@click.prevent="$emit(`getId`, couple.id)"
+		<div
 			class="main__schedule-form" 
-			v-for="(couple, index) in couplesMonday" 
+			v-for="(couple, index) in couples" 
 			:key="couple.id"
 		>
 			<div class="main__schedule-input-text">
@@ -56,9 +62,9 @@ defineEmits(['add', 'getTutorsData', "getId"])
 					placeholder="13"
 				>
 			</div>
-			<button class="remove-couple" @click.prevent="removeCouple(index, couplesMonday)">Удалить</button>
+			<button class="remove-couple" @click.prevent="removeCouple(index, couples)">Удалить</button>
 		</div>
-		<div>
+		<div v-if="isAddCouples">
 			<button @click.prevent="$emit('add')" class="add-couple">Добавить пару</button>
 		</div>
 	</main>

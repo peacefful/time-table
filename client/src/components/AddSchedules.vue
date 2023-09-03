@@ -3,12 +3,7 @@ import { groups, tutors } from '@/API/api-enterprises-institutions';
 import { ref, reactive } from 'vue';
 import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday';
 import axios from 'axios';
-import MondayTable from './weekdays/MondayTable.vue';
-import TuesdayTable from './weekdays/TuesdayTable.vue';
-import WednesdayTable from './weekdays/WednesdayTable.vue';
-import ThursdayTable from './weekdays/ThursdayTable.vue';
-import FridayTable from './weekdays/FridayTable.vue';
-import SaturdayTable from './weekdays/SaturdayTable.vue';
+import CoupleTable from './CoupleTable.vue';
 
 const tutorsData = ref<object[]>([])
 
@@ -78,51 +73,42 @@ async function createSchedulesTable() {
 		<form @submit.prevent="createSchedulesTable()">
 			<div class="main__schedule">
 			<h1>Новое расписание</h1>
-			<MondayTable
-				style="margin-top: 2%;"
-				:couples-monday="couplesMonday"
+			<CoupleTable
+				:couples="couplesMonday"
+				:tutors-data="tutorsData"
+				:title="'Понедельник'"
 				@add="addCouple(couplesMonday)"
-				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
 			/>
-			<TuesdayTable
-				:couples-tuesday="couplesTuesday"
-				@add="addCouple(couplesTuesday)"
+			<CoupleTable
+				:couples="couplesTuesday"
 				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
+				:title="'Вторник'"
+				@add="addCouple(couplesMonday)"
 			/>
-			<WednesdayTable
-				:couples-wednesday="couplesWednesday"
-				@add="addCouple(couplesWednesday)"
+			<CoupleTable
+				:couples="couplesWednesday"
 				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
+				:title="'Среда'"
+				@add="addCouple(couplesMonday)"
 			/>
-			<ThursdayTable
-				:couples-thursday="couplesThursday"
-				@add="addCouple(couplesThursday)"
+			<CoupleTable
+				:couples="couplesThursday"
 				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
+				:title="'Четверг'"
+				@add="addCouple(couplesMonday)"
 			/>
-			<FridayTable
-				:couples-friday="couplesFriday"
-				@add="addCouple(couplesFriday)"
+			<CoupleTable
+				:couples="couplesFriday"
 				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
+				:title="'Пятница'"
+				@add="addCouple(couplesMonday)"
 			/>
-			<SaturdayTable
-				:couples-saturday="couplesSaturday"
-				@add="addCouple(couplesSaturday)"
+			<CoupleTable
+				:couples="couplesSaturday"
 				:tutors-data="tutorsData"
-				:get-tutors-data="getTutorsData"
+				:title="'Суббота'"
+				@add="addCouple(couplesMonday)"
 			/>
-			<div>
-				<select v-model="groupId">
-					<option disabled value="">Выберите группу</option>
-					<option v-for="group in groupsData" :key="group.id" :value="group.id">
-						{{ group.groupName }}
-					</option>
-				</select>
-			</div>
 			<button type="submit" style="margin-top: 1%;">Сохранить</button>
 		</div>
 		</form>
