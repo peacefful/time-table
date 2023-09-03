@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
-import Header from '@/components/Header.vue';
+import Header from '@/components/UI/Header.vue';
 import AddInstitution from '@/components/AddInstitution.vue';
 import AddGroups from '@/components/AddGroups.vue';
-import AddSchedules from '@/components/AddSchedules.vue';
-import ShowSchedules from '@/components/ShowSchedules.vue';
-import UpdateSchedules from '@/components/UpdateSchedules.vue';
+import AddSchedules from '@/pages/AddSchedules.vue';
+import ShowSchedules from '@/pages/ShowSchedules.vue';
+import UpdateSchedules from '@/pages/UpdateSchedules.vue';
 
 defineProps<{
 	form: string

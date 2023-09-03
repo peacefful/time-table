@@ -8,8 +8,8 @@ import { groups, students, tutors } from '@/API/api-enterprises-institutions';
 import { getData, getDatas } from '@/utils/findItem';
 import { getGroup } from '@/API/student';
 import { useTutorStore } from '@/API/tutor';
-import Header from '@/components/Header.vue';
-import Title from "@/components/TitlePage.vue";
+import Header from '@/components/UI/Header.vue';
+import Title from "@/components/UI/TitlePage.vue";
 import router from '@/router';
 
 const role = localStorage.getItem("role")

@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { authUser } from '../utils/auth/auth'
 import { institutions } from "@/API/api-enterprises-institutions";
 import RegistrationLoginUser from "../components/RegistrationLoginUser.vue"
-import ButtonLabel from "../components/ButtonLabel.vue"
+import ButtonLabel from "../components/UI/ButtonLabel.vue"
 import router from '../router/index'
 import axios from "axios";
 

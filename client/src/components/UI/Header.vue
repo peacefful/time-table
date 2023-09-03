@@ -4,7 +4,7 @@ import { move } from '@/hooks/useAnimation';
 import { directors, students, tutors } from "@/API/api-enterprises-institutions";
 import { ref } from "vue";
 import { isEmptyLogin } from '@/utils/isEmptyLogin';
-import { IPages } from "../interfaces/iPages"
+import type { IPages } from "../interfaces/iPages"
 import router from '@/router';
 import axios from "axios";
 

@@ -2,12 +2,15 @@
 import { move } from "../hooks/useAnimation"
 import { groups, tutors } from "@/API/api-enterprises-institutions";
 import { ref, reactive } from "vue";
-import { friday, monday, saturday, thursday, tuesday, wednesday } from "@/API/api-weekday";
 import { getDatas } from "@/utils/findItem";
 import axios from "axios";
-import CoupleTable from "./CoupleTable.vue";
+import CoupleTable from "../components/EditCoupleTable.vue";
+import { getSchedulesTable } from "@/utils/getSchedulesTable";
 
 const tutorsData = ref<object[]>([])
+const scheduleId = localStorage.getItem("scheduleId")
+const institutionId = localStorage.getItem("institutionId")
+
 const couples = reactive({
 	mondayCouple: [],
 	tuesdayCouple: [],
@@ -16,9 +19,6 @@ const couples = reactive({
 	fridayCouple: [],
 	saturdayCouple: [],
 })
-
-const scheduleId = localStorage.getItem("scheduleId")
-const institutionId = localStorage.getItem("institutionId")
 
 async function getCouples() {
 	const data:object[] = (await axios.get(groups)).data
@@ -36,17 +36,17 @@ getCouples()
 getDatas(tutors, tutorsData, "userId", Number(institutionId))
 
 function updateSchedules () {
-	const couplesWeeek:object[] = [
-		{ api: monday, couple: couples.mondayCouple },
-		{ api: tuesday, couple: couples.tuesdayCouple },
-		{ api: wednesday, couple: couples.wednesdayCouple },
-		{ api: thursday, couple: couples.thursdayCouple },
-		{ api: friday, couple: couples.fridayCouple },
-		{ api: saturday, couple: couples.saturdayCouple },
-	]
+	const couplesWeeek:object[] = getSchedulesTable(
+		couples.mondayCouple,
+		couples.tuesdayCouple,
+		couples.wednesdayCouple,
+		couples.thursdayCouple,
+		couples.fridayCouple,
+		couples.saturdayCouple,
+	)
 
 	for (const iterator of couplesWeeek) {
-		for (const couple of iterator.couple) {
+		for (const couple of iterator.object) {
 			const putUrl = `${iterator.api}/${couple.id}`
 
 			axios.put(putUrl, {

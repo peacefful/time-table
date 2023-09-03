@@ -9,8 +9,8 @@ import { getStudentSchedules } from "@/API/student"
 import { getGroups } from "@/API/director"
 import { useTutorStore } from "@/API/tutor"
 import router from '@/router';
-import Header from '@/components/Header.vue';
-import Title from '@/components/TitlePage.vue';
+import Header from '@/components/UI/Header.vue';
+import Title from '@/components/UI/TitlePage.vue';
 
 const role = localStorage.getItem("role")
 
@@ -55,42 +55,42 @@ const { animationBoolean } = move(500)
 								<div>
 									<h3>Понедельник</h3>
 									<div v-for="monday in schedulesData.monday" :key="monday.id">
-										{{ monday.subject }} ({{ monday.teacher }}) 
+										{{ monday.subject }} ({{ monday.teacher }}) [{{ monday.office }}]
 										[{{ monday.beginning }}-{{ monday.end }}]
 									</div>
 								</div>
 								<div style="margin-top: 1%;">
 									<h3>Вторник</h3>
 									<div v-for="tuesday in schedulesData.tuesday" :key="tuesday.id">
-										{{ tuesday.subject }} ({{ tuesday.teacher }}) 
+										{{ tuesday.subject }} ({{ tuesday.teacher }}) [{{ tuesday.office }}]
 										[{{ tuesday.beginning }}-{{ tuesday.end }}]
 									</div>
 								</div>
 								<div style="margin-top: 1%;">
 									<h3>Среда</h3>
 									<div v-for="wednesday in schedulesData.wednesday" :key="wednesday.id">
-										{{ wednesday.subject }} ({{ wednesday.teacher }}) 
+										{{ wednesday.subject }} ({{ wednesday.teacher }}) [{{ wednesday.office }}]
 										[{{ wednesday.beginning }}-{{ wednesday.end }}]
 									</div>
 								</div>
 								<div style="margin-top: 1%;">
 									<h3>Четверг</h3>
 									<div v-for="thursday in schedulesData.thursday" :key="thursday.id">
-										{{ thursday.subject }} ({{ thursday.teacher }}) 
+										{{ thursday.subject }} ({{ thursday.teacher }}) [{{ thursday.office }}]
 										[{{ thursday.beginning }}-{{ thursday.end }}]
 									</div>
 								</div>
 								<div style="margin-top: 1%;">
 									<h3>Пятница</h3>
 									<div v-for="friday in schedulesData.friday" :key="friday.id">
-										{{ friday.subject }} ({{ friday.teacher }}) 
+										{{ friday.subject }} ({{ friday.teacher }}) [{{ friday.office }}]
 										[{{ friday.beginning }}-{{ friday.end }}]
 									</div>
 								</div>
 								<div style="margin-top: 1%;">
 									<h3>Суббота</h3>
 									<div v-for="saturday in schedulesData.saturday" :key="saturday.id">
-										{{ saturday.subject }} ({{ saturday.teacher }}) 
+										{{ saturday.subject }} ({{ saturday.teacher }}) [{{ saturday.office }}]
 										[{{ saturday.beginning }}-{{ saturday.end }}]
 									</div>
 								</div>

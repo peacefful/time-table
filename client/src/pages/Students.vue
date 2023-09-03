@@ -6,8 +6,8 @@ import { ref } from 'vue';
 import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import { getStudents } from "@/API/student"
 import { getStudentsForDirector } from "@/API/director"
-import Header from '@/components/Header.vue';
-import Title from '@/components/TitlePage.vue';
+import Header from '@/components/UI/Header.vue';
+import Title from '@/components/UI/TitlePage.vue';
 
 const studentsData = ref<object[]>([])
 const institutionId:number = Number(localStorage.getItem("institutionId"))

@@ -7,8 +7,8 @@ import { isEmptyLogin } from "@/utils/isEmptyLogin";
 import { getDatas } from "@/utils/findItem";
 import { getDirector } from "@/API/student"
 import { getInstitutionData } from "@/API/director"
-import Header from "@/components/Header.vue";
-import Title from "@/components/TitlePage.vue";
+import Header from "@/components/UI/Header.vue";
+import Title from "@/components/UI/TitlePage.vue";
 import router from "@/router";
 
 const institutionData = ref<object>()
