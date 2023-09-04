@@ -27,10 +27,14 @@ export async function getStudentData(user:object[], group:string) {
 export async function getStudentSchedules(schedulesData:object[]) {
 	try {
 		const data:object[] = (await axios.get(groups)).data
+		
 		schedulesData.value = data.find(item => {
 			const students:object[] = item.students
 			return students.find(student => student.id === Number(localStorage.getItem("id")))
 		})
+		console.log(schedulesData.value);
+		
+		
 	} catch (error) {
 		console.log(error);
 	}

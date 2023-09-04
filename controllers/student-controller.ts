@@ -141,23 +141,3 @@ export const updateGroupId = async (req: Request, res: Response):Promise<void> =
 		console.log(error);
 	}
 }
-
-//Изменить пароль
-// export const updatePassword = async (req: Request, res: Response):Promise<void> => {
-// 	try {
-// 		const id:number = parseInt(req.params.id)
-// 		const { password }:IStudent = req.body
-// 		const hashedPassword:string = await hashPassword(password);
-// 		const students = await prisma.students.update({
-// 			where: {
-// 				id
-// 			},
-// 			data: {
-// 				password: hashedPassword,
-// 			}
-// 		})
-// 		res.send(students)
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// }

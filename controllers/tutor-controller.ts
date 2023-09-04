@@ -126,3 +126,21 @@ export const changeTutor = async (req: Request, res: Response):Promise<void> => 
 		console.log(error);
 	}
 }
+
+export const updateGroupId = async (req: Request, res: Response):Promise<void> => {
+	try {
+		const id:number = parseInt(req.params.id)
+		const { groupId }:ITutor = req.body
+		const tutors = await prisma.tutor.update({
+			where: {
+				id
+			},
+			data: {
+				groupId,
+			}
+		})
+		res.send(tutors)
+	} catch (error) {
+		console.log(error);
+	}
+}

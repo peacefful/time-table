@@ -1,5 +1,4 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation';
 import { ref } from 'vue';
@@ -28,6 +27,11 @@ if (role === "Директор") {
 } else if (role === "Куратор") {
 	getData(tutors, tutorGroupId, "id", Number(localStorage.getItem("id")))
 	findAuthTutor(groupsDatas)
+}
+
+const getIdGroup = (id:number) => {
+	localStorage.setItem("addUserGroupId", id.toString())
+	router.push({ name: 'showschedule', params: { form: 'schedules' }})
 }
 
 const { animationBoolean } = move(500)
@@ -64,7 +68,7 @@ const { animationBoolean } = move(500)
 							Создать группу
 						</p>
 						<div style="margin-top: 2%;" v-for="group in groupsDatas" :key="group.id">
-							<p @click="router.push({ name: 'showschedule', params: { form: 'schedules' }})">{{ group.groupName }}</p>
+							<p @click="getIdGroup(group.id)">{{ group.groupName }}</p>
 						</div>
 					</div>
 					<div v-else style="margin-top: 1%;">

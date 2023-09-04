@@ -152,12 +152,17 @@ a,p {
 
 .schedules-update{
 	@include button(rgb(0, 106, 255), white);
-	margin-top: 1%;
+	margin-top: 2%;
 }
 
 .schedules-remove{
 	@include button(red, white);
 	margin-left: 2%;
+}
+
+.schedules-add {
+	@include button(rgb(0, 255, 30), white);
+	margin-top: 1%;
 }
 
 input[type='number'] {
@@ -220,11 +225,12 @@ input[type='number'] {
 		transition: all 0.5s;
 		&:hover{
 			opacity: 0.5;
+			transform: rotate(180deg);
 		}
 	}
 	.modal__box{
 		position: relative;
-		max-width: 500px;
+		width: 700px;
 		background-color: rgb(0, 0, 0);
 		border-radius: 4%;
 		padding: 5% 10%;

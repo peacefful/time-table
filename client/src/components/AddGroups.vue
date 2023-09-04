@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { changeGroupStudents, groups } from "@/API/api-enterprises-institutions";
+import { changeGroupStudents, groups, students } from "@/API/api-enterprises-institutions";
 import { ref } from "vue"
 import router from "@/router";
 import axios from "axios";
@@ -43,6 +43,7 @@ const closeModal = () => isShowModal.value = false
 				<input style="margin-top: 1%;" type="text" placeholder="Курс" v-model="course">
 				<button @click.prevent="openModal()">Добавить студентов</button>
 				<SelectStudentsTutors
+					:api="students"
 					v-model:ids="ids"
 					@close-modal="closeModal()"
 					v-if="isShowModal" 

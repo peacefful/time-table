@@ -7,7 +7,7 @@ import Title from '../components/UI/TitlePage.vue';
 import router from '@/router';
 import axios from 'axios';
 
-const scheduleId = localStorage.getItem("scheduleId")
+const addUserGroupId = localStorage.getItem("addUserGroupId")
 
 const couples = reactive({
 	groupTtile: '',
@@ -21,7 +21,9 @@ const couples = reactive({
 
 async function getCouples() {
 	const data:object[] = (await axios.get(groups)).data
-	const ownGroup = data.find(item => item.id === Number(scheduleId))
+	
+	const ownGroup = data.find(item => item.id === Number(addUserGroupId))
+	
 	couples.groupTtile = ownGroup.groupName
 	couples.mondayCouple = ownGroup.monday
 	couples.tuesdayCouple = ownGroup.tuesday
@@ -51,12 +53,12 @@ function deleteSchedules() {
 	}
 }
 
-const isShowModal = ref<boolean>(true)
+
 </script>
 
 <template>
-	<main v-if="isShowModal">
-		<Title :title="couples.groupTtile" />
+	<main>
+		<Title :title="couples.groupTtile"/>
 		<div v-if="couples.mondayCouple.length">
 			<div style="color: rgba(255, 255, 255, 0.763);" class="schedules-flex">
 				<GetCoupleTable
@@ -96,14 +98,3 @@ const isShowModal = ref<boolean>(true)
 		</div>
 	</main>
 </template>
-
-<style>
-
-h2{
-	text-align: center;
-}
-
-.week {
-	margin-top: 7%;
-}
-</style>

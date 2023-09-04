@@ -12,3 +12,5 @@ export const authStudents:string = "http://localhost:3000/api/authstudents"
 export const changeGroupStudents:string = "http://localhost:3000/api/students/updategroup"
 
 export const users:string = "http://localhost:3000/api/users"
+
+export const changeGroupTutors:string = "http://localhost:3000/api/tutors/updategroup"

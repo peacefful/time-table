@@ -44,4 +44,4 @@ const { animationBoolean } = move(500)
 			</div>
 		</main>
 	</transition>
-</template>@/API/director
+</template>
