@@ -1,4 +1,3 @@
-<!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { outSystem } from '@/utils/outSystem'
 import { ref } from 'vue'
