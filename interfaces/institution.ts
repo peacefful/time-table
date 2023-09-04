@@ -1,5 +1,5 @@
 export interface IInstitution {
-	id?: number
-	appellation: string
-	directorId: number
+  id?: number
+  appellation: string
+  directorId: number
 }

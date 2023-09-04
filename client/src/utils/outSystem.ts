@@ -1,6 +1,6 @@
-import router from "@/router"
+import router from '@/router'
 
 export const outSystem = () => {
-	localStorage.clear()
-	router.push("/")
+  localStorage.clear()
+  router.push('/')
 }

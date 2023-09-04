@@ -1,4 +1,4 @@
 export interface IUser {
-	name: string
-	institutionId: number
+  name: string
+  institutionId: number
 }

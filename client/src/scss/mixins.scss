@@ -1,13 +1,13 @@
-@mixin button ($backgroundColor, $color) {
-	font-family: 'Montserrat', sans-serif;
-	font-size: 30px;
-	background-color: $backgroundColor;
-	color: $color;
-	border-radius: 15px;
-	cursor: pointer;
-	transition: all 0.3s;
-	&:hover{
-		color: $backgroundColor;
-		background-color: $color;
-	}
+@mixin button($backgroundColor, $color) {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  background-color: $backgroundColor;
+  color: $color;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: $backgroundColor;
+    background-color: $color;
+  }
 }

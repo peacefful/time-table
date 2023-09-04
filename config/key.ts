@@ -1,1 +1,1 @@
-export const keyJwt:string = "pec-jwt"
+export const keyJwt: string = 'pec-jwt'

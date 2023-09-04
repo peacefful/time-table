@@ -1,1 +1,1 @@
-export const isEmptyLogin = ():boolean => Boolean(Number(localStorage.getItem("id")))
+export const isEmptyLogin = (): boolean => Boolean(Number(localStorage.getItem('id')))
