@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { groups, tutors } from '@/API/api-enterprises-institutions'
+import { groups, tutors } from '@/API/apiEnterprisesInstitutions'
 
 export const useTutorStore = defineStore('tutorStore', () => {
   async function findAuthTutor(groupsDatas: object[]) {

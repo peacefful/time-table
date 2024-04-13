@@ -1,13 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   name: string
   surname: string
   password: string
 }>()
 
-defineEmits(['update:name', 'update:surname', 'update:password'])
+const emit = defineEmits(['update:name', 'update:surname', 'update:password'])
+
+const name = computed({
+  get() {
+    return props.name
+  },
+  set(value) {
+    emit('update:name', value)
+  }
+})
+
+const surname = computed({
+  get() {
+    return props.surname
+  },
+  set(value) {
+    emit('update:surname', value)
+  }
+})
+
+const password = computed({
+  get() {
+    return props.password
+  },
+  set(value) {
+    emit('update:password', value)
+  }
+})
 
 let boolean = ref<boolean>(false)
 let type = ref<string>('password')
@@ -19,9 +46,9 @@ const showPassword = () => {
 </script>
 
 <template>
-  <input placeholder="Имя" type="text" @input="$emit('update:name', $event.target.value)" />
-  <input placeholder="Фамилия" type="text" @input="$emit('update:surname', $event.target.value)" />
-  <input placeholder="Пароль" :type="type" @input="$emit('update:password', $event.target.value)" />
+  <input placeholder="Имя" type="text" v-model="name" />
+  <input placeholder="Фамилия" type="text" v-model="surname" />
+  <input placeholder="Пароль" :type="type" v-model="password" />
   <label>
     <input type="checkbox" @click="showPassword()" />
     Показать пароль

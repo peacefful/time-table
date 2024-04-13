@@ -1,7 +1,7 @@
 <!-- eslint-disable no-inner-declarations -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
-import { directors } from '@/API/api-enterprises-institutions'
+import { DIRECTORS_API } from '@/API/apiEnterprisesInstitutions'
 import { ref } from 'vue'
 import { isEmptyLogin } from '@/utils/isEmptyLogin'
 import { getDatas } from '@/utils/findItem'
@@ -10,14 +10,21 @@ import { getInstitutionData } from '@/API/director'
 import Header from '@/components/UI/Header.vue'
 import Title from '@/components/UI/TitlePage.vue'
 import router from '@/router'
+import type { IInstitutions } from '@/interfaces/iInstitution'
 
-const institutionData = ref<object>()
+interface IDirector {
+	id: number
+	name: string
+	surname: string
+}
+
+const institutionData = ref<IInstitutions>()
 const directorData = ref<object>()
 const appellation = ref<string | null>(localStorage.getItem('appellation'))
 const role = localStorage.getItem('role')
 
 if (role === 'Директор') {
-  getDatas(directors, directorData, 'id', Number(localStorage.getItem('id')))
+  getDatas(DIRECTORS_API, directorData, 'id', Number(localStorage.getItem('id')))
   getInstitutionData(institutionData)
 } else if (role === 'Студент') {
   getDirector(directorData, appellation)
@@ -96,3 +103,4 @@ button {
 }
 </style>
 ../components/modal/openCloseDataModal@/utils/isEmptyLogin@/API/director
+@/API/apiEnterprisesInstitutions

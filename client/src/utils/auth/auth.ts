@@ -1,5 +1,5 @@
 /* eslint-disable no-inner-declarations */
-import { authDirectors, institutions, users } from '@/API/api-enterprises-institutions'
+import { authDirectors, institutions, users } from '@/API/apiEnterprisesInstitutions'
 import { makeAuthRequest } from '@/utils/auth/authData'
 import router from '@/router'
 import axios from 'axios'

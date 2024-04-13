@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { changeGroupStudents, groups, students } from '@/API/api-enterprises-institutions'
+import { changeGroupStudents, groups, students } from '@/API/apiEnterprisesInstitutions'
 import { ref } from 'vue'
 import router from '@/router'
 import axios from 'axios'
@@ -55,4 +55,4 @@ const closeModal = () => (isShowModal.value = false)
       </form>
     </div>
   </main>
-</template>
+</template>@/API/apiEnterprisesInstitutions

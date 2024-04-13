@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { institutions, users } from '@/API/api-enterprises-institutions'
+import { institutions, users } from '@/API/apiEnterprisesInstitutions'
 import { ref } from 'vue'
 import router from '@/router'
 import axios from 'axios'
 
-const institution = ref<string>()
+const institution = ref<string>('')
 const directorId = Number(localStorage.getItem('id'))
 
 const instance = axios.create({
@@ -44,3 +44,4 @@ async function postInstitutions() {
     </div>
   </main>
 </template>
+@/API/apiEnterprisesInstitutions

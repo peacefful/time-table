@@ -77,3 +77,4 @@ function deleteSchedules() {
     <div v-else style="margin-top: 1%">Расписания пока нету</div>
   </main>
 </template>
+@/API/apiEnterprisesInstitutions

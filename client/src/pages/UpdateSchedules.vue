@@ -6,7 +6,7 @@ import {
   groups,
   students,
   tutors
-} from '@/API/api-enterprises-institutions'
+} from '@/API/apiEnterprisesInstitutions'
 import { ref, reactive } from 'vue'
 import { getDatas } from '@/utils/findItem'
 import { getSchedulesTable } from '@/utils/getSchedulesTable'
@@ -163,3 +163,4 @@ const { animationBoolean } = move(300)
   </transition>
 </template>
 ../interfaces/iIdsObject
+@/API/apiEnterprisesInstitutions

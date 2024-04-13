@@ -3,18 +3,19 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue'
 import { isEmptyLogin } from '@/utils/isEmptyLogin'
-import { groups, students, tutors } from '@/API/api-enterprises-institutions'
+import { groups, students, tutors } from '@/API/apiEnterprisesInstitutions'
 import { getData, getDatas } from '@/utils/findItem'
 import { getGroup } from '@/API/student'
 import { useTutorStore } from '@/API/tutor'
 import Header from '@/components/UI/Header.vue'
 import Title from '@/components/UI/TitlePage.vue'
 import router from '@/router'
+import type { IGroups } from "../interfaces/iGroups"
 
 const role = localStorage.getItem('role')
 
-const groupsDatas = ref<object[]>([])
-const studentGroupId = ref<object[]>([])
+const groupsDatas = ref<IGroups[]>([])
+const studentGroupId = ref<IGroups>()
 const tutorGroupId = ref<object[]>([])
 
 const { findAuthTutor } = useTutorStore()
@@ -91,4 +92,4 @@ const { animationBoolean } = move(500)
       </div>
     </main>
   </transition>
-</template>
+</template>@/API/apiEnterprisesInstitutions

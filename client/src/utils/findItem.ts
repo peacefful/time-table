@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type { IGroups } from '@/interfaces/iGroups'
 
 export const getData = async (
   apiURl: string,
@@ -16,12 +17,12 @@ export const getData = async (
 
 export const getDatas = async (
   apiURl: string,
-  arrayData: object[],
+  arrayData: IGroups[],
   findItem: string,
   ownValue: string | number
 ) => {
   try {
-    const data: object[] = (await axios.get(apiURl)).data
+    const data: IGroups[] = (await axios.get(apiURl)).data
     arrayData.value = data.filter((item) => item[findItem] === ownValue)
   } catch (error) {
     console.log(error)

@@ -1,17 +1,19 @@
 <script lang="ts" setup>
-import { groups, tutors } from '@/API/api-enterprises-institutions'
+import { groups, tutors } from '@/API/apiEnterprisesInstitutions'
 import { ref, reactive } from 'vue'
-import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday'
 import { getSchedulesTable } from '@/utils/getSchedulesTable'
 import axios from 'axios'
 import CoupleTable from '../components/EditCoupleTable.vue'
+import type { ICouples } from "../interfaces/iCouples"
+import type { IGroups } from "../interfaces/iGroups"
+import type { IUsers } from '@/interfaces/iUsers'
 
-const tutorsData = ref<object[]>([])
-const groupsData = ref<object[]>([])
+const tutorsData = ref<IUsers[]>([])
+const groupsData = ref<IGroups[]>([])
 const groupId = ref<string>('')
 
 async function getTutorsData() {
-  const data: object[] = (await axios.get(tutors)).data
+  const data: { userId: number|string }[] = (await axios.get(tutors)).data
   tutorsData.value = data.filter(
     (item) => item.userId === Number(localStorage.getItem('institutionId'))
   )
@@ -20,11 +22,10 @@ async function getTutorsData() {
 getTutorsData()
 
 async function getGroups() {
-  const data: object[] = (await axios.get(groups)).data
+  const data: IGroups[] = (await axios.get(groups)).data
   groupsData.value = data.filter(
     (item) => item.institutionId === Number(localStorage.getItem('institutionId'))
   )
-  console.log(groupsData.value)
 }
 
 getGroups()
@@ -52,7 +53,7 @@ function addCouple(couples: object[]) {
 }
 
 async function createSchedulesTable() {
-  const couplesWeeek = getSchedulesTable(
+  const couplesWeeek:{ object: ICouples[], api: string }[] = getSchedulesTable(
     couples.mondayCouple,
     couples.tuesdayCouple,
     couples.wednesdayCouple,
@@ -63,7 +64,7 @@ async function createSchedulesTable() {
 
   for (const couple of couplesWeeek) {
     for (const item of couple.object) {
-      item.groupId = groupId.value
+      item.groupId = Number(groupId.value)
       await axios.post(couple.api, item)
 
       item.subject = ''
@@ -137,3 +138,4 @@ select {
   padding: 0.5%;
 }
 </style>
+@/API/apiEnterprisesInstitutions

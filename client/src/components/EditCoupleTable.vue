@@ -2,10 +2,12 @@
 import { removeCouple } from '@/utils/deleteCouple'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import type { ICouples } from '@/interfaces/iCouples'
+import type { IUsers } from '@/interfaces/iUsers'
 
 defineProps<{
-  couples: object[]
-  tutorsData: object[]
+  couples: ICouples[]
+  tutorsData: IUsers[]
   title: string
 }>()
 

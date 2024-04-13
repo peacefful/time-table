@@ -1,4 +1,4 @@
-import { students, directors, tutors } from '@/API/api-enterprises-institutions'
+import { students, DIRECTORS_API, tutors } from '@/API/apiEnterprisesInstitutions'
 import axios from 'axios'
 
 export const makeRegRequest = async (
@@ -28,7 +28,7 @@ export const makeRegRequest = async (
       })
       return response.data
     } else {
-      const response = await axios.post(directors, {
+      const response = await axios.post(DIRECTORS_API, {
         name,
         surname,
         password,

@@ -1,35 +1,40 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { move } from '@/hooks/useAnimation'
-import { directors, students, tutors } from '@/API/api-enterprises-institutions'
+import { DIRECTORS_API, students, tutors } from '@/API/apiEnterprisesInstitutions'
 import { ref } from 'vue'
 import { isEmptyLogin } from '@/utils/isEmptyLogin'
-import type { IPages } from '../interfaces/iPages'
 import router from '@/router'
 import axios from 'axios'
+import type { IPages } from '@/interfaces/iPages'
+import type { IUsers } from '@/interfaces/iUsers'
 
 const role = localStorage.getItem('role')
 
-const pages: IPages = {
-  main: {
-    nameNav: 'Главная',
-    url: '/main'
-  },
-  groups: {
-    nameNav: 'Группы',
-    url: '/groups'
-  },
-  students: {
-    nameNav: 'Студенты',
-    url: '/students'
-  },
-  schedule: {
-    nameNav: 'Расписание',
-    url: '/schedule'
-  }
-}
+const pages = ref<IPages[]>([
+	{
+		id: 1,
+		nameNav: 'Главная',
+		url: '/main'
+	},
+	{
+		id: 2,
+		nameNav: 'Группы',
+		url: '/groups'
+	},
+	{
+		id: 3,
+		nameNav: 'Студенты',
+		url: '/students'
+	},
+	{
+		id: 4,
+		nameNav: 'Расписание',
+		url: '/schedule'
+	}
+])
 
-const authUser = ref<object>({})
+const authUser = ref<IUsers>()
 
 async function getAuthUser() {
   if (role === 'Студент') {
@@ -38,7 +43,7 @@ async function getAuthUser() {
       (user: { id: number }) => user.id === Number(localStorage.getItem('id'))
     )
   } else if (role === 'Директор') {
-    const users = (await axios.get(directors)).data
+    const users = (await axios.get(DIRECTORS_API)).data
     authUser.value = await users.find(
       (user: { id: number }) => user.id === Number(localStorage.getItem('id'))
     )
@@ -60,7 +65,7 @@ const { animationBoolean } = move(400)
     <header v-if="animationBoolean">
       <div v-if="isEmptyLogin() === false && role === 'Студент'" class="header">
         <div class="header__nav">
-          <ul v-for="(page, index) in pages" :key="index">
+          <ul v-for="page in pages" :key="page.id">
             <nav style="pointer-events: none">
               <p @click="router.push(page.url)">{{ page.nameNav }}</p>
             </nav>
@@ -74,13 +79,11 @@ const { animationBoolean } = move(400)
         </h3>
       </div>
       <div v-else class="header">
-        <div class="header__nav">
-          <ul v-for="(page, index) in pages" :key="index">
-            <nav>
-              <p @click="router.push(page.url)">{{ page.nameNav }}</p>
-            </nav>
+        <nav class="header__nav">
+          <ul v-for="page in pages" :key="page.id">
+            <p @click="router.push(page.url)">{{ page.nameNav }}</p>
           </ul>
-        </div>
+        </nav>
         <h3 v-if="authUser">
           <p @click="router.push('/profile')">{{ authUser.name }}</p>
         </h3>
@@ -109,3 +112,4 @@ const { animationBoolean } = move(400)
   }
 }
 </style>
+@/API/apiEnterprisesInstitutions

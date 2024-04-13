@@ -1,15 +1,15 @@
 import {
-  directors,
+  DIRECTORS_API,
   groups,
   institutions,
   students,
   users
-} from '@/API/api-enterprises-institutions'
+} from '@/API/apiEnterprisesInstitutions'
 import axios from 'axios'
 
 export async function getDirector(arrayData: object[], ownValueFind: string | number) {
   try {
-    const data: object[] = (await axios.get(directors)).data
+    const data: object[] = (await axios.get(DIRECTORS_API)).data
     arrayData.value = data.find(
       (director) => director.institution.appellation === ownValueFind.value
     )

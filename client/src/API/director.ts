@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { directors, groups, institutions, users } from '@/API/api-enterprises-institutions'
+import { DIRECTORS_API, groups, institutions, users } from '@/API/apiEnterprisesInstitutions'
+import type { IUsers } from '@/interfaces/iUsers'
 
 export async function getInstitutionData(institutionData: object) {
   try {
@@ -13,9 +14,9 @@ export async function getInstitutionData(institutionData: object) {
   }
 }
 
-export async function getDirectorData(user: object[], appellation: string) {
+export async function getDirectorData(user: IUsers[], appellation: string) {
   try {
-    const dataUser: object[] = (await axios.get(directors)).data
+    const dataUser: object[] = (await axios.get(DIRECTORS_API)).data
     user.value = dataUser.find((item) => item.id === Number(localStorage.getItem('id')))
     appellation.value = user.value.institution.appellation
   } catch (error) {

@@ -1,5 +1,5 @@
 import router from '@/router'
-import { directors, institutions } from '@/API/api-enterprises-institutions'
+import { DIRECTORS_API, institutions } from '@/API/apiEnterprisesInstitutions'
 import { makeRegRequest } from './regData'
 import axios from 'axios'
 
@@ -35,7 +35,7 @@ export const registrationUser = async (
           }
           registrationStudentsTutors()
         } else {
-          await makeRegRequest(name, surname, password, role, directors)
+          await makeRegRequest(name, surname, password, role, Number(DIRECTORS_API))
           router.push('/')
         }
       } else {

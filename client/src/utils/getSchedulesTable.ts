@@ -1,13 +1,14 @@
-import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/api-weekday'
+import { monday, tuesday, wednesday, thursday, friday, saturday } from '@/API/apiWeekday'
+import type { ICouples } from '@/interfaces/iCouples'
 
 export function getSchedulesTable(
-  mondayCouple: object[],
-  tuesdayCouple: object[],
-  wednesdayCouple: object[],
-  thursdayCouple: object[],
-  fridayCouple: object[],
-  saturdayCouple: object[]
-): object[] {
+  mondayCouple: ICouples[],
+  tuesdayCouple: ICouples[],
+  wednesdayCouple: ICouples[],
+  thursdayCouple: ICouples[],
+  fridayCouple: ICouples[],
+  saturdayCouple: ICouples[]
+): { object: ICouples[], api: string }[] {
   return [
     { object: mondayCouple, api: monday },
     { object: tuesdayCouple, api: tuesday },

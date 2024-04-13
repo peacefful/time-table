@@ -4,8 +4,9 @@ import { ref } from 'vue'
 import { getStudentData } from '@/API/student'
 import { getDirectorData } from '@/API/director'
 import { useTutorStore } from '@/API/tutor'
+import type { IUsers } from '@/interfaces/iUsers'
 
-const user = ref<object[]>([])
+const user = ref<IUsers[]>([])
 const appellation = ref<string>()
 const role = localStorage.getItem('role')
 const group = ref<string>()

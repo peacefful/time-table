@@ -3,7 +3,7 @@
 import { move } from '@/hooks/useAnimation'
 import { ref } from 'vue'
 import { isEmptyLogin } from '@/utils/isEmptyLogin'
-import { students, tutors } from '@/API/api-enterprises-institutions'
+import { students, tutors } from '@/API/apiEnterprisesInstitutions'
 import { getData } from '@/utils/findItem'
 import { getStudentSchedules } from '@/API/student'
 import { getGroups } from '@/API/director'
@@ -91,3 +91,4 @@ const { animationBoolean } = move(500)
   </transition>
 </template>
 @/API/director
+@/API/apiEnterprisesInstitutions

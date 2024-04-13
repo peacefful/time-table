@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import axios from 'axios'
+import type { IUsers } from '@/interfaces/iUsers';
 
 const props = defineProps<{
   ids: string[]
@@ -19,11 +20,11 @@ const ids = computed({
 })
 
 const isShowModal = ref<boolean>(true)
-const usersData = ref<object[]>([])
+const usersData = ref<IUsers[]>([])
 const search = ref<string>('')
 
 async function getUsers() {
-  const data: object[] = (await axios.get(props.api)).data
+  const data: IUsers[] = (await axios.get(props.api)).data
   const ownUsers = data.filter(
     (item) => item.userId === Number(localStorage.getItem('institutionId'))
   )
@@ -64,11 +65,10 @@ const findStudent = () => {
         <input type="text" placeholder="Поиск" v-model="search" />
         <div style="padding-top: 3%" v-for="user in findStudent()" :key="user.id">
           <div>
-            {{ user.name }} {{ user.surname }} ({{ user.role }})
+            {{ user.name }} {{ user.surname }}
             <input type="checkbox" :value="user.id" v-model="ids" />
           </div>
         </div>
-        {{ ids }}
         <div></div>
         <button @click.prevent="$emit('closeModal')" style="margin-top: 10%; padding: 3% 6%">
           Добавить

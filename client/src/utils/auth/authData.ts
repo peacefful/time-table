@@ -1,4 +1,4 @@
-import { authDirectors, authStudents, authTutors } from '@/API/api-enterprises-institutions'
+import { authDirectors, authStudents, authTutors } from '@/API/apiEnterprisesInstitutions'
 import axios from 'axios'
 
 export const makeAuthRequest = async (

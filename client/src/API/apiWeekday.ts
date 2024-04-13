@@ -1,0 +1,6 @@
+export const monday: string = 'http://localhost:3000/api/monday'
+export const tuesday: string = 'http://localhost:3000/api/tuesday'
+export const wednesday: string = 'http://localhost:3000/api/wednesday'
+export const thursday: string = 'http://localhost:3000/api/thursday'
+export const friday: string = 'http://localhost:3000/api/friday'
+export const saturday: string = 'http://localhost:3000/api/saturday'

@@ -2,11 +2,12 @@
 import { ref } from 'vue'
 import { move } from '../hooks/useAnimation'
 import { registrationUser } from '../utils/auth/registration'
-import { institutions } from '@/API/api-enterprises-institutions'
+import { institutions } from '@/API/apiEnterprisesInstitutions'
 import RegistrationLoginUser from '../components/RegistrationLoginUser.vue'
 import ButtonLabel from '../components/UI/ButtonLabel.vue'
 import router from '../router/index'
 import axios from 'axios'
+import type { IInstitutions } from '@/interfaces/iInstitution'
 
 const name = ref<string>('')
 const surname = ref<string>('')
@@ -14,7 +15,7 @@ const password = ref<string>('')
 const role = ref<string>('')
 const groupOrAppellation = ref<string>('')
 
-const institutionsData = ref<object[]>([])
+const institutionsData = ref<IInstitutions[]>([])
 async function getInstitutions() {
   institutionsData.value = (await axios.get(institutions)).data
 }
@@ -77,3 +78,4 @@ const { animationBoolean } = move(500)
 }
 </style>
 ../mixins/auth../mixins/auth../utils/auth/registration
+@/API/apiEnterprisesInstitutions
